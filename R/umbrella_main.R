@@ -24,28 +24,28 @@
 #################
 
 # Set current working directory according to file location.
-tryCatch(
-  {
-    # Graphical Execution under RStudio.
-    require('rstudioapi')
-    print("NOTE: Package 'rstudioapi' has been attached.")
-    setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
-    print("SUCCESS: Operating under RStudio. Attempting graphical execution...")
-  },
-  error = function(e) {
-    # Headless Execution under the Terminal (Script directory only).
-    print("ERROR: Not operating under RStudio. Attempting headless execution...")
-    detach('package:rstudioapi', unload = TRUE, character.only = TRUE)
-    print("NOTE: Package 'rstudioapi' has been detached.")
-  }
-)
+# tryCatch(
+#   {
+#     # Graphical Execution under RStudio.
+#     require('rstudioapi')
+#     print("NOTE: Package 'rstudioapi' has been attached.")
+#     setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+#     print("SUCCESS: Operating under RStudio. Attempting graphical execution...")
+#   },
+#   error = function(e) {
+#     # Headless Execution under the Terminal (Script directory only).
+#     print("ERROR: Not operating under RStudio. Attempting headless execution...")
+#     detach('package:rstudioapi', unload = TRUE, character.only = TRUE)
+#     print("NOTE: Package 'rstudioapi' has been detached.")
+#   }
+# )
 
 #################
 # Local Modules #
 #################
 
 # Connect to local files relative to above working directory declaration.
-source('module_apply_random_seed.R', chdir = TRUE)
+# source('module_apply_random_seed.R', chdir = TRUE)
 
 #############
 # Variables #
