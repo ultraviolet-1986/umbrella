@@ -13,15 +13,11 @@ ApplyRandomSeed <- function() {
   }
 
   # Choose a random number and use it as a random seed.
-  random_seed <- c(sample(1:1e6, 1, replace = FALSE))
+  random_seed <- sample(1:1e6, 1, replace = FALSE)
   set.seed(random_seed)
 
   # Print chosen seed
   print(paste('Applied Seed:', random_seed))
-
-  # Vector should contain different numbers every time.
-  print('NOTE: Verify Random Seed with Sample Vector')
-  print(c(sample(1:100, 10, replace = FALSE)))
 }
 
 # End of File.
