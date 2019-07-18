@@ -43,6 +43,14 @@ available:
     numbers (if any are already applied) and will select a new one from between
     `1` and `1,000,000`.
 
+- **`GenerateRandomNetworkFile()`** /
+  **`umbrella::GenerateRandomNetworkFile()`**
+  - This function will write a comma-separated file named
+    `umbrella_random_network.csv` within the current working directory. If this
+    file exists, it will be removed and re-written.
+  - It is possible to convert these data to a matrix for outputting a graphical
+    network.
+
 ## Dependencies
 
 At present, these are the following packages which are required in order to use
