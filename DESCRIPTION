@@ -9,8 +9,8 @@ Suggests: MASS
 Description: Umbrella is a generic biased random walk algorithm, which aims to
   perform accurate community detection for virtually any data set.
 Collate:
-  umbrella_module_generate_random_network_file.R
   umbrella_module_apply_random_seed.R
+  umbrella_module_generate_random_network_file.R
   umbrella_main.R
 License: GPL (>= 3)
 URL: https://github.com/ultraviolet-1986/umbrella
