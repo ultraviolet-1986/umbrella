@@ -59,11 +59,11 @@ RandomWalk <- function(dataset = 'placeholder',  # This will be removed for prod
   }
   else if (isFALSE(random_seed))
   {
-    print('NOTE: Proceeding with default pseudo-random seed.')
+    print('NOTE: Proceeding with current pseudo-random seed.')
   }
   else if (missing(random_seed))
   {
-    print("NOTE: Argument 'random_seed' not specified. Proceeding with default pseudo-random seed.")
+    print("NOTE: Argument 'random_seed' not specified. Proceeding with current pseudo-random seed.")
   }
   else
   {
