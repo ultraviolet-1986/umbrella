@@ -2,7 +2,7 @@
 \alias{RandomWalk}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-  Function: RandomWalk()
+  Function: RandomWalk
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
@@ -71,13 +71,30 @@ function (dataset = "placeholder", start_node, steps, random_seed = c(TRUE,
         ApplyRandomSeed()
     }
     else if (isFALSE(random_seed)) {
-        print("NOTE: Proceeding with default pseudo-random seed.")
+        print("NOTE: Proceeding with current pseudo-random seed.")
     }
     else if (missing(random_seed)) {
-        print("NOTE: Proceeding with default pseudo-random seed.")
+        print("NOTE: Argument 'random_seed' not specified. Proceeding with current pseudo-random seed.")
     }
     else {
-        print("ERROR: Argument 'random_seed' has not been defined correctly.")
+        print("ERROR: Argument 'random_seed' has not been defined correctly. Terminating Random Walk.")
+        return()
+    }
+    if (missing(mode)) {
+        print("NOTE: Argument 'mode' not specified. Proceeding under 'all' mode.")
+        mode <- "all"
+    }
+    else if (mode == "in") {
+        print("NOTE: Random Walk will be executed under 'in' mode.")
+    }
+    else if (mode == "out") {
+        print("NOTE: Random Walk will be executed under 'out' mode.")
+    }
+    else if (mode == "all") {
+        print("NOTE: Random Walk will be executed under 'all' mode.")
+    }
+    else {
+        print("ERROR: Argument 'mode' has not been defined correctly. Terminating Random Walk.")
         return()
     }
   }
