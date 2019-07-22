@@ -81,15 +81,15 @@ RandomWalk <- function(dataset = 'placeholder',  # This will be removed for prod
   }
   else if (mode == 'in')
   {
-    print("NOTE: Random Walk will be executed using 'in' mode.")
+    print("NOTE: Random Walk will be executed under 'in' mode.")
   }
   else if (mode == 'out')
   {
-    print("NOTE: Random Walk will be executed using 'out' mode.")
+    print("NOTE: Random Walk will be executed under 'out' mode.")
   }
   else if (mode == 'all')
   {
-    print("NOTE: Random Walk will be executed using 'all' mode.")
+    print("NOTE: Random Walk will be executed under 'all' mode.")
   }
   else
   {
