@@ -83,7 +83,7 @@ RandomWalk <- function(dataset = 'placeholder',  # This will be removed for prod
   }
   else if (missing(mode))
   {
-    print("NOTE: Argument 'mode' not specified. Random Walk will be executed using 'all' mode.")
+    print("NOTE: Argument 'mode' not specified. Proceeding under 'all' mode.")
     mode <- 'all'
   }
   else
