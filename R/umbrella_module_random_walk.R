@@ -58,11 +58,35 @@ RandomWalk <- function(dataset = 'placeholder',  # This will be removed for prod
   }
   else if (missing(random_seed))
   {
-    print('NOTE: Proceeding with default pseudo-random seed.')
+    print("NOTE: Argument 'random_seed' not specified. Proceeding with default pseudo-random seed.")
   }
   else
   {
     print("ERROR: Argument 'random_seed' has not been defined correctly.")
+    return()
+  }
+
+  # Argument Parsing: mode
+  if (exists(mode) && mode == 'in')
+  {
+    print("NOTE: Random Walk will be executed using 'in' mode.")
+  }
+  else if (exists(mode) && mode == 'out')
+  {
+    print("NOTE: Random Walk will be executed using 'out' mode.")
+  }
+  else if (exists(mode) && mode == 'all')
+  {
+    print("NOTE: Random Walk will be executed using 'all' mode.")
+  }
+  else if (missing(mode))
+  {
+    print("NOTE: Argument 'mode' not specified. Random Walk will be executed using 'all' mode.")
+    mode <- 'all'
+  }
+  else
+  {
+    print("ERROR: Argument 'mode' has not been defined correctly.")
     return()
   }
 }
