@@ -43,6 +43,11 @@ RandomWalk <- function(dataset = 'placeholder',  # This will be removed for prod
   # Argument Parsing: dataset
   # - This will fail in production if data are not applied.
   # - A placeholder is currently present to allow execution of other logic.
+  # if(missing(dataset))
+  # {
+  #   print("ERROR: Argument 'dataset' has not been defined. Terminating Random Walk.")
+  #   return()
+  # }
 
   # Argument Parsing: random_seed
   # - If argument is empty, the function will execute with default pseudo-random seed.
