@@ -67,6 +67,8 @@ RandomWalk <- function(dataset = 'placeholder',  # This will be removed for prod
   }
 
   # Argument Parsing: mode
+  # - If this argument is not defined, 'RandomWalk' will execute using 'all' mode.
+  # - If argument is incorrect, the function will terminate.
   if (exists(mode) && mode == 'in')
   {
     print("NOTE: Random Walk will be executed using 'in' mode.")
