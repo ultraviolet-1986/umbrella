@@ -62,33 +62,33 @@ RandomWalk <- function(dataset = 'placeholder',  # This will be removed for prod
   }
   else
   {
-    print("ERROR: Argument 'random_seed' has not been defined correctly.")
+    print("ERROR: Argument 'random_seed' has not been defined correctly. Terminating Random Walk.")
     return()
   }
 
   # Argument Parsing: mode
   # - If this argument is not defined, 'RandomWalk' will execute using 'all' mode.
   # - If argument is incorrect, the function will terminate.
-  if (exists(mode) && mode == 'in')
-  {
-    print("NOTE: Random Walk will be executed using 'in' mode.")
-  }
-  else if (exists(mode) && mode == 'out')
-  {
-    print("NOTE: Random Walk will be executed using 'out' mode.")
-  }
-  else if (exists(mode) && mode == 'all')
-  {
-    print("NOTE: Random Walk will be executed using 'all' mode.")
-  }
-  else if (missing(mode))
+  if (missing(mode))
   {
     print("NOTE: Argument 'mode' not specified. Proceeding under 'all' mode.")
     mode <- 'all'
   }
+  else if (mode == 'in')
+  {
+    print("NOTE: Random Walk will be executed using 'in' mode.")
+  }
+  else if (mode == 'out')
+  {
+    print("NOTE: Random Walk will be executed using 'out' mode.")
+  }
+  else if (mode == 'all')
+  {
+    print("NOTE: Random Walk will be executed using 'all' mode.")
+  }
   else
   {
-    print("ERROR: Argument 'mode' has not been defined correctly.")
+    print("ERROR: Argument 'mode' has not been defined correctly. Terminating Random Walk.")
     return()
   }
 }
