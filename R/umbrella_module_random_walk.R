@@ -33,36 +33,36 @@
 # Functions #
 #############
 
-RandomWalk <-
-  function(dataset = 'placeholder',  # This will be removed for production.
-           start_node,
-           steps,
-           random_seed = c(TRUE, FALSE),
-           mode = c('in', 'out', 'all'),
-           stuck = c('stop_walk', 'raise_error')) {
-    # Argument Parsing: dataset
-    # - This will fail in production if data are not applied.
-    # - A placeholder is currently present to allow execution of other logic.
+RandomWalk <- function(dataset = 'placeholder',  # This will be removed for production.
+                       start_node,
+                       steps,
+                       random_seed = c(TRUE, FALSE),
+                       mode = c('in', 'out', 'all'),
+                       stuck = c('stop_walk', 'raise_error')
+){
+  # Argument Parsing: dataset
+  # - This will fail in production if data are not applied.
+  # - A placeholder is currently present to allow execution of other logic.
 
-    # Argument Parsing: random_seed
-    if (isTRUE(random_seed))
-    {
-      print('NOTE: Applying a unique psuedo-random seed.')
-      ApplyRandomSeed()
-    }
-    else if (isFALSE(random_seed))
-    {
-      print('NOTE: Proceeding with default pseudo-random seed.')
-    }
-    else if (missing(random_seed))
-    {
-      print('NOTE: Proceeding with default pseudo-random seed.')
-    }
-    else
-    {
-      print('ERROR: An unknown error occurred.')
-      return()
-    }
+  # Argument Parsing: random_seed
+  if (isTRUE(random_seed))
+  {
+    print('NOTE: Applying a unique psuedo-random seed.')
+    ApplyRandomSeed()
   }
+  else if (isFALSE(random_seed))
+  {
+    print('NOTE: Proceeding with default pseudo-random seed.')
+  }
+  else if (missing(random_seed))
+  {
+    print('NOTE: Proceeding with default pseudo-random seed.')
+  }
+  else
+  {
+    print('ERROR: An unknown error occurred.')
+    return()
+  }
+}
 
 # End of File.
