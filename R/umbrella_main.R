@@ -59,6 +59,6 @@
 # Kickstart #
 #############
 
-ApplyRandomSeed()  # Comment to enforce specific seed.
+# ApplyRandomSeed()  # Comment to enforce specific seed.
 
 # End of File.
