@@ -45,6 +45,8 @@ RandomWalk <- function(dataset = 'placeholder',  # This will be removed for prod
   # - A placeholder is currently present to allow execution of other logic.
 
   # Argument Parsing: random_seed
+  # - If argument is empty, the function will execute with default pseudo-random seed.
+  # - If argument is incorrect, the function will terminate.
   if (isTRUE(random_seed))
   {
     print('NOTE: Applying a unique psuedo-random seed.')
@@ -60,7 +62,7 @@ RandomWalk <- function(dataset = 'placeholder',  # This will be removed for prod
   }
   else
   {
-    print('ERROR: An unknown error occurred.')
+    print("ERROR: Argument 'random_seed' has not been defined correctly.")
     return()
   }
 }
