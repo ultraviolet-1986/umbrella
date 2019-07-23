@@ -17,7 +17,8 @@
 #################
 
 # NOTES:
-# - Current implementation will be based on logic from 'igraph' 'random_walk()' C++ code.
+# - Current implementation will be based on logic from 'igraph' 'random_walk()'
+#   C++ code.
 # - Code has been formatted to demonstrate a C-style development process.
 
 # Function: RandomWalk
@@ -33,41 +34,63 @@
 # Functions #
 #############
 
-RandomWalk <- function(dataset = 'placeholder',  # This will be removed for production.
+RandomWalk <- function(dataset = 'placeholder',  # To be removed for production.
                        start_node,
                        steps,
                        random_seed = c(TRUE, FALSE),
                        mode = c('in', 'out', 'all'),
                        stuck = c('stop_walk', 'raise_error')
 ){
-  # Argument Parsing: dataset
+  #############################
+  # Argument Parsing: dataset #
+  #############################
+
   # - This will fail in production if data are not applied.
   # - A placeholder is currently present to allow execution of other logic.
+
   # if(missing(dataset))
   # {
-  #   print("ERROR: Argument 'dataset' has not been defined. Terminating Random Walk.")
+  #   print(paste("ERROR: Argument 'stuck' has not been defined. Terminating",
+  #               "Random Walk."))
   #   return()
   # }
 
-  # Argument Parsing: start_node
-  # - This is a required parameter, failing to specify will terminate the program.
+  ################################
+  # Argument Parsing: start_node #
+  ################################
+
+  # - This is a required parameter, failing to specify will terminate the
+  #   program.
+
   if (missing(start_node))
   {
-    print("ERROR: Argument 'start_node' not specified. Terminating Random Walk.")
+    print(paste("ERROR: Argument 'start_node' has not been defined.",
+                "Terminating Random Walk."))
     return()
   }
 
-  # Argument Parsing: steps
-  # - This is a required parameter, failing to specify will terminate the program.
+  ###########################
+  # Argument Parsing: steps #
+  ###########################
+
+  # - This is a required parameter, failing to specify will terminate the
+  #   program.
+
   if(missing(steps))
   {
-    print("ERROR: Argument 'steps' have not been defined correctly. Terminating Random Walk.")
+    print(paste("ERROR: Argument 'steps' has not been defined. Terminating",
+                "Random Walk."))
     return()
   }
 
-  # Argument Parsing: random_seed
-  # - If argument is empty, the function will execute with default pseudo-random seed.
+  #################################
+  # Argument Parsing: random_seed #
+  #################################
+
+  # - If argument is empty, the function will execute with default pseudo-random
+  #   seed.
   # - If argument is incorrect, the function will terminate.
+
   if (isTRUE(random_seed))
   {
     print('NOTE: Applying a unique psuedo-random seed.')
@@ -79,17 +102,24 @@ RandomWalk <- function(dataset = 'placeholder',  # This will be removed for prod
   }
   else if (missing(random_seed))
   {
-    print("NOTE: Argument 'random_seed' not specified. Proceeding with current pseudo-random seed.")
+    print(paste("NOTE: Argument 'random_seed' not specified. Proceeding with",
+                "current pseudo-random seed."))
   }
   else
   {
-    print("ERROR: Argument 'random_seed' has not been defined correctly. Terminating Random Walk.")
+    print(paste("ERROR: Argument 'random_seed' has not been defined.",
+                "Terminating Random Walk."))
     return()
   }
 
-  # Argument Parsing: mode
-  # - If this argument is not defined, 'RandomWalk' will execute using 'all' mode.
+  ##########################
+  # Argument Parsing: mode #
+  ##########################
+
+  # - If this argument is not defined, 'RandomWalk' will execute using 'all'
+  #   mode.
   # - If argument is incorrect, the function will terminate.
+
   if (missing(mode))
   {
     print("NOTE: Argument 'mode' not specified. Proceeding under 'all' mode.")
@@ -109,17 +139,24 @@ RandomWalk <- function(dataset = 'placeholder',  # This will be removed for prod
   }
   else
   {
-    print("ERROR: Argument 'mode' has not been defined correctly. Terminating Random Walk.")
+    print(paste("ERROR: Argument 'mode' has not been defined. Terminating",
+                "Random Walk."))
     return()
   }
 
-  # Argument Parsing: stuck
+  ###########################
+  # Argument Parsing: stuck #
+  ###########################
+
   # - Depending on condition, the program will either attempt to return or hard
   #   terminate when a 'stuck' state is reached.
-  # - This is a required parameter, failing to specify will terminate the program.
+  # - This is a required parameter, failing to specify will terminate the
+  #   program.
+
   if (missing(stuck))
   {
-    print("ERROR: Argument 'stuck' has not been defined. Terminating Random Walk.")
+    print(paste("ERROR: Argument 'stuck' has not been defined. Terminating",
+                "Random Walk."))
     return()
   }
 }

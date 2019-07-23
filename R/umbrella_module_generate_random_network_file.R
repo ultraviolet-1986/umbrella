@@ -13,13 +13,17 @@ GenerateRandomNetworkFile <- function() {
   # Erase 'umbrella_random_network.csv' if exists to prepare for writing.
   if (file.exists(umbrella_random_network_file)) {
     file.remove(umbrella_random_network_file)
-    print(paste('NOTE:', umbrella_random_network_file, 'has been deleted from the current working directory.'))
+    print(paste('NOTE:', umbrella_random_network_file, 'has been deleted from',
+                'the current working directory.'))
   }
 
-  # Write exactly 100 lines of random numbers (between 1 and 100) to 'umbrella_random_network.csv'.
+  # Write exactly 100 lines of random numbers (between 1 and 100) to
+  # 'umbrella_random_network.csv'.
   for (i in 1:100 ) {
     write(
-      paste(sample(1:100, 1, replace = TRUE), sample(1:100, 1, replace = TRUE), sep = ', '),
+      paste(sample(1:100, 1, replace = TRUE),
+            sample(1:100, 1, replace = TRUE),
+            sep = ', '),
       file = umbrella_random_network_file,
       append = TRUE,
       sep = "\n"
@@ -28,7 +32,8 @@ GenerateRandomNetworkFile <- function() {
     i <- i + 1
   }
 
-  print(paste('NOTE:', umbrella_random_network_file, 'has been written to the current working directory.'))
+  print(paste('NOTE:', umbrella_random_network_file, 'has been written to the',
+              'current working directory.'))
 }
 
 # End of File.
