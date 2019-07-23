@@ -54,6 +54,7 @@ RandomWalk <- function(dataset = 'placeholder',  # This will be removed for prod
   if (missing(start_node))
   {
     print("ERROR: Argument 'start_node' not specified. Terminating Random Walk.")
+    return()
   }
 
   # Argument Parsing: steps
@@ -61,6 +62,7 @@ RandomWalk <- function(dataset = 'placeholder',  # This will be removed for prod
   if(missing(steps))
   {
     print("ERROR: Argument 'steps' have not been defined correctly. Terminating Random Walk.")
+    return()
   }
 
   # Argument Parsing: random_seed
@@ -108,6 +110,16 @@ RandomWalk <- function(dataset = 'placeholder',  # This will be removed for prod
   else
   {
     print("ERROR: Argument 'mode' has not been defined correctly. Terminating Random Walk.")
+    return()
+  }
+
+  # Argument Parsing: stuck
+  # - Depending on condition, the program will either attempt to return or hard
+  #   terminate when a 'stuck' state is reached.
+  # - This is a required parameter, failing to specify will terminate the program.
+  if (missing(stuck))
+  {
+    print("ERROR: Argument 'stuck' has not been defined. Terminating Random Walk.")
     return()
   }
 }
