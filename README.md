@@ -42,6 +42,7 @@ available:
   - This function will erase the current seed for generating pseudo-random
     numbers (if any are already applied) and will select a new one from between
     `1` and `1,000,000`.
+  - Use `help(ApplyRandomSeed)`for more information.
 
 - **`GenerateRandomNetworkFile()`** /
   **`umbrella::GenerateRandomNetworkFile()`**
@@ -50,6 +51,12 @@ available:
     file exists, it will be removed and re-written.
   - It is possible to convert these data to a matrix for outputting a graphical
     network.
+  - Use `help(GenerateRandomNetworkFile)`for more information.
+    
+- **`RandomWalk()`** / **`umbrella::RandomWalk()`**
+  - This function will attempt to perform and plot a random walk using a
+    specified data set.
+  - Use `help(RandomWalk)` for more information.
 
 ## Dependencies
 
@@ -58,6 +65,12 @@ At present, these are the following packages which are required in order to use
 
 - `rstudioapi`
 - `ipgraph`
+
+## Suggestions
+
+Although not required to perform any task using `umbrella`, these data were used
+and tested throughout.
+
 - `igraphdata`
 
 ## References
