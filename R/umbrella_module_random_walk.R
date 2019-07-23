@@ -49,6 +49,20 @@ RandomWalk <- function(dataset = 'placeholder',  # This will be removed for prod
   #   return()
   # }
 
+  # Argument Parsing: start_node
+  # - This is a required parameter, failing to specify will terminate the program.
+  if (missing(start_node))
+  {
+    print("ERROR: Argument 'start_node' not specified. Terminating Random Walk.")
+  }
+
+  # Argument Parsing: steps
+  # - This is a required parameter, failing to specify will terminate the program.
+  if(missing(steps))
+  {
+    print("ERROR: Argument 'steps' have not been defined correctly. Terminating Random Walk.")
+  }
+
   # Argument Parsing: random_seed
   # - If argument is empty, the function will execute with default pseudo-random seed.
   # - If argument is incorrect, the function will terminate.
