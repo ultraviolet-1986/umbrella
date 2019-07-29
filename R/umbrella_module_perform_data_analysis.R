@@ -69,8 +69,8 @@ PerformDataAnalysis <- function(dataset)
   print("NOTE: Validation Complete. Listing results:")
 
   # Display type and class of data.
-  print(paste("Data Type:", data_type))
+  print(paste("NOTE: Data are of type '", data_type, "'.", sep = ''))
 
-  # Data Preview
-  print(head(dataset, 1))
+  # Display number of rows and columns.
+  print("")
 }
