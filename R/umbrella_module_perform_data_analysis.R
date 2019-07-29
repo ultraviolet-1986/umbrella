@@ -31,7 +31,7 @@
 # Functions #
 #############
 
-PerformDataAnalysis <- function(dataset)
+PerformDataAnalysis <- function(dataset, draw_graph = c(TRUE, FALSE))
 {
   ###################
   # Data Validation #
@@ -47,7 +47,7 @@ PerformDataAnalysis <- function(dataset)
   else if (typeof(dataset) == 'list')
   {
     # SUCCESS: Data exists and is in the correct format.
-    print("NOTE: Data is of type 'List'. Performing Data Analysis.")
+    print("NOTE: Data is of type 'List'.")
 
     # NOTES:
     # - Continue outside of IF statement.
@@ -71,6 +71,37 @@ PerformDataAnalysis <- function(dataset)
   # Display type and class of data.
   print(paste("NOTE: Data are of type '", data_type, "'.", sep = ''))
 
-  # Display number of rows and columns.
-  print("")
+  # Convert data to 'igraph' class (if class 'list').
+  if (class(dataset) == 'data.frame')
+  {
+    # SUCCESS: Convert data into correct format for network analysis.
+    print(paste("NOTE: Data are 'data.frame' format. Converting to 'igraph'."))
+
+    # umbrella_data <- read.csv('umbrella_random_network.csv')
+    dataset <- graph_from_adj_list(dataset, mode = 'out', duplicate = FALSE)
+
+    print(paste("NOTE: Data have been converted to 'igraph'."))
+  }
+  else if (class(dataset) == 'igraph')
+  {
+    # SUCCESS: No data conversion required.
+    print(paste("NOTE: Data are 'igraph' format. No conversion required."))
+  }
+  else
+  {
+    # FAILURE: Catch unknown error.
+    print("ERROR: An unknown error occurred. Terminating Data Analysis.")
+    return()
+  }
+
+  #########################
+  # Plot Data Graphically #
+  #########################
+
+  if (isTRUE(draw_graph))
+  {
+    plot(dataset)
+  }
+
+  return(dataset)
 }
