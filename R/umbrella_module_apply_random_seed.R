@@ -6,6 +6,10 @@
 # File Name: umbrella_module_apply_random_seed.R
 # File Author: William Whinn
 
+#############
+# Functions #
+#############
+
 ApplyRandomSeed <- function() {
   if (exists('.Random.seed')) {
     # Delete the current seed (if exists).

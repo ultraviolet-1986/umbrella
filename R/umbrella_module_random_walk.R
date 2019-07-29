@@ -50,7 +50,7 @@ RandomWalk <- function(dataset = 'placeholder',  # To be removed for production.
 
   # if(missing(dataset))
   # {
-  #   print(paste("ERROR: Argument 'stuck' has not been defined. Terminating",
+  #   print(paste("ERROR: Argument 'dataset' has not been defined. Terminating",
   #               "Random Walk."))
   #   return()
   # }
@@ -159,6 +159,10 @@ RandomWalk <- function(dataset = 'placeholder',  # To be removed for production.
                 "Random Walk."))
     return()
   }
+
+  #########################
+  # Kickstart Random Walk #
+  #########################
 }
 
 # End of File.

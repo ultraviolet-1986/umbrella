@@ -6,6 +6,10 @@
 # File Name: umbrella_module_generate_random_network_file..R
 # File Author: William Whinn
 
+#############
+# Functions #
+#############
+
 GenerateRandomNetworkFile <- function() {
   # Define the 'umbrella_random_network.csv' file for writing.
   umbrella_random_network_file <- 'umbrella_random_network.csv'
