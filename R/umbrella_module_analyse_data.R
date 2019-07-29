@@ -122,6 +122,9 @@ UmbrellaTestFunction <- function()
   # - This function will be removed before final release.
   # - No data will be exported to the current R session.
 
+  # WARNING:
+  # - This functions writes a file to the user's "$HOME" directory.
+
   setwd("~/")
   umbrella::GenerateRandomNetworkFile()
   umbrella_data <- read.csv('umbrella_random_network.csv')
