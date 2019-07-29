@@ -23,10 +23,10 @@ GenerateRandomNetworkFile <- function() {
 
   # Write exactly 100 lines of random numbers (between 1 and 100) to
   # 'umbrella_random_network.csv'.
-  for (i in 1:10 ) {
+  for (i in 1:5) {
     write(
-      paste(sample(1:15, 1, replace = TRUE),
-            sample(1:15, 1, replace = TRUE),
+      paste(sample(1:10, 1, replace = TRUE),
+            sample(1:10, 1, replace = TRUE),
             sep = ', '),
       file = umbrella_random_network_file,
       append = TRUE,

@@ -9,9 +9,9 @@ Suggests: igraphdata (>= 1.0.1)
 Description: Umbrella is a generic biased random walk algorithm, which aims to
   perform accurate community detection for virtually any data set.
 Collate:
+  umbrella_module_analyse_data.R
   umbrella_module_apply_random_seed.R
   umbrella_module_generate_random_network_file.R
-  umbrella_module_perform_data_analysis.R
   umbrella_module_random_walk.R
 License: GPL (>= 3)
 URL: https://github.com/ultraviolet-1986/umbrella

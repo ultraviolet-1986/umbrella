@@ -31,7 +31,7 @@
 # Functions #
 #############
 
-PerformDataAnalysis <- function(dataset, draw_graph = c(TRUE, FALSE))
+AnalyseData <- function(dataset, draw_graph = c(TRUE, FALSE))
 {
   ###################
   # Data Validation #
@@ -47,7 +47,7 @@ PerformDataAnalysis <- function(dataset, draw_graph = c(TRUE, FALSE))
   else if (typeof(dataset) == 'list')
   {
     # SUCCESS: Data exists and is in the correct format.
-    print("NOTE: Data is of type 'List'.")
+    print("NOTE: Data is of type 'list'.")
 
     # NOTES:
     # - Continue outside of IF statement.
@@ -66,12 +66,8 @@ PerformDataAnalysis <- function(dataset, draw_graph = c(TRUE, FALSE))
   # Data Analysis #
   #################
 
-  print("NOTE: Validation Complete. Listing results:")
+  print("NOTE: Validation Complete. No errors encountered.")
 
-  # Display type and class of data.
-  print(paste("NOTE: Data are of type '", data_type, "'.", sep = ''))
-
-  # Convert data to 'igraph' class (if class 'list').
   if (class(dataset) == 'data.frame')
   {
     # SUCCESS: Convert data into correct format for network analysis.
@@ -103,5 +99,33 @@ PerformDataAnalysis <- function(dataset, draw_graph = c(TRUE, FALSE))
     plot(dataset)
   }
 
-  return(dataset)
+  ###############
+  # Return Data #
+  ###############
+
+  # NOTES:
+  # - Return data quietly.
+  # - This allows assignment to variable.
+
+  invisible(dataset)
 }
+
+################
+# TESTING CODE #
+################
+
+UmbrellaTestFunction <- function()
+{
+  # NOTES:
+  # - This function was written to test 'umbrella' under Linux.
+  #   - MS Windows may not function correctly due to differing file structure.
+  # - This function will be removed before final release.
+  # - No data will be exported to the current R session.
+
+  setwd("~/")
+  umbrella::GenerateRandomNetworkFile()
+  umbrella_data <- read.csv('umbrella_random_network.csv')
+  umbrella::AnalyseData(umbrella_data, draw_graph = TRUE)
+}
+
+# End of File.

@@ -21,7 +21,7 @@ ApplyRandomSeed <- function() {
   set.seed(random_seed)
 
   # Print chosen seed
-  print(paste('Applied Seed:', random_seed))
+  print(paste('NOTE: Applied Seed:', random_seed))
 }
 
 # End of File.
