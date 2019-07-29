@@ -3,7 +3,7 @@
 # MSc Data Science (Full Time)
 # PROM02 Computing Master's Project
 
-# File Name: umbrella_module_perform_data_analysis..R
+# File Name: umbrella_module_perform_data_analysis.R
 # File Author: William Whinn
 
 ##############
@@ -25,8 +25,15 @@ PerformDataAnalysis <- function(dataset)
                 "Data Analysis."))
     return()
   }
+  else if (typeof(dataset) == 'list')
+  {
+    # Success: Data exists and is in the correct format.
+    print("NOTE: Data is of type 'List'. Performing Data Analysis.")
+  }
   else
   {
-    # Success: Data have been provided. Perform analysis.
+    # Failure: Catch unknown error.
+    print("ERROR: An unknown error occurred. Terminating Data Analysis.")
+    return()
   }
 }
