@@ -140,6 +140,38 @@ UmbrellaTestFunction <- function()
   umbrella::GenerateRandomNetworkFile()
   umbrella_data <- read.csv('umbrella_random_network.csv')
   umbrella::AnalyseData(umbrella_data, draw_graph = TRUE)
+
+  # Convert 'umbrella_data' into a graph object.
+  print("TEST: Converting data into graph object.")
+  umbrella_data <- igraph::graph_from_adj_list(umbrella_data, mode = 'out',
+                                               duplicate = FALSE)
+
+  # Convert 'umbrella_data' into adjacency matrix.
+  print("TEST: Convert data into adjacency matrix.")
+  umbrella_data <- igraph::as_adjacency_matrix(umbrella_data, type = 'both')
+  print("TEST: Outputting data as adjacency matrix.")
+  print(umbrella_matrix)
+
+  # Convert 'umbrella_data' back into original format.
+  print("TEST: Convert data back into graph object.")
+  umbrella_data <- igraph::graph_from_adjacency_matrix(umbrella_data)
+
+  # Plot the final resutls.
+  print("TEST: Plot the reconverted graph object to test conversion.")
+  igraph::plot.igraph(umbrella_data,
+                      main = 'Network Data Graph (UmbrellaTestFunction())',
+                      sub = paste("Umbrella", packageVersion("umbrella")))
+
+  ###############
+  # Return Data #
+  ###############
+
+  # NOTES:
+  # - Return data quietly.
+  # - This allows assignment to variable.
+
+  print("TEST: Return data as graph object.")
+  invisible(umbrella_data)
 }
 
 # End of File.
