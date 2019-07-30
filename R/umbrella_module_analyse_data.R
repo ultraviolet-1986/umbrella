@@ -73,8 +73,8 @@ AnalyseData <- function(dataset, draw_graph = c(TRUE, FALSE))
     # SUCCESS: Convert data into correct format for network analysis.
     print(paste("NOTE: Data are 'data.frame' format. Converting to 'igraph'."))
 
-    # umbrella_data <- read.csv('umbrella_random_network.csv')
-    dataset <- graph_from_adj_list(dataset, mode = 'out', duplicate = FALSE)
+    dataset <- igraph::graph_from_adj_list(dataset, mode = 'out',
+                                           duplicate = FALSE)
 
     print(paste("NOTE: Data have been converted to 'igraph'."))
   }
@@ -104,9 +104,9 @@ AnalyseData <- function(dataset, draw_graph = c(TRUE, FALSE))
 
   if (isTRUE(draw_graph))
   {
-    plot(dataset,
-         main = 'Network Data Graph',
-         sub = paste("Umbrella", packageVersion("umbrella")))
+    igraph::plot.igraph(dataset,
+                        main = 'Network Data Graph',
+                        sub = paste("Umbrella", packageVersion("umbrella")))
   }
 
   ###############
