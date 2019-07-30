@@ -31,11 +31,38 @@
 # Functions #
 #############
 
-AnalyseData <- function(dataset, draw_graph = c(TRUE, FALSE))
+AnalyseData <- function(dataset,
+                        draw_graph = c(TRUE, FALSE),
+                        random_seed = c(TRUE, FALSE))
 {
-  ###################
-  # Data Validation #
-  ###################
+  #################################
+  # Argument Parsing: random_seed #
+  #################################
+
+  if (isTRUE(random_seed))
+  {
+    umbrella::ApplyRandomSeed()
+  }
+  else if (isFALSE(random_seed))
+  {
+    print(paste("NOTE: Argument 'random_seed' is set to 'FALSE'. Proceeding ",
+                "with machine default."))
+  }
+  else if (missing(random_seed))
+  {
+    print(paste("NOTE: Argument 'random_seed' is missing. Proceeding with ",
+                "machine default."))
+  }
+  else
+  {
+    # FAILURE: Catch unknown error.
+    print("ERROR: An unknown error occurred. Terminating Data Analysis.")
+    return()
+  }
+
+  #############################
+  # Argument Parsing: dataset #
+  #############################
 
   if (missing(dataset))
   {
@@ -98,9 +125,9 @@ AnalyseData <- function(dataset, draw_graph = c(TRUE, FALSE))
   print(paste("NOTE: Data contains a total of", igraph::vcount(dataset),
               "vertices (nodes)."))
 
-  #########################
-  # Plot Data Graphically #
-  #########################
+  ################################
+  # Argument Parsing: draw_graph #
+  ################################
 
   if (isTRUE(draw_graph))
   {
@@ -135,30 +162,29 @@ UmbrellaTestFunction <- function()
   # WARNING:
   # - This function writes a file to the user's "$HOME" directory.
 
-  umbrella::ApplyRandomSeed()
   setwd("~/")
   umbrella::GenerateRandomNetworkFile()
-  umbrella_data <- read.csv('umbrella_random_network.csv')
-  umbrella::AnalyseData(umbrella_data, draw_graph = TRUE)
+  test_data <- read.csv('umbrella_random_network.csv')
+  umbrella::AnalyseData(test_data, draw_graph = TRUE)
 
-  # Convert 'umbrella_data' into a graph object.
+  # Convert 'test_data' into a graph object.
   print("TEST: Convert comma-separated data into graph object.")
-  umbrella_data <- igraph::graph_from_adj_list(umbrella_data, mode = 'out',
-                                               duplicate = FALSE)
+  test_data <- igraph::graph_from_adj_list(test_data, mode = 'out',
+                                           duplicate = FALSE)
 
-  # Convert 'umbrella_data' into adjacency matrix.
+  # Convert 'test_data' into adjacency matrix.
   print("TEST: Convert data into adjacency matrix.")
-  umbrella_data <- igraph::as_adjacency_matrix(umbrella_data, type = 'both')
+  test_data <- igraph::as_adjacency_matrix(test_data, type = 'both')
   print("TEST: Outputting data as adjacency matrix.")
-  print(umbrella_matrix)
+  print(test_data)
 
-  # Convert 'umbrella_data' back into original format.
+  # Convert 'test_data' back into original format.
   print("TEST: Convert data back into graph object.")
-  umbrella_data <- igraph::graph_from_adjacency_matrix(umbrella_data)
+  test_data <- igraph::graph_from_adjacency_matrix(test_data)
 
   # Plot the final resutls.
   print("TEST: Plot the reconverted graph object to test conversion.")
-  igraph::plot.igraph(umbrella_data,
+  igraph::plot.igraph(test_data,
                       main = 'Network Data Graph / UmbrellaTestFunction()',
                       sub = paste("Umbrella", packageVersion("umbrella")))
 
@@ -171,8 +197,8 @@ UmbrellaTestFunction <- function()
   # - This allows assignment to variable.
 
   print("TEST: Return data as graph object.")
-  print(umbrella_data)
-  invisible(umbrella_data)
+  print(test_data)
+  invisible(test_data)
 }
 
 # End of File.
