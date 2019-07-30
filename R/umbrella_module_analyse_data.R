@@ -162,6 +162,8 @@ UmbrellaTestFunction <- function()
   # WARNING:
   # - This function writes a file to the user's "$HOME" directory.
 
+  print("########## TEST CODE ##########")
+
   setwd("~/")
   umbrella::GenerateRandomNetworkFile()
   test_data <- read.csv('umbrella_random_network.csv')
