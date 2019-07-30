@@ -92,11 +92,11 @@ AnalyseData <- function(dataset, draw_graph = c(TRUE, FALSE))
 
   # Get number of edges (connections) within the graph object.
   print(paste("NOTE: Data contains a total of", igraph::ecount(dataset),
-              "edges."))
+              "edges (connections)."))
 
   # Get number of vertices (nodes) within the graph object.
   print(paste("NOTE: Data contains a total of", igraph::vcount(dataset),
-              "vertices."))
+              "vertices (nodes)."))
 
   #########################
   # Plot Data Graphically #
@@ -104,7 +104,9 @@ AnalyseData <- function(dataset, draw_graph = c(TRUE, FALSE))
 
   if (isTRUE(draw_graph))
   {
-    plot(dataset)
+    plot(dataset,
+         main = 'Network Data Graph',
+         sub = paste("Umbrella", packageVersion("umbrella")))
   }
 
   ###############
