@@ -90,6 +90,14 @@ AnalyseData <- function(dataset, draw_graph = c(TRUE, FALSE))
     return()
   }
 
+  # Get number of edges (connections) within the graph object.
+  print(paste("NOTE: Data contains a total of", igraph::ecount(dataset),
+              "edges."))
+
+  # Get number of vertices (nodes) within the graph object.
+  print(paste("NOTE: Data contains a total of", igraph::vcount(dataset),
+              "vertices."))
+
   #########################
   # Plot Data Graphically #
   #########################
