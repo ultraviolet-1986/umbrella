@@ -142,7 +142,7 @@ UmbrellaTestFunction <- function()
   umbrella::AnalyseData(umbrella_data, draw_graph = TRUE)
 
   # Convert 'umbrella_data' into a graph object.
-  print("TEST: Converting data into graph object.")
+  print("TEST: Convert comma-separated data into graph object.")
   umbrella_data <- igraph::graph_from_adj_list(umbrella_data, mode = 'out',
                                                duplicate = FALSE)
 
@@ -159,7 +159,7 @@ UmbrellaTestFunction <- function()
   # Plot the final resutls.
   print("TEST: Plot the reconverted graph object to test conversion.")
   igraph::plot.igraph(umbrella_data,
-                      main = 'Network Data Graph (UmbrellaTestFunction())',
+                      main = 'Network Data Graph / UmbrellaTestFunction()',
                       sub = paste("Umbrella", packageVersion("umbrella")))
 
   ###############
@@ -171,6 +171,7 @@ UmbrellaTestFunction <- function()
   # - This allows assignment to variable.
 
   print("TEST: Return data as graph object.")
+  print(umbrella_data)
   invisible(umbrella_data)
 }
 
