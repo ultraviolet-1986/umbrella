@@ -10,7 +10,7 @@
 # Functions #
 #############
 
-GenerateRandomNetworkFile <- function() {
+GenerateRandomNetworkFile <- function(edges = 20, vertices = 20) {
   # Define the 'umbrella_random_network.csv' file for writing.
   umbrella_random_network_file <- 'umbrella_random_network.csv'
 
@@ -21,18 +21,34 @@ GenerateRandomNetworkFile <- function() {
                 'the current working directory.'))
   }
 
-  # Write exactly 100 lines of random numbers (between 1 and 100) to
-  # 'umbrella_random_network.csv'.
-  for (i in 1:5) {
+  # Write 'umbrella_random_network.csv' with parameters outlines by the user, or
+  # create a file with 20 edges and 20 vertices by default.
+
+  # Create a placeholder for randomly-generated numbers within this scope.
+  numbers <- c(NULL, NULL)
+
+  for (i in 1:vertices) {
+    # Generate a pair of random numbers.
+    numbers <- c(sample(1:edges, 1), sample(1:edges, 1))
+
+    # If row numbers are identical, generate again until they are different.
+    while (numbers[1] == numbers[2])
+    {
+      print("NOTE: Row is identical. Iterating.")
+      numbers <- c(sample(1:edges, 1), sample(1:edges, 1))
+    }
+
+    # Once numbers are unique to their row, write them to the file.
     write(
-      paste(sample(1:10, 1, replace = TRUE),
-            sample(1:10, 1, replace = TRUE),
+      paste(numbers[1],
+            numbers[2],
             sep = ', '),
       file = umbrella_random_network_file,
       append = TRUE,
       sep = "\n"
     )
 
+    # Increment the loop counter by one.
     i <- i + 1
   }
 
