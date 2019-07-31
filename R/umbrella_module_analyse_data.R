@@ -100,7 +100,7 @@ AnalyseData <- function(dataset,
     # SUCCESS: Convert data into correct format for network analysis.
     print(paste("NOTE: Data are 'data.frame' format. Converting to 'igraph'."))
 
-    dataset <- igraph::graph_from_adj_list(dataset, mode = 'out',
+    dataset <- igraph::graph_from_adj_list(dataset, mode = 'all',
                                            duplicate = FALSE)
 
     print(paste("NOTE: Data have been converted to 'igraph'."))
@@ -171,7 +171,7 @@ UmbrellaTestFunction <- function()
 
   # Convert 'test_data' into a graph object.
   print("TEST: Convert comma-separated data into graph object.")
-  test_data <- igraph::graph_from_adj_list(test_data, mode = 'out',
+  test_data <- igraph::graph_from_adj_list(test_data, mode = 'all',
                                            duplicate = FALSE)
 
   # Convert 'test_data' into adjacency matrix.
@@ -188,6 +188,18 @@ UmbrellaTestFunction <- function()
   print("TEST: Plot the reconverted graph object to test conversion.")
   igraph::plot.igraph(test_data,
                       main = 'Network Data Graph / UmbrellaTestFunction()',
+                      sub = paste("Umbrella", packageVersion("umbrella")))
+
+  # Perform Random Walk on Random Network File.
+  print("TEST: Performing random walk on testing data.")
+
+  test_random_walk <- random_walk(test_data, start = 1, steps = 10,
+                                  mode = 'all')
+  print(test_random_walk)
+
+  print("TEST: Plotting random walk on testing data.")
+  igraph::plot.igraph(graph_from_adj_list(test_random_walk),
+                      main = 'Random Walk Graph / UmbrellaTestFunction()',
                       sub = paste("Umbrella", packageVersion("umbrella")))
 
   ###############
