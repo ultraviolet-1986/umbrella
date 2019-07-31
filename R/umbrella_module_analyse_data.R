@@ -119,11 +119,11 @@ AnalyseData <- function(dataset,
 
   # Get number of edges (connections) within the graph object.
   print(paste("NOTE: Data contains a total of", igraph::ecount(dataset),
-              "edges (connections)."))
+              "connections."))
 
   # Get number of vertices (nodes) within the graph object.
   print(paste("NOTE: Data contains a total of", igraph::vcount(dataset),
-              "vertices (nodes)."))
+              "nodes."))
 
   ################################
   # Argument Parsing: draw_graph #
@@ -151,21 +151,21 @@ AnalyseData <- function(dataset,
 # TESTING CODE #
 ################
 
+# NOTES:
+# - This function was written to test 'umbrella' under Linux.
+#   - MS Windows may not function correctly due to differing file structure.
+# - This function will be removed before final release.
+# - No data will be exported to the current R session unless assigned by user.
+
+# WARNING:
+# - This function writes a file to the user's "$HOME" directory.
+
 UmbrellaTestFunction <- function()
 {
-  # NOTES:
-  # - This function was written to test 'umbrella' under Linux.
-  #   - MS Windows may not function correctly due to differing file structure.
-  # - This function will be removed before final release.
-  # - No data will be exported to the current R session.
-
-  # WARNING:
-  # - This function writes a file to the user's "$HOME" directory.
-
   print("########## TEST CODE ##########")
 
   setwd("~/")
-  umbrella::GenerateRandomNetworkFile()
+  umbrella::GenerateRandomNetworkFile(nodes = 10, rows = 10)
   test_data <- read.csv('umbrella_random_network.csv')
   umbrella::AnalyseData(test_data, draw_graph = TRUE)
 
@@ -183,12 +183,6 @@ UmbrellaTestFunction <- function()
   # Convert 'test_data' back into original format.
   print("TEST: Convert data back into graph object.")
   test_data <- igraph::graph_from_adjacency_matrix(test_data)
-
-  # Plot the final resutls.
-  print("TEST: Plot the reconverted graph object to test conversion.")
-  igraph::plot.igraph(test_data,
-                      main = 'Network Data Graph / UmbrellaTestFunction()',
-                      sub = paste("Umbrella", packageVersion("umbrella")))
 
   # Perform Random Walk on Random Network File.
   print("TEST: Performing random walk on testing data.")
