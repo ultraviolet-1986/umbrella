@@ -213,4 +213,9 @@ umbrella_test_function <- function()
   invisible(test_data)
 }
 
+umbrella_stochastic_matrix <- function()
+{
+  igraph::stochastic_matrix(umbrella_test_function())
+}
+
 # End of File.
