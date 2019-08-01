@@ -215,6 +215,7 @@ umbrella_test_function <- function()
 
 umbrella_stochastic_matrix <- function()
 {
+  print("TEST: Create stochastic matrix.")
   igraph::stochastic_matrix(umbrella_test_function())
 }
 
