@@ -10,7 +10,7 @@
 # Functions #
 #############
 
-GenerateRandomNetworkFile <- function(nodes = 20, rows = 20) {
+generate_random_network_file <- function(nodes = 20, rows = 20) {
   # Define the 'umbrella_random_network.csv' file for writing.
   umbrella_random_network_file <- 'umbrella_random_network.csv'
 

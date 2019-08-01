@@ -10,7 +10,7 @@
 # Functions #
 #############
 
-ApplyRandomSeed <- function() {
+apply_random_seed <- function() {
   if (exists('.Random.seed')) {
     # Delete the current seed (if exists).
     rm(.Random.seed, envir = globalenv())

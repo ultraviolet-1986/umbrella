@@ -31,7 +31,7 @@
 # Functions #
 #############
 
-AnalyseData <- function(dataset,
+analyse_data <- function(dataset,
                         draw_graph = c(TRUE, FALSE),
                         random_seed = c(TRUE, FALSE))
 {
@@ -41,7 +41,7 @@ AnalyseData <- function(dataset,
 
   if (isTRUE(random_seed))
   {
-    umbrella::ApplyRandomSeed()
+    umbrella::apply_random_seed()
   }
   else if (isFALSE(random_seed))
   {
@@ -160,14 +160,14 @@ AnalyseData <- function(dataset,
 # WARNING:
 # - This function writes a file to the user's "$HOME" directory.
 
-UmbrellaTestFunction <- function()
+umbrella_test_function <- function()
 {
   print("########## TEST CODE ##########")
 
   setwd("~/")
-  umbrella::GenerateRandomNetworkFile(nodes = 10, rows = 10)
+  umbrella::generate_random_network_file(nodes = 10, rows = 10)
   test_data <- read.csv('umbrella_random_network.csv')
-  umbrella::AnalyseData(test_data, draw_graph = TRUE)
+  umbrella::analyse_data(test_data, draw_graph = TRUE)
 
   # Convert 'test_data' into a graph object.
   print("TEST: Convert comma-separated data into graph object.")
@@ -187,13 +187,17 @@ UmbrellaTestFunction <- function()
   # Perform Random Walk on Random Network File.
   print("TEST: Performing random walk on testing data.")
 
-  test_random_walk <- random_walk(test_data, start = 1, steps = 10,
+  test_random_walk <- igraph::random_walk(test_data, start = 1, steps = 10,
                                   mode = 'all')
   print(test_random_walk)
 
+  # Create and output an adjacency edge list of 'test_data'.
+  print("TEST: Output an adjacency edge list of the network data.")
+  print(as_adj_edge_list(test_data))
+
   print("TEST: Plotting random walk on testing data.")
   igraph::plot.igraph(graph_from_adj_list(test_random_walk),
-                      main = 'Random Walk Graph / UmbrellaTestFunction()',
+                      main = 'Random Walk Graph / umbrella_test_function()',
                       sub = paste("Umbrella", packageVersion("umbrella")))
 
   ###############
