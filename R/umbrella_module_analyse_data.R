@@ -196,7 +196,7 @@ umbrella_test_function <- function()
   print(as_adj_edge_list(test_data))
 
   print("TEST: Plotting random walk on testing data.")
-  igraph::plot.igraph(graph_from_adj_list(test_random_walk),
+  igraph::plot.igraph(igraph::graph_from_adj_list(test_random_walk),
                       main = 'Random Walk Graph / umbrella_test_function()',
                       sub = paste("Umbrella", packageVersion("umbrella")))
 
@@ -216,7 +216,7 @@ umbrella_test_function <- function()
 umbrella_stochastic_matrix <- function()
 {
   print("TEST: Create stochastic matrix.")
-  igraph::stochastic_matrix(umbrella_test_function())
+  print(igraph::stochastic_matrix(umbrella_test_function()))
 }
 
 # End of File.
