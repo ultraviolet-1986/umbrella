@@ -2,15 +2,23 @@
 \alias{GenerateRandomNetworkFile}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-  Function: GenerateRandomNetworkFile
+  Umbrella: GenerateRandomNetworkFile()
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-GenerateRandomNetworkFile()
+GenerateRandomNetworkFile(nodes = 20, rows = 20)
 }
 %- maybe also 'usage' for other objects documented here.
+\arguments{
+  \item{nodes}{
+%%     ~~Describe \code{nodes} here~~
+}
+  \item{rows}{
+%%     ~~Describe \code{rows} here~~
+}
+}
 \details{
 %%  ~~ If necessary, more details than the description above ~~
 }
@@ -42,20 +50,27 @@ GenerateRandomNetworkFile()
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function ()
+function (nodes = 20, rows = 20)
 {
     umbrella_random_network_file <- "umbrella_random_network.csv"
     if (file.exists(umbrella_random_network_file)) {
         file.remove(umbrella_random_network_file)
-        print(paste("NOTE:", umbrella_random_network_file, "has been deleted from the current working directory."))
+        print(paste("NOTE: '", umbrella_random_network_file,
+            "' has been deleted ", "from the current working directory.",
+            sep = ""))
     }
-    for (i in 1:100) {
-        write(paste(sample(1:100, 1, replace = TRUE), sample(1:100,
-            1, replace = TRUE), sep = ", "), file = umbrella_random_network_file,
+    for (i in 1:rows) {
+        numbers <- c(sample(1:nodes, 1), sample(1:nodes, 1))
+        while (numbers[1] == numbers[2]) {
+            numbers <- c(sample(1:nodes, 1), sample(1:nodes,
+                1))
+        }
+        write(paste(numbers[1], numbers[2], sep = ", "), file = umbrella_random_network_file,
             append = TRUE, sep = "\n")
         i <- i + 1
     }
-    print(paste("NOTE:", umbrella_random_network_file, "has been written to the current working directory."))
+    print(paste("NOTE: '", umbrella_random_network_file, "' has been written to ",
+        "current working directory.", sep = ""))
   }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

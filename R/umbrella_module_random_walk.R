@@ -21,7 +21,7 @@
 #   C++ code.
 # - Code has been formatted to demonstrate a C-style development process.
 
-# Function: random_walk
+# Function: RandomWalk
 # Parameters:
 # - dataset
 # - start_node
@@ -34,7 +34,7 @@
 # Functions #
 #############
 
-random_walk <- function(dataset = 'placeholder',  # To be removed for production.
+RandomWalk <- function(dataset = 'placeholder',  # To be removed for production.
                        start_node,
                        steps,
                        random_seed = c(TRUE, FALSE),
@@ -116,7 +116,7 @@ random_walk <- function(dataset = 'placeholder',  # To be removed for production
   # Argument Parsing: mode #
   ##########################
 
-  # - If this argument is not defined, 'random_walk' will execute using 'all'
+  # - If this argument is not defined, 'RandomWalk' will execute using 'all'
   #   mode.
   # - If argument is incorrect, the function will terminate.
 

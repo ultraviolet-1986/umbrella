@@ -2,7 +2,7 @@
 \alias{ApplyRandomSeed}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-  Function: ApplyRandomSeed
+  Umbrella: ApplyRandomSeed
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
@@ -49,7 +49,7 @@ function ()
     }
     random_seed <- sample(1:1e+06, 1, replace = FALSE)
     set.seed(random_seed)
-    print(paste("Applied Seed:", random_seed))
+    print(paste("NOTE: Random seed", random_seed, "has been applied."))
   }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

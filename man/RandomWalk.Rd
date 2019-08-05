@@ -2,7 +2,7 @@
 \alias{RandomWalk}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-  Function: RandomWalk
+  Umbrella: RandomWalk()
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
@@ -66,6 +66,16 @@ function (dataset = "placeholder", start_node, steps, random_seed = c(TRUE,
     FALSE), mode = c("in", "out", "all"), stuck = c("stop_walk",
     "raise_error"))
 {
+    if (missing(start_node)) {
+        print(paste("ERROR: Argument 'start_node' has not been defined.",
+            "Terminating Random Walk."))
+        return()
+    }
+    if (missing(steps)) {
+        print(paste("ERROR: Argument 'steps' has not been defined. Terminating",
+            "Random Walk."))
+        return()
+    }
     if (isTRUE(random_seed)) {
         print("NOTE: Applying a unique psuedo-random seed.")
         ApplyRandomSeed()
@@ -74,10 +84,12 @@ function (dataset = "placeholder", start_node, steps, random_seed = c(TRUE,
         print("NOTE: Proceeding with current pseudo-random seed.")
     }
     else if (missing(random_seed)) {
-        print("NOTE: Argument 'random_seed' not specified. Proceeding with current pseudo-random seed.")
+        print(paste("NOTE: Argument 'random_seed' not specified. Proceeding with",
+            "current pseudo-random seed."))
     }
     else {
-        print("ERROR: Argument 'random_seed' has not been defined correctly. Terminating Random Walk.")
+        print(paste("ERROR: Argument 'random_seed' has not been defined.",
+            "Terminating Random Walk."))
         return()
     }
     if (missing(mode)) {
@@ -94,7 +106,13 @@ function (dataset = "placeholder", start_node, steps, random_seed = c(TRUE,
         print("NOTE: Random Walk will be executed under 'all' mode.")
     }
     else {
-        print("ERROR: Argument 'mode' has not been defined correctly. Terminating Random Walk.")
+        print(paste("ERROR: Argument 'mode' has not been defined. Terminating",
+            "Random Walk."))
+        return()
+    }
+    if (missing(stuck)) {
+        print(paste("ERROR: Argument 'stuck' has not been defined. Terminating",
+            "Random Walk."))
         return()
     }
   }

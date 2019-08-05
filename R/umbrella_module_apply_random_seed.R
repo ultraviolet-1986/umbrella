@@ -3,14 +3,14 @@
 # MSc Data Science (Full Time)
 # PROM02 Computing Master's Project
 
-# File Name: umbrella_module_apply_random_seed.R
+# File Name: umbrella_module_apply_random_seedu.R
 # File Author: William Whinn
 
 #############
 # Functions #
 #############
 
-apply_random_seed <- function() {
+ApplyRandomSeed <- function() {
   if (exists('.Random.seed')) {
     # Delete the current seed (if exists).
     rm(.Random.seed, envir = globalenv())
