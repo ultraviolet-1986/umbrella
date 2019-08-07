@@ -34,7 +34,7 @@
 # Functions #
 #############
 
-RandomWalk <- function(dataset = 'placeholder',  # To be removed for production.
+RandomWalk <- function(dataset,
                        start_node,
                        steps,
                        random_seed = c(TRUE, FALSE),
@@ -45,15 +45,12 @@ RandomWalk <- function(dataset = 'placeholder',  # To be removed for production.
   # Argument Parsing: dataset #
   #############################
 
-  # - This will fail in production if data are not applied.
-  # - A placeholder is currently present to allow execution of other logic.
-
-  # if(missing(dataset))
-  # {
-  #   print(paste("ERROR: Argument 'dataset' has not been defined. Terminating",
-  #               "Random Walk."))
-  #   return()
-  # }
+  if(missing(dataset))
+  {
+    print(paste("ERROR: Argument 'dataset' has not been defined. Terminating",
+                "Random Walk."))
+    return()
+  }
 
   ################################
   # Argument Parsing: start_node #
