@@ -55,7 +55,7 @@ UmbrellaExperimentConversion <- function()
 
   print("TEST: Plotting random walk on testing data.")
   igraph::plot.igraph(igraph::graph_from_adj_list(test_random_walk),
-                      main = 'Random Walk Graph / umbrella_test_function()',
+                      main = 'Random Walk Graph / UmbrellaExperimentConversion()',
                       sub = paste("Umbrella", packageVersion("umbrella")))
 
   ###############
