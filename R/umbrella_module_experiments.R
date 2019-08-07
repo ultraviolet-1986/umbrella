@@ -6,6 +6,13 @@
 # File Name: umbrella_module_experiments.R
 # File Author: William Whinn
 
+##############
+# References #
+##############
+
+# https://cran.r-project.org/web/packages/diffusr/vignettes/diffusr.html
+# https://stats.stackexchange.com/questions/26722/calculate-transition-matrix-markov-in-r
+
 ################
 # Experiment 1 #
 ################
@@ -26,6 +33,8 @@ UmbrellaExperimentConversion <- function()
   umbrella::GenerateRandomNetworkFile(nodes = 10, rows = 10)
   test_data <- read.csv('umbrella_random_network.csv')
   umbrella::AnalyseData(test_data, draw_graph = TRUE)
+
+  # TODO Create transition matrix before object is converted to 'igraph'.
 
   # Convert 'test_data' into a graph object.
   print("TEST: Convert comma-separated data into graph object.")
