@@ -34,12 +34,13 @@
 # Functions #
 #############
 
-RandomWalk <- function(dataset,
-                       start_node,
-                       steps,
-                       random_seed = c(TRUE, FALSE),
-                       mode = c('in', 'out', 'all'),
-                       stuck = c('stop_walk', 'raise_error')
+RandomWalk <- function(
+  dataset,
+  start_node,
+  steps,
+  random_seed = c(TRUE, FALSE),
+  mode = c('in', 'out', 'all'),
+  stuck = c('stop_walk', 'raise_error')
 ){
   #############################
   # Argument Parsing: dataset #
