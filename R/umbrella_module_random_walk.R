@@ -68,18 +68,20 @@ RandomWalk <- function(
     return()
   }
 
-  ###########################
-  # Argument Parsing: steps #
-  ###########################
+  #####################################
+  # Argument Parsing: number_of_steps #
+  #####################################
 
-  # - This is a required parameter, failing to specify will terminate the
-  #   program.
+  # - If this parameter has not been set, this value will be automatically set
+  #   to the number of edges within the data set.
 
   if(missing(number_of_steps))
   {
-    print(paste("ERROR: Argument 'number_of_steps' has not been defined. ",
-                "Terminating Random Walk."))
-    return()
+    number_of_steps <- ecount(dataset)
+
+    print("NOTE: Argument 'number_of_steps' has not been defined.")
+    print(paste("NOTE: Automatically setting 'number_of_steps' to: '",
+                number_of_steps, "'.", sep = ''))
   }
 
   #################################
@@ -164,15 +166,23 @@ RandomWalk <- function(
   # Kickstart Random Walk #
   #########################
 
-  auto_number_of_steps <- ecount(dataset)
+  umbrella::AnalyseData(dataset)
 
   # igrahph method.
-  igraph::random_walk(
+  walk <- igraph::random_walk(
     dataset,
     start = start_node,
-    # steps = number_of_steps,
-    steps = auto_number_of_steps,
+    steps = number_of_steps,
     mode = walk_mode)
+
+  print(walk)
+
+  # Plot results
+  print("TEST: Plotting random walk on testing data.")
+  igraph::plot.igraph(
+    igraph::graph_from_adj_list(walk),
+    main = 'Random Walk Graph / RandomWalk()',
+    sub = paste("Umbrella", packageVersion("umbrella")))
 }
 
 # End of File.
