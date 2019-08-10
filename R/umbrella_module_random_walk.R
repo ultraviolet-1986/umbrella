@@ -37,10 +37,11 @@
 RandomWalk <- function(
   dataset,
   start_node,
-  steps,
+  number_of_steps,
   random_seed = c(TRUE, FALSE),
-  mode = c('in', 'out', 'all'),
-  stuck = c('stop_walk', 'raise_error')
+  walk_mode = c('in', 'out', 'all'),
+  # stuck = c('stop_walk', 'raise_error')
+  stuck_response = c('return', 'error')
 ){
   #############################
   # Argument Parsing: dataset #
@@ -74,10 +75,10 @@ RandomWalk <- function(
   # - This is a required parameter, failing to specify will terminate the
   #   program.
 
-  if(missing(steps))
+  if(missing(number_of_steps))
   {
-    print(paste("ERROR: Argument 'steps' has not been defined. Terminating",
-                "Random Walk."))
+    print(paste("ERROR: Argument 'number_of_steps' has not been defined. ",
+                "Terminating Random Walk."))
     return()
   }
 
@@ -118,26 +119,27 @@ RandomWalk <- function(
   #   mode.
   # - If argument is incorrect, the function will terminate.
 
-  if (missing(mode))
+  if (missing(walk_mode))
   {
-    print("NOTE: Argument 'mode' not specified. Proceeding under 'all' mode.")
-    mode <- 'all'
+    print(paste("NOTE: Argument 'walk_mode' not specified. Proceeding under ",
+                "'all' mode."))
+    walk_mode <- 'all'
   }
-  else if (mode == 'in')
+  else if (walk_mode == 'in')
   {
     print("NOTE: Random Walk will be executed under 'in' mode.")
   }
-  else if (mode == 'out')
+  else if (walk_mode == 'out')
   {
     print("NOTE: Random Walk will be executed under 'out' mode.")
   }
-  else if (mode == 'all')
+  else if (walk_mode == 'all')
   {
     print("NOTE: Random Walk will be executed under 'all' mode.")
   }
   else
   {
-    print(paste("ERROR: Argument 'mode' has not been defined. Terminating",
+    print(paste("ERROR: Argument 'walk_mode' has not been defined. Terminating",
                 "Random Walk."))
     return()
   }
@@ -151,7 +153,7 @@ RandomWalk <- function(
   # - This is a required parameter, failing to specify will terminate the
   #   program.
 
-  if (missing(stuck))
+  if (missing(stuck_response))
   {
     print(paste("ERROR: Argument 'stuck' has not been defined. Terminating",
                 "Random Walk."))
@@ -161,6 +163,16 @@ RandomWalk <- function(
   #########################
   # Kickstart Random Walk #
   #########################
+
+  auto_number_of_steps <- ecount(dataset)
+
+  # igrahph method.
+  igraph::random_walk(
+    dataset,
+    start = start_node,
+    # steps = number_of_steps,
+    steps = auto_number_of_steps,
+    mode = walk_mode)
 }
 
 # End of File.
