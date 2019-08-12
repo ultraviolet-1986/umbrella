@@ -38,7 +38,7 @@
 RandomWalk <- function(
   dataset,
   start_node,
-  number_of_steps,
+  walk_length,
   random_seed = c(TRUE, FALSE),
   walk_mode = c('in', 'out', 'all'),
   # stuck = c('stop_walk', 'raise_error')
@@ -70,19 +70,19 @@ RandomWalk <- function(
   }
 
   #####################################
-  # Argument Parsing: number_of_steps #
+  # Argument Parsing: walk_length #
   #####################################
 
   # - If this parameter has not been set, this value will be automatically set
   #   to the number of edges within the data set.
 
-  if(missing(number_of_steps))
+  if(missing(walk_length))
   {
-    number_of_steps <- ecount(dataset)
+    walk_length <- ecount(dataset)
 
-    print("NOTE: Argument 'number_of_steps' has not been defined.")
-    print(paste("NOTE: Automatically setting 'number_of_steps' to: '",
-                number_of_steps, "'.", sep = ''))
+    print("NOTE: Argument 'walk_length' has not been defined.")
+    print(paste("NOTE: Automatically setting 'walk_length' to: '",
+                walk_length, "'.", sep = ''))
   }
 
   #################################
@@ -167,13 +167,13 @@ RandomWalk <- function(
   # Kickstart Random Walk #
   #########################
 
-  # umbrella::AnalyseData(dataset)
+  umbrella::AnalyseData(dataset)
 
   # igrahph method.
   # walk <- igraph::random_walk(
   #   dataset,
   #   start = start_node,
-  #   steps = number_of_steps,
+  #   steps = walk_length,
   #   mode = walk_mode,
   #   stuck = stuck_response)
 
@@ -191,7 +191,7 @@ RandomWalk <- function(
   start <- start_node # Random walk starting vertex
   # len <- 10 # Walk length
   # len <- ecount(karate)
-  len <- number_of_steps
+  len <- walk_length
 
   path <- c(start, rep(NA, len))
 
