@@ -11,6 +11,7 @@
 ##############
 
 # https://www.stat.auckland.ac.nz/~ihaka/downloads/Waikato-WRUG.pdf
+# https://stackoverflow.com/questions/49095518/more-efficient-way-to-run-a-random-walk-on-a-transition-matrix-than-the-igraph
 
 #################
 # Documentation #
@@ -94,12 +95,12 @@ RandomWalk <- function(
 
   if (isTRUE(random_seed))
   {
-    print('NOTE: Applying a unique psuedo-random seed.')
-    ApplyRandomSeed()
+    umbrella::ApplyRandomSeed()
   }
   else if (isFALSE(random_seed))
   {
-    print('NOTE: Proceeding with current pseudo-random seed.')
+    print(paste("NOTE: Argument 'random_seed' set to 'FALSE'. Proceeding with",
+                "current pseudo-random seed."))
   }
   else if (missing(random_seed))
   {
@@ -166,23 +167,67 @@ RandomWalk <- function(
   # Kickstart Random Walk #
   #########################
 
-  umbrella::AnalyseData(dataset)
+  # umbrella::AnalyseData(dataset)
 
   # igrahph method.
-  walk <- igraph::random_walk(
-    dataset,
-    start = start_node,
-    steps = number_of_steps,
-    mode = walk_mode)
+  # walk <- igraph::random_walk(
+  #   dataset,
+  #   start = start_node,
+  #   steps = number_of_steps,
+  #   mode = walk_mode,
+  #   stuck = stuck_response)
 
-  print(walk)
+  ####################
+  # Random Walk Code #
+  ####################
+
+  n <- ecount(dataset)
+
+  tm <- matrix(sample(0:1, n^2, prob = c(0.95, 0.05), replace = TRUE), n, n)
+  tm <- (tm == 1 | t(tm) == 1) * 1
+  diag(tm) <- 0
+
+  # start <- 23
+  start <- start_node # Random walk starting vertex
+  # len <- 10 # Walk length
+  # len <- ecount(karate)
+  len <- number_of_steps
+
+  path <- c(start, rep(NA, len))
+
+  for(i in 2:(len + 1))
+  {
+    idx <- tm[path[i - 1], ] != 0
+
+    if(any(idx))
+    {
+      path[i] <- resample(which(idx), 1, prob = tm[path[i - 1], idx])
+    }
+    else
+    {
+      break # Stopping if we get stuck
+    }
+  }
+
+  path
+  path <- igraph::graph_from_adj_list(path, mode = 'all', duplicate = FALSE)
+  print(path)
+
+  ###################
+  # Additional Code #
+  ###################
 
   # Plot results
-  print("TEST: Plotting random walk on testing data.")
-  igraph::plot.igraph(
-    igraph::graph_from_adj_list(walk),
+  print("NOTE: Plotting random walk on data set.")
+  plot(
+    path,
     main = 'Random Walk Graph / RandomWalk()',
     sub = paste("Umbrella", packageVersion("umbrella")))
+}
+
+resample <- function(x, ...)
+{
+  x[sample.int(length(x), ...)]
 }
 
 # End of File.
