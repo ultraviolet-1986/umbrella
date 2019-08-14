@@ -30,7 +30,7 @@
 # - walk_length
 # - random_seed (TRUE, FALSE)
 # - walk_mode ('in', 'out', 'all')
-# - stuck_response ('stop_walk', 'raise_error')
+# - stuck_response ('return', 'error')
 
 #############
 # Functions #
@@ -43,7 +43,6 @@ RandomWalk <- function(
   walk_length,
   random_seed = c(TRUE, FALSE),
   walk_mode = c('in', 'out', 'all'),
-  # stuck = c('stop_walk', 'raise_error')
   stuck_response = c('return', 'error')
 ){
   #############################
