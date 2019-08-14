@@ -71,7 +71,7 @@ RandomWalk <- function(
     print(paste("NOTE: An ontology has been passed. The random walk will be",
                 "biased."))
 
-    umbrella::AnalyseData(dataset)
+    dataset <- umbrella::AnalyseData(dataset)
 
     # TODO: Use ontology here, the random walk will account for this when it is
     #       implemented.
