@@ -25,11 +25,12 @@
 # Function: RandomWalk
 # Parameters:
 # - dataset
+# - ontology
 # - start_node
-# - steps
-# - random_seed ('TRUE', 'FALSE')
-# - mode ('in', 'out', 'all')
-# - stuck ('stop_walk', 'raise_error')
+# - walk_length
+# - random_seed (TRUE, FALSE)
+# - walk_mode ('in', 'out', 'all')
+# - stuck_response ('stop_walk', 'raise_error')
 
 #############
 # Functions #
@@ -37,6 +38,7 @@
 
 RandomWalk <- function(
   dataset,
+  ontology,
   start_node,
   walk_length,
   random_seed = c(TRUE, FALSE),
@@ -52,6 +54,35 @@ RandomWalk <- function(
   {
     print(paste("ERROR: Argument 'dataset' has not been defined. Terminating",
                 "Random Walk."))
+    return()
+  }
+
+  ##############################
+  # Argument Parsing: ontology #
+  ##############################
+
+  # - An 'ontology' can be passed to this function, and if so, Umbrella will
+  #   perform a 'biased' random walk on the data.
+  # - Umbrella will call the 'AnalyseData()' function twice: once on the
+  #   'dataset' and once for the 'ontology'. The result of this 'biasing' will
+  #   be walked.
+
+  if (ontology)
+  {
+    print(paste("NOTE: An ontology has been passed. The random walk will be",
+                "biased."))
+
+    umbrella::AnalyseData(dataset)
+    umbrella::AnalyseData(ontology)
+  }
+  else if (missing(ontology))
+  {
+    print(paste("NOTE: An ontology has not been passed. The random walk will",
+                "not be biased."))
+  }
+  else
+  {
+    print(paste("ERROR: An unknown error occurred."))
     return()
   }
 
