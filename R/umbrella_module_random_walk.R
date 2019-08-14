@@ -72,7 +72,9 @@ RandomWalk <- function(
                 "biased."))
 
     umbrella::AnalyseData(dataset)
-    umbrella::AnalyseData(ontology)
+
+    # TODO: Use ontology here, the random walk will account for this when it is
+    #       implemented.
   }
   else if (missing(ontology))
   {
