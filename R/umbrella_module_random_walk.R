@@ -199,8 +199,6 @@ RandomWalk <- function(
   # Kickstart Random Walk #
   #########################
 
-  umbrella::AnalyseData(dataset)
-
   # igrahph method.
   # walk <- igraph::random_walk(
   #   dataset,
