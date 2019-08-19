@@ -66,26 +66,26 @@ RandomWalk <- function(
   #   'dataset' and once for the 'ontology'. The result of this 'biasing' will
   #   be walked.
 
-  if (ontology)
-  {
-    print(paste("NOTE: An ontology has been passed. The random walk will be",
-                "biased."))
-
-    dataset <- umbrella::AnalyseData(dataset)
-
-    # TODO: Use ontology here, the random walk will account for this when it is
-    #       implemented.
-  }
-  else if (missing(ontology))
-  {
-    print(paste("NOTE: An ontology has not been passed. The random walk will",
-                "not be biased."))
-  }
-  else
-  {
-    print(paste("ERROR: An unknown error occurred."))
-    return()
-  }
+  # if (exists(ontology))
+  # {
+  #   print(paste("NOTE: An ontology has been passed. The random walk will be",
+  #               "biased."))
+  #
+  #   dataset <- umbrella::AnalyseData(dataset)
+  #
+  #   # TODO: Use ontology here, the random walk will account for this when it is
+  #   #       implemented.
+  # }
+  # else if (missing(ontology))
+  # {
+  #   print(paste("NOTE: An ontology has not been passed. The random walk will",
+  #               "not be biased."))
+  # }
+  # else
+  # {
+  #   print(paste("ERROR: An unknown error occurred."))
+  #   return()
+  # }
 
   ################################
   # Argument Parsing: start_node #
@@ -106,15 +106,15 @@ RandomWalk <- function(
   #####################################
 
   # - If this parameter has not been set, this value will be automatically set
-  #   to the number of edges within the data set.
+  #   to approximately 50% of the number of edges within the data set.
 
   if(missing(walk_length))
   {
-    walk_length <- ecount(dataset)
+    walk_length <- round(ecount(dataset) / 2)
 
     print("NOTE: Argument 'walk_length' has not been defined.")
-    print(paste("NOTE: Automatically setting 'walk_length' to: '",
-                walk_length, "'.", sep = ''))
+    print(paste("NOTE: Automatically setting number of steps to ", walk_length,
+                ".", sep = ''))
   }
 
   #################################
@@ -253,6 +253,8 @@ RandomWalk <- function(
     path,
     main = 'Random Walk Graph / RandomWalk()',
     sub = paste("Umbrella", packageVersion("umbrella")))
+
+  invisible(path)
 }
 
 resample <- function(x, ...)
