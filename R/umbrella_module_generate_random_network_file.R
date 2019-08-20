@@ -10,45 +10,36 @@
 # Functions #
 #############
 
-GenerateRandomNetworkFile <- function(nodes = 20, rows = 20) {
-  # Define the 'umbrella_random_network.csv' file for writing.
-  umbrella_random_network_file <- 'umbrella_random_network.csv'
+GenerateRandomNetwork <- function(nodes = 25, to_file = c(TRUE, FALSE))
+{
+  # Prevent re-writing the file name.
+  umbrella_random_network_file <- 'umbrella_random_network.txt'
 
-  # Erase 'umbrella_random_network.csv' if exists to prepare for writing.
-  if (file.exists(umbrella_random_network_file)) {
-    file.remove(umbrella_random_network_file)
-    print(paste("NOTE: '", umbrella_random_network_file, "' has been deleted ",
-                "from the current working directory.", sep = ''))
-  }
+  # Create an undirected graph to export as both data and a text file.
+  umbrella_random_network <- sample_pa(nodes, power = 2, directed = FALSE)
+  # umbrella_random_network <- erdos.renyi.game(nodes, .33)
 
-  # Write 'umbrella_random_network.csv' with parameters outlines by the user, or
-  # create a file with 20 edges and 20 rows by default.
-
-  for (i in 1:rows) {
-    # Generate a pair of random numbers.
-    numbers <- c(sample(1:nodes, 1), sample(1:nodes, 1))
-
-    # If row numbers are identical, generate again until they are different.
-    while (numbers[1] == numbers[2])
+  # Export the data as a text file within the user's current working directory
+  # and overwrite any existing data.
+  if(isTRUE(to_file))
+  {
+    if(file.exists(umbrella_random_network_file))
     {
-      numbers <- c(sample(1:nodes, 1), sample(1:nodes, 1))
+      print(paste("NOTE: Existing network file detected and will be",
+                  "overwritten."))
     }
 
-    # Once numbers are unique to their row, write them to the file.
-    write(
-      paste(numbers[1],
-            numbers[2],
-            sep = ', '),
-      file = umbrella_random_network_file,
-      append = TRUE,
-      sep = "\n"
-    )
+    # Output data to text file within current working directory.
+    igraph::write_graph(umbrella_random_network,
+                        file = umbrella_random_network_file,
+                        format = 'edgelist')
 
-    # Increment the loop counter by one.
-    i <- i + 1
+    print(paste("NOTE: Random network file '", umbrella_random_network_file,
+                "' has been written", sep = ''))
   }
-  print(paste("NOTE: '", umbrella_random_network_file, "' has been written to ",
-              "current working directory.", sep = ''))
+
+  # Return the dataset quietly.
+  invisible(umbrella_random_network)
 }
 
 # End of File.
