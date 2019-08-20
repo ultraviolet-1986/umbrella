@@ -25,47 +25,33 @@
 # WARNING:
 # - This function writes a file to the user's "$HOME" directory.
 
-UmbrellaExperimentConversion <- function()
+UmbrellaExperimentProbeRandomData <- function()
 {
   print("########## EXPERIMEMT ##########")
 
   setwd("~/")
-  umbrella::GenerateRandomNetworkFile(nodes = 10, rows = 10)
-  test_data <- read.csv('umbrella_random_network.csv')
-  umbrella::AnalyseData(test_data, draw_graph = TRUE)
+  umbrella::GenerateRandomNetwork(to_file = TRUE)
+  test_data <- read_graph('umbrella_random_network.txt', format = 'edgelist')
 
-  # TODO Create transition matrix before object is converted to 'igraph'.
+  # Analyse dataset and create analysis payload.
+  test_data <- umbrella::AnalyseData(test_data, draw_graph = TRUE)
 
-  # Convert 'test_data' into a graph object.
-  print("TEST: Convert comma-separated data into graph object.")
-  test_data <- igraph::graph_from_adj_list(test_data, mode = 'all',
-                                           duplicate = FALSE)
-
-  # Convert 'test_data' into adjacency matrix.
-  print("TEST: Convert data into adjacency matrix.")
-  test_data <- igraph::as_adjacency_matrix(test_data, type = 'both')
-  print("TEST: Outputting data as adjacency matrix.")
-  print(test_data)
-
-  # Convert 'test_data' back into original format.
-  print("TEST: Convert data back into graph object.")
-  test_data <- igraph::graph_from_adjacency_matrix(test_data)
-
-  # Perform Random Walk on Random Network File.
+  # Perform Random Walk on data from Random Network File.
   print("TEST: Performing random walk on testing data.")
 
-  test_random_walk <- igraph::random_walk(test_data, start = 1, steps = 10,
-                                          mode = 'all')
+  test_random_walk <- igraph::random_walk(test_data$dataset, start = 1,
+                                          steps = 10, mode = 'all')
+
   print(test_random_walk)
 
   # Create and output an adjacency edge list of 'test_data'.
   print("TEST: Output an adjacency edge list of the network data.")
-  print(as_adj_edge_list(test_data))
+  print(igraph::as_adj_edge_list(test_data$dataset))
 
   print("TEST: Plotting random walk on testing data.")
   igraph::plot.igraph(
     igraph::graph_from_adj_list(test_random_walk),
-    main = 'Random Walk Graph / UmbrellaExperimentConversion()',
+    main = 'Random Walk Graph / UmbrellaExperimentProbeRandomData()',
     sub = paste("Umbrella", packageVersion("umbrella")))
 
   ###############
