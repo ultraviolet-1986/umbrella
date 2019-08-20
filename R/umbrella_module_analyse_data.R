@@ -140,6 +140,12 @@ AnalyseData <- function(dataset,
   }
 
   ############################
+  # Create Transition Matrix #
+  ############################
+
+  dataset_transition_matrix <- igraph::stochastic_matrix(dataset)
+
+  ############################
   # Compile Analysis Payload #
   ############################
 
@@ -153,7 +159,8 @@ AnalyseData <- function(dataset,
     'dataset_class' = dataset_class,
     'dataset_edge_count' = dataset_edge_count,
     'dataset_vertex_count' = dataset_vertex_count,
-    'dataset_adjacency_matrix' = as_adjacency_matrix(dataset)
+    'dataset_adjacency_matrix' = as_adjacency_matrix(dataset),
+    'dataset_transition_matrix' = dataset_transition_matrix
   )
 
   ###############
