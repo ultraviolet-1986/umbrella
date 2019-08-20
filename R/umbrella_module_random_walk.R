@@ -218,9 +218,7 @@ RandomWalk <- function(
   diag(tm) <- 0
 
   # start <- 23
-  start <- start_node # Random walk starting vertex
-  # len <- 10 # Walk length
-  # len <- ecount(karate)
+  start <- start_node
   len <- walk_length
 
   path <- c(start, rep(NA, len))
