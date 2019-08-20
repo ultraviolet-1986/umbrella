@@ -30,8 +30,7 @@ UmbrellaExperimentProbeRandomData <- function()
   print("########## EXPERIMEMT ##########")
 
   setwd("~/")
-  umbrella::GenerateRandomNetwork(to_file = TRUE)
-  test_data <- read_graph('umbrella_random_network.txt', format = 'edgelist')
+  test_data <- umbrella::GenerateRandomNetwork(to_file = TRUE)
 
   # Analyse dataset and create analysis payload.
   test_data <- umbrella::AnalyseData(test_data, draw_graph = TRUE)
