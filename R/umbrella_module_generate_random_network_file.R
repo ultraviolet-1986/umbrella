@@ -16,7 +16,7 @@ GenerateRandomNetwork <- function(nodes = 25, to_file = c(TRUE, FALSE))
   umbrella_random_network_file <- 'umbrella_random_network.txt'
 
   # Create an 'Edros Renyi' graph to export as both data and a text file.
-  umbrella_random_network <- erdos.renyi.game(nodes, .33)
+  umbrella_random_network <- igraph::erdos.renyi.game(nodes, .33)
 
   # Export the data as a text file within the user's current working directory
   # and overwrite any existing data.
