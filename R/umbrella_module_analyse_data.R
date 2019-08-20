@@ -80,7 +80,8 @@ AnalyseData <- function(dataset,
     # - Continue outside of IF statement.
     # - Error conditions will terminate data analysis.
 
-    data_type <- class(dataset)
+    dataset_class <- class(dataset)
+    dataset_type <- typeof(dataset)
   }
   else
   {
@@ -117,13 +118,15 @@ AnalyseData <- function(dataset,
     return()
   }
 
-  # Get number of edges (connections) within the graph object.
+  # Get number of edges (Nodes) within the graph object.
+  dataset_edge_count <- igraph::ecount(dataset)
   print(paste("NOTE: Data contains a total of", igraph::ecount(dataset),
-              "connections."))
-
-  # Get number of vertices (nodes) within the graph object.
-  print(paste("NOTE: Data contains a total of", igraph::vcount(dataset),
               "nodes."))
+
+  # Get number of vertices (Connections) within the graph object.
+  dataset_vertex_count = igraph::vcount(dataset)
+  print(paste("NOTE: Data contains a total of", igraph::vcount(dataset),
+              "connections."))
 
   ################################
   # Argument Parsing: draw_graph #
@@ -136,15 +139,33 @@ AnalyseData <- function(dataset,
                         sub = paste("Umbrella", packageVersion("umbrella")))
   }
 
+  ############################
+  # Compile Analysis Payload #
+  ############################
+
+  # NOTES:
+  # - This data frame will contain the analysis of the dataset and will be
+  #   returned.
+
+  analysis_payload <- list(
+    'dataset' = dataset,
+    'dataset_type' = dataset_type,
+    'dataset_class' = dataset_class,
+    'dataset_edge_count' = dataset_edge_count,
+    'dataset_vertex_count' = dataset_vertex_count,
+    'dataset_adjacency_matrix' = as_adjacency_matrix(dataset)
+  )
+
   ###############
   # Return Data #
   ###############
 
   # NOTES:
-  # - Return data quietly.
+  # - Return 'analysis_payload' quietly.
   # - This allows assignment to variable.
+  # - Must access specific item using 'analysis_payload$dataset' for example.
 
-  invisible(dataset)
+  return(analysis_payload)
 }
 
 # End of File.
