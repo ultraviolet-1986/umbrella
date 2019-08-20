@@ -143,7 +143,7 @@ AnalyseData <- function(dataset,
   # Create Transition Matrix #
   ############################
 
-  dataset_transition_matrix <- igraph::stochastic_matrix(dataset)
+  dataset_transition_matrix <- igraph::stochastic_matrix(dataset, sparse = TRUE)
 
   ############################
   # Compile Analysis Payload #
