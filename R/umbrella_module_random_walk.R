@@ -106,11 +106,12 @@ RandomWalk <- function(
   #####################################
 
   # - If this parameter has not been set, this value will be automatically set
-  #   to approximately 50% of the number of edges within the data set.
+  #   to approximately 50% of the number of vertices (nodes) within the data
+  #   set.
 
   if(missing(walk_length))
   {
-    walk_length <- round(ecount(dataset) / 2)
+    walk_length <- round(vcount(dataset) / 2)
 
     print("NOTE: Argument 'walk_length' has not been defined.")
     print(paste("NOTE: Automatically setting number of steps to ", walk_length,
@@ -211,7 +212,7 @@ RandomWalk <- function(
   # Random Walk Code #
   ####################
 
-  n <- ecount(dataset)
+  n <- vcount(dataset)
 
   tm <- matrix(sample(0:1, n^2, prob = c(0.95, 0.05), replace = TRUE), n, n)
   tm <- (tm == 1 | t(tm) == 1) * 1
