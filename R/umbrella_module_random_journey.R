@@ -20,6 +20,8 @@ RandomJourney <- function(data, start_node = 1)
     # Increment the number of loops performed.
     loop_iteration <- loop_iteration + 1
 
+    print(paste("NOTE: Beginning loop #", loop_iteration, ".", sep = ''))
+
     ####################
     # Stage 1ᵢ: Step 1 #
     ####################
@@ -27,7 +29,8 @@ RandomJourney <- function(data, start_node = 1)
     # Take the values from the previous iteration and pass them to the first
     # step of this iteration of the journey.
 
-    print(paste("NOTE: Performing initial step"))
+    print(paste("NOTE: Performing initial step of loop #", loop_iteration, ".",
+                sep = ''))
 
     walk1 <- random_walk(data, previous_state, 2, stuck = 'return')
     next_step <- tail(walk1, n = 1)
@@ -50,6 +53,8 @@ RandomJourney <- function(data, start_node = 1)
     if (degrees <= 0.1)
     {
       # Walk complete or stuck, silently return 'path'.
+      print(paste("NOTE: No change in direction available. Terminating Random",
+                  "Journey."))
       stuck <- TRUE
       invisible(path)
     }
@@ -58,11 +63,16 @@ RandomJourney <- function(data, start_node = 1)
     # Stage 3ᵢ: Step 2 #
     ####################
 
+    print(paste("NOTE: Performing final step of loop #", loop_iteration, ".",
+                sep = ''))
+
     walk2 <- random_walk(data, next_step, 2, stuck = 'return')
     next_step <- next_step <- tail(walk2, n = 1)
 
     # Append the path taken during this iteration to the previous iteration.
     path <- union(path, c(walk1, walk2))
+
+    print(paste("NOTE: Ending loop #", loop_iteration, ".", sep = ''))
   }
 
   # Trim the initial (empty) step.
