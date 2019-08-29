@@ -84,9 +84,10 @@ UmbrellaExperimentRandomJourney <- function ()
               "'igraphdata'."))
   data("foodwebs")
 
-  # Perform the Random Journey on the 'foodwebs' dataset.
+  print(paste("TEST: Perform the Random Journey on the 'foodweb' data."))
   walk_data <- umbrella::RandomJourney(foodwebs[['ChesMiddle']])
 
+  print(paste("TEST: Printing the Random Journey's path."))
   print(walk_data)
 
   print("TEST: Plotting random walk on 'foodwebs' data.")
@@ -96,7 +97,14 @@ UmbrellaExperimentRandomJourney <- function ()
     sub = paste("Umbrella", packageVersion("umbrella"))
   )
 
-  # Silently return the path.
+  ###############
+  # Return Data #
+  ###############
+
+  # NOTES:
+  # - Return data quietly.
+  # - This allows assignment to variable.
+
   invisible(walk_data)
 }
 
