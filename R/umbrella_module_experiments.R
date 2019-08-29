@@ -13,9 +13,9 @@
 # https://cran.r-project.org/web/packages/diffusr/vignettes/diffusr.html
 # https://stats.stackexchange.com/questions/26722/calculate-transition-matrix-markov-in-r
 
-################
-# Experiment 1 #
-################
+###################################
+# Experiment 1: Probe Random Data #
+###################################
 
 # NOTES:
 # - This function was written to test 'umbrella' under Linux.
@@ -38,8 +38,13 @@ UmbrellaExperimentProbeRandomData <- function()
   # Perform Random Walk on data from Random Network File.
   print("TEST: Performing random walk on testing data.")
 
-  test_random_walk <- igraph::random_walk(test_data$dataset, start = 1,
-                                          steps = 10, mode = 'all')
+  test_random_walk <-
+    igraph::random_walk(
+      test_data$dataset,
+      start = 1,
+      steps = 10,
+      mode = 'all'
+    )
 
   print(test_random_walk)
 
@@ -51,7 +56,8 @@ UmbrellaExperimentProbeRandomData <- function()
   igraph::plot.igraph(
     igraph::graph_from_adj_list(test_random_walk),
     main = 'Random Walk Graph / UmbrellaExperimentProbeRandomData()',
-    sub = paste("Umbrella", packageVersion("umbrella")))
+    sub = paste("Umbrella", packageVersion("umbrella"))
+  )
 
   ###############
   # Return Data #
@@ -64,6 +70,34 @@ UmbrellaExperimentProbeRandomData <- function()
   print("TEST: Return data as graph object.")
   print(test_data)
   invisible(test_data)
+}
+
+########################################
+# Experiment 2: Random Journey Example #
+########################################
+
+UmbrellaExperimentRandomJourney <- function ()
+{
+  print("########## EXPERIMEMT ##########")
+
+  print(paste("TEST: Loading the 'foodwebs' dataset from package ",
+              "'igraphdata'."))
+  data("foodwebs")
+
+  # Perform the Random Journey on the 'foodwebs' dataset.
+  walk_data <- umbrella::RandomJourney(foodwebs[['ChesMiddle']])
+
+  print(walk_data)
+
+  print("TEST: Plotting random walk on 'foodwebs' data.")
+  igraph::plot.igraph(
+    igraph::graph_from_adj_list(walk_data),
+    main = 'Random Walk Graph / UmbrellaExperimentRandomJourney()',
+    sub = paste("Umbrella", packageVersion("umbrella"))
+  )
+
+  # Silently return the path.
+  invisible(walk_data)
 }
 
 # End of File.
