@@ -85,7 +85,7 @@ UmbrellaExperimentRandomJourney <- function ()
   data("foodwebs")
 
   print(paste("TEST: Perform the Random Journey on the 'foodweb' data."))
-  walk_data <- umbrella::RandomJourney(foodwebs[['ChesMiddle']])
+  walk_data <- umbrella::RandomJourney(foodwebs[['Chesapeake']])
 
   print(paste("TEST: Printing the Random Journey's path."))
   print(walk_data)
