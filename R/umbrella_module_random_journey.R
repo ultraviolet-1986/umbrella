@@ -45,12 +45,18 @@ RandomJourney <- function(data, start_node = 1)
     # Check if possible to continue, break if number of nodes connected to this
     # iteration is equal to, or less than 1.
 
-    degrees <- degree(data, v = next_step, mode = "in", loops = FALSE,
-                      normalized = TRUE)
+    # degrees <- degree(data, v = next_step, mode = "in", loops = FALSE,
+    #                   normalized = TRUE)
+    #
+    # print(degrees)
 
-    print(degrees)
+    # nodes_available <- length(neighbors(graph_from_adj_list(walk1[loop_iteration]), 1, mode = 'out'))
+    nodes_available <- betweenness(data, loop_iteration)
 
-    if (degrees <= 0.1)
+    print(nodes_available)
+
+    #if (degrees <= 0.1)
+    if (nodes_available <= 0.01 || loop_iteration >= length(data))
     {
       # Walk complete or stuck, silently return 'path'.
       print(paste("NOTE: No change in direction available. Terminating Random",
