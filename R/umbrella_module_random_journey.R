@@ -22,9 +22,9 @@ RandomJourney <- function(data, start_node = 1)
 
     print(paste("NOTE: Beginning loop #", loop_iteration, ".", sep = ''))
 
-    ####################
-    # Stage 1ᵢ: Step 1 #
-    ####################
+    ###################
+    # Stage 1: Step 1 #
+    ###################
 
     # Take the values from the previous iteration and pass them to the first
     # step of this iteration of the journey.
@@ -35,9 +35,9 @@ RandomJourney <- function(data, start_node = 1)
     walk1 <- random_walk(data, previous_state, 2, stuck = 'return')
     next_step <- tail(walk1, n = 1)
 
-    #################################
-    # Stage 2ᵢ: Assess Surroundings #
-    #################################
+    ################################
+    # Stage 2: Assess Surroundings #
+    ################################
 
     # Guide the walker between steps.
     # TODO Write the code for this.
@@ -59,9 +59,9 @@ RandomJourney <- function(data, start_node = 1)
       invisible(path)
     }
 
-    ####################
-    # Stage 3ᵢ: Step 2 #
-    ####################
+    ###################
+    # Stage 3: Step 2 #
+    ###################
 
     print(paste("NOTE: Performing final step of loop #", loop_iteration, ".",
                 sep = ''))
