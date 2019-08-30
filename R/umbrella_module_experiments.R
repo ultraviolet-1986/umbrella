@@ -84,11 +84,23 @@ UmbrellaExperimentRandomJourney <- function ()
               "'igraphdata'."))
   data("foodwebs")
 
+  # Create more complete network.
+  gram_complete <- igraph::graph.union(foodwebs$gramdry, foodwebs$gramwet)
+
   print(paste("TEST: Perform the Random Journey on the 'foodweb' data."))
-  walk_data <- umbrella::RandomJourney(foodwebs[['Chesapeake']])
+  walk_data <- umbrella::RandomJourney(gram_complete)
+
+  # Convert path to numerical vector for processing.
+  walk_data <- as.integer(as.vector(walk_data))
 
   print(paste("TEST: Printing the Random Journey's path."))
   print(walk_data)
+
+  print(paste("TEST: Printing name list of Random Journey's path."))
+  for (i in walk_data)
+  {
+    print(names(gram_complete[[i]]))
+  }
 
   print("TEST: Plotting random walk on 'foodwebs' data.")
   igraph::plot.igraph(
