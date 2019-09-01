@@ -66,9 +66,9 @@ RandomJourney <- function(data)
     # Check if possible to continue, break if number of nodes connected to this
     # iteration is equal to, or less than 1.
 
-    nodes_available <- betweenness(data, loop_iteration) # By betweenness
+    #nodes_available <- betweenness(data, loop_iteration) # By betweenness
 
-    # nodes_available <- length(adjacent_vertices(data, next_step)) # Adjacent vertices
+    nodes_available <- length(adjacent_vertices(data, next_step)) # Adjacent vertices
 
     print(nodes_available)
 
