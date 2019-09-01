@@ -6,21 +6,45 @@
 # File Name: umbrella_module_random_journey.R
 # File Author: William Whinn
 
-RandomJourney <- function(data, start_node = 1)
+RandomJourney <- function(data)
 {
   # Create empty objects within function scope.
   path <- ''
-  previous_state <- start_node
   stuck <- FALSE
 
   loop_iteration <- 0
+
+  # Get list of Root Nodes.
+  root_nodes <- which(sapply(sapply(V(data), function(x) neighbors(
+    foodwebs$gramwet,x, mode="in")), length) == 0)
+
+  root_nodes <- as.vector(as.integer(root_nodes))
+
+  # Print the name and location of each of the root nodes detected.
+  print(paste("NOTE: Detected root nodes:"))
+  print(root_nodes)
+
+  print(paste("Number of Root Nodes: ", length(root_nodes), ".", sep = ''))
+
+  # If there are multiple root nodes, randomly select one and use it as the
+  # starting point for the Random Journey.
+  if(length(root_nodes) > 1)
+  {
+    root_nodes <- sample(root_nodes, 1, replace = FALSE)
+  }
+
+  # Assign the chosen root node as the starting position for the random journey.
+  previous_state <- as.vector(as.integer(root_nodes))
+
+  print(paste("NOTE: Beginning Random Journey from the selected root node: ",
+              root_nodes, ".", sep = ''))
+
+  print(root_nodes)
 
   while (isFALSE(stuck))
   {
     # Increment the number of loops performed.
     loop_iteration <- loop_iteration + 1
-
-    print(paste("NOTE: Beginning loop #", loop_iteration, ".", sep = ''))
 
     ###################
     # Stage 1: Step 1 #
@@ -28,9 +52,6 @@ RandomJourney <- function(data, start_node = 1)
 
     # Take the values from the previous iteration and pass them to the first
     # step of this iteration of the journey.
-
-    print(paste("NOTE: Performing initial step of loop #", loop_iteration, ".",
-                sep = ''))
 
     walk1 <- random_walk(data, previous_state, 2, stuck = 'return')
     next_step <- tail(walk1, n = 1)
@@ -45,17 +66,10 @@ RandomJourney <- function(data, start_node = 1)
     # Check if possible to continue, break if number of nodes connected to this
     # iteration is equal to, or less than 1.
 
-    # degrees <- degree(data, v = next_step, mode = "in", loops = FALSE,
-    #                   normalized = TRUE)
-    #
-    # print(degrees)
-
-    # nodes_available <- length(neighbors(graph_from_adj_list(walk1[loop_iteration]), 1, mode = 'out'))
     nodes_available <- betweenness(data, loop_iteration)
 
     print(nodes_available)
 
-    #if (degrees <= 0.1)
     if (nodes_available <= 0.01 || loop_iteration >= length(data))
     {
       # Walk complete or stuck, silently return 'path'.
@@ -69,16 +83,11 @@ RandomJourney <- function(data, start_node = 1)
     # Stage 3: Step 2 #
     ###################
 
-    print(paste("NOTE: Performing final step of loop #", loop_iteration, ".",
-                sep = ''))
-
     walk2 <- random_walk(data, next_step, 2, stuck = 'return')
     next_step <- next_step <- tail(walk2, n = 1)
 
     # Append the path taken during this iteration to the previous iteration.
     path <- union(path, c(walk1, walk2))
-
-    print(paste("NOTE: Ending loop #", loop_iteration, ".", sep = ''))
   }
 
   # Trim the initial (empty) step.
