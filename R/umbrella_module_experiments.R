@@ -109,6 +109,10 @@ UmbrellaExperimentRandomJourney <- function ()
     sub = paste("Umbrella", packageVersion("umbrella"))
   )
 
+  # Requires package 'GGally' for the 'ggnet2' function.
+  # ggnet2(igraph::graph_from_adj_list(umbrella_data), label = TRUE,
+  #   node.size = 8, node.color = "pink", edge.size = 1, edge.color = "grey")
+
   ###############
   # Return Data #
   ###############
