@@ -16,7 +16,7 @@ RandomJourney <- function(data)
 
   # Get list of Root Nodes.
   root_nodes <- which(sapply(sapply(V(data), function(x) neighbors(
-    foodwebs$gramwet,x, mode="in")), length) == 0)
+    data,x, mode="in")), length) == 0)
 
   root_nodes <- as.vector(as.integer(root_nodes))
 
@@ -66,13 +66,13 @@ RandomJourney <- function(data)
     # Check if possible to continue, break if number of nodes connected to this
     # iteration is equal to, or less than 1.
 
-    #nodes_available <- betweenness(data, loop_iteration) # By betweenness
-
-    nodes_available <- length(adjacent_vertices(data, next_step)) # Adjacent vertices
+    # nodes_available <- betweenness(data, loop_iteration) # By betweenness
+    # nodes_available <- length(adjacent_vertices(data, next_step)) # Adjacent vertices
+    nodes_available <- neighbors(data, next_step) # By Neighbours
 
     print(nodes_available)
 
-    if (nodes_available <= 0.01 || loop_iteration >= length(data))
+    if (nodes_available <= 1 || loop_iteration >= length(data))
     {
       # Walk complete or stuck, silently return 'path'.
       print(paste("NOTE: No change in direction available. Terminating Random",
@@ -97,6 +97,12 @@ RandomJourney <- function(data)
 
   # Output the number of loop iterations.
   print(paste("NOTE: Performed", loop_iteration, "loop(s)."))
+
+  # Output the path taken.
+  print(paste("NOTE: Printing path taken."))
+  print(paste(path))
+
+  path <- graph_from_adj_list(path)
 
   # Silently return the completed random journey path.
   invisible(path)
