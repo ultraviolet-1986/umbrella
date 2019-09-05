@@ -71,7 +71,7 @@ RandomJourney <- function(data, walk_mode = 'out')
     nodes_available <- igraph::neighbors(data, next_step, mode = walk_mode) # By Neighbours
 
     number_of_nodes <- length(igraph::neighbors(data, next_step, mode = 'out'))
-    print(number_of_nodes)
+    # print(number_of_nodes)
 
     # print(nodes_available)
 
