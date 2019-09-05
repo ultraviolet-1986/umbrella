@@ -84,34 +84,44 @@ UmbrellaExperimentRandomJourney <- function ()
               "'igraphdata'."))
   data("foodwebs")
 
-  # Create more complete network.
-  gram_complete <- igraph::graph.union(foodwebs$gramdry, foodwebs$gramwet)
+  # Assign network to variable.
+  gramwet <- foodwebs$gramwet
+
+  # Purge self-loops.
+  gramwet <- simplify(gramwet)
 
   print(paste("TEST: Perform the Random Journey on the 'foodweb' data."))
-  walk_data <- umbrella::RandomJourney(gram_complete)
+  walk_data <- umbrella::RandomJourney(gramwet)
 
   # Convert path to numerical vector for processing.
-  walk_data <- as.integer(as.vector(walk_data))
+  # walk_data <- as.integer(as.vector(walk_data))
 
   print(paste("TEST: Printing the Random Journey's path."))
   print(walk_data)
 
-  print(paste("TEST: Printing name list of Random Journey's path."))
-  for (i in walk_data)
-  {
-    print(names(gram_complete[[i]]))
-  }
+  # print(paste("TEST: Printing name list of Random Journey's path."))
+  # for (i in walk_data)
+  # {
+  #   # print(names(gramwet[[i]]))
+  #   print(vertex_attr(foodwebs$gramwet, 'name', index = V(foodwebs$gramwet))[[i]])
+  # }
+
+  # Remove reciprocal relationships from 'walk_data'.
+  walk_data <- simplify(walk_data)
 
   print("TEST: Plotting random walk on 'foodwebs' data.")
   igraph::plot.igraph(
-    igraph::graph_from_adj_list(walk_data),
+    walk_data,
     main = 'Random Walk Graph / UmbrellaExperimentRandomJourney()',
     sub = paste("Umbrella", packageVersion("umbrella"))
   )
 
   # Requires package 'GGally' for the 'ggnet2' function.
-  # ggnet2(igraph::graph_from_adj_list(umbrella_data), label = TRUE,
-  #   node.size = 9, node.color = "pink", edge.size = 1, edge.color = "grey")
+  walk_plot <- GGally::ggnet2(walk_data, label = TRUE, node.size = 9,
+                              node.color = "pink", edge.size = 1,
+                              edge.color = "grey", arrow.size = 8,
+                              arrow.gap = 0.022, mode = 'kamadakawai')
+  print(walk_plot)
 
   ###############
   # Return Data #
