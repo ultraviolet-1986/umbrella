@@ -6,7 +6,7 @@
 # File Name: umbrella_module_random_journey.R
 # File Author: William Whinn
 
-RandomJourney <- function(data)
+RandomJourney <- function(data, walk_mode = 'out')
 {
   # Create empty objects within function scope.
   path <- ''
@@ -53,7 +53,7 @@ RandomJourney <- function(data)
     # Take the values from the previous iteration and pass them to the first
     # step of this iteration of the journey.
 
-    walk1 <- random_walk(data, previous_state, 2, stuck = 'return')
+    walk1 <- random_walk(data, previous_state, 2, stuck = 'return', mode = walk_mode)
     next_step <- tail(walk1, n = 1)
 
     ################################
@@ -68,11 +68,19 @@ RandomJourney <- function(data)
 
     # nodes_available <- betweenness(data, loop_iteration) # By betweenness
     # nodes_available <- length(adjacent_vertices(data, next_step)) # Adjacent vertices
-    nodes_available <- neighbors(data, next_step) # By Neighbours
+    nodes_available <- igraph::neighbors(data, next_step, mode = walk_mode) # By Neighbours
 
-    print(nodes_available)
+    number_of_nodes <- length(igraph::neighbors(data, next_step, mode = 'out'))
+    print(number_of_nodes)
 
-    if (nodes_available <= 1 || loop_iteration >= length(data))
+    # print(nodes_available)
+
+    biomass <- vertex_attr(foodwebs$gramwet, 'Biomass',
+                           index = V(foodwebs$gramwet))[[next_step]]
+
+    # if (nodes_available <= 1 || loop_iteration >= length(data))
+    # if (number_of_nodes <= 1 || loop_iteration >= igraph::vcount(data))
+    if (biomass == 0 || loop_iteration >= igraph::vcount(data))
     {
       # Walk complete or stuck, silently return 'path'.
       print(paste("NOTE: No change in direction available. Terminating Random",
@@ -85,8 +93,8 @@ RandomJourney <- function(data)
     # Stage 3: Step 2 #
     ###################
 
-    walk2 <- random_walk(data, next_step, 2, stuck = 'return')
-    next_step <- next_step <- tail(walk2, n = 1)
+    walk2 <- random_walk(data, next_step, 2, stuck = 'return', mode = walk_mode)
+    next_step <- tail(walk2, n = 1)
 
     # Append the path taken during this iteration to the previous iteration.
     path <- union(path, c(walk1, walk2))
