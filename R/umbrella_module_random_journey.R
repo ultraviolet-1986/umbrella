@@ -74,23 +74,60 @@ RandomJourney <- function(data, walk_mode = 'out')
     nodes_available <- igraph::neighbors(data, next_step, mode = walk_mode) # By Neighbours
 
     number_of_nodes <- length(igraph::neighbors(data, next_step, mode = 'out'))
-    # print(number_of_nodes)
 
+    # print(number_of_nodes)
     # print(nodes_available)
 
     biomass <- vertex_attr(foodwebs$gramwet, 'Biomass',
                            index = V(foodwebs$gramwet))[[next_step]]
 
-    # if (nodes_available <= 1 || loop_iteration >= length(data))
-    # if (number_of_nodes <= 1 || loop_iteration >= igraph::vcount(data))
-    if (biomass == 0 || loop_iteration >= igraph::vcount(data))
+    if (biomass == 0)
     {
-      # Walk complete or stuck, silently return 'path'.
-      print(paste("NOTE: No change in direction available. Terminating Random",
-                  "Journey."))
+      print("NOTE: Detected a creature with Biomass of '0'.")
+    }
+    else if (as.integer(biomass) > as.integer(next_step))
+    {
+      print("NOTE: Consumed a creature of a lower Biomass than itself.")
+    }
+    else if (as.integer(biomass) < as.integer(next_step))
+    {
+      print("NOTE: Consumed by a creature of a higher Biomass than itself.")
+      print("NOTE: Terminating Random Journey.")
       stuck <- TRUE
       invisible(path)
     }
+    else if (loop_iteration >= igraph::vcount(data))
+    {
+      print("NOTE: Number of loops has reached the length of the network.")
+      print("NOTE: Terminating Random Journey.")
+      stuck <- TRUE
+      invisible(path)
+    }
+    else if (number_of_nodes <= 1)
+    {
+      print("NOTE: There are no nodes available for traversal.")
+      print("NOTE: Terminating Random Journey.")
+      stuck <- TRUE
+      invisible(path)
+    }
+    else
+    {
+      print("NOTE: RandomJourney() has encountered an unknown error.")
+      print("NOTE: Terminating Random Journey.")
+      stuck <- TRUE
+      invisible(path)
+    }
+
+    # if (nodes_available <= 1 || loop_iteration >= igraph::vcount(data))
+    # if (number_of_nodes <= 1 || loop_iteration >= igraph::vcount(data))
+    # if (biomass == 0 || number_of_nodes <= 1 || loop_iteration >= igraph::vcount(data))
+    # {
+    #   # Walk complete or stuck, silently return 'path'.
+    #   print(paste("NOTE: No change in direction available. Terminating Random",
+    #               "Journey."))
+    #   stuck <- TRUE
+    #   invisible(path)
+    # }
 
     ######################################
     # Stage 3: Compile current walk path #
