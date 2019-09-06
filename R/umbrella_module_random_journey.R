@@ -53,8 +53,10 @@ RandomJourney <- function(data, walk_mode = 'out')
     # Take the values from the previous iteration and pass them to the first
     # step of this iteration of the journey.
 
-    walk1 <- random_walk(data, previous_state, 2, stuck = 'return', mode = walk_mode)
-    next_step <- tail(walk1, n = 1)
+    walk1 <- random_walk(data, start = previous_state, steps = 2,
+                         stuck = 'return', mode = walk_mode)
+
+    next_step <- tail(as.integer(walk1), n = 1)
 
     ################################
     # Stage 2: Assess Surroundings #
@@ -100,8 +102,24 @@ RandomJourney <- function(data, walk_mode = 'out')
     path <- union(path, c(walk1, walk2))
   }
 
+  # Convert the path to an integer vector list for processing.
+  path <- as.vector(as.integer(path))
+
   # Trim the initial (empty) step.
   path <- path[-1]
+
+  # Convert 'walk_data' to a graph object.
+  path <- graph_from_adj_list(path)
+
+  # Remove reciprocal relationships from 'walk_data'.
+  path <- simplify(path)
+
+  # Convert to data frame list.
+  # path1 <- path[-1]
+  # path1 <- as.integer(as.vector(path))
+  # path2 <- c(path1[-1], tail(path1, n = 1))
+  # path <- data.frame(path1, path2)
+  # path <- graph_from_data_frame(path)
 
   # Output the number of loop iterations.
   print(paste("NOTE: Performed", loop_iteration, "loop(s)."))
@@ -110,7 +128,7 @@ RandomJourney <- function(data, walk_mode = 'out')
   print(paste("NOTE: Printing path taken."))
   print(paste(path))
 
-  path <- graph_from_adj_list(path)
+  # path <- graph_from_edgelist(path)
 
   # Silently return the completed random journey path.
   invisible(path)

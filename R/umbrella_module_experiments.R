@@ -106,9 +106,6 @@ UmbrellaExperimentRandomJourney <- function ()
   #   print(vertex_attr(foodwebs$gramwet, 'name', index = V(foodwebs$gramwet))[[i]])
   # }
 
-  # Remove reciprocal relationships from 'walk_data'.
-  walk_data <- simplify(walk_data)
-
   print("TEST: Plotting random walk on 'foodwebs' data.")
   igraph::plot.igraph(
     walk_data,
