@@ -95,11 +95,12 @@ RandomJourney <- function(data, walk_mode = 'out')
     # Stage 3: Step 2 #
     ###################
 
-    walk2 <- random_walk(data, next_step, 2, stuck = 'return', mode = walk_mode)
-    next_step <- tail(walk2, n = 1)
+    # walk2 <- random_walk(data, next_step, 2, stuck = 'return', mode = walk_mode)
+    # next_step <- tail(walk2, n = 1)
 
     # Append the path taken during this iteration to the previous iteration.
-    path <- union(path, c(walk1, walk2))
+    # path <- union(path, c(walk1, walk2))
+    path <- union(path, walk1)
   }
 
   # Convert the path to an integer vector list for processing.
@@ -110,6 +111,8 @@ RandomJourney <- function(data, walk_mode = 'out')
 
   # Convert 'walk_data' to a graph object.
   path <- graph_from_adj_list(path)
+
+  # path <- V(path)
 
   # Remove reciprocal relationships from 'walk_data'.
   path <- simplify(path)
