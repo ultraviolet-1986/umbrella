@@ -18,6 +18,7 @@ RandomJourney <- function(data, walk_mode = 'out')
   root_nodes <- which(sapply(sapply(V(data), function(x) neighbors(
     data,x, mode="in")), length) == 0)
 
+  # Create numerical list of detected root node(s).
   root_nodes <- as.vector(as.integer(root_nodes))
 
   # Print the name and location of each of the root nodes detected.
@@ -91,15 +92,10 @@ RandomJourney <- function(data, walk_mode = 'out')
       invisible(path)
     }
 
-    ###################
-    # Stage 3: Step 2 #
-    ###################
+    ######################################
+    # Stage 3: Compile current walk path #
+    ######################################
 
-    # walk2 <- random_walk(data, next_step, 2, stuck = 'return', mode = walk_mode)
-    # next_step <- tail(walk2, n = 1)
-
-    # Append the path taken during this iteration to the previous iteration.
-    # path <- union(path, c(walk1, walk2))
     path <- union(path, walk1)
   }
 
