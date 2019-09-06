@@ -69,21 +69,42 @@ RandomJourney <- function(data, walk_mode = 'out')
     # Check if possible to continue, break if number of nodes connected to this
     # iteration is equal to, or less than 1.
 
+    # Detect neigbouring nodes for the journey.
+
     # nodes_available <- betweenness(data, loop_iteration) # By betweenness
     # nodes_available <- length(adjacent_vertices(data, next_step)) # Adjacent vertices
-    nodes_available <- igraph::neighbors(data, next_step, mode = walk_mode) # By Neighbours
+    nodes_available <- igraph::neighbors(data, next_step, mode = walk_mode)
 
     number_of_nodes <- length(igraph::neighbors(data, next_step, mode = 'out'))
-
-    # print(number_of_nodes)
-    # print(nodes_available)
 
     biomass <- vertex_attr(foodwebs$gramwet, 'Biomass',
                            index = V(foodwebs$gramwet))[[next_step]]
 
+    # Decide next step based on prefering to eat a smaller creature.
+    next_step_loop <- 0
+    while (number_of_nodes >= next_step_loop)
+    {
+      if (as.integer(biomass) > as.integer(next_step))
+      {
+        print("NOTE: Targeting a creature of lower Biomass than itself.")
+        next_step <- sample(number_of_nodes, size = 1)
+        break
+      }
+      else
+      {
+        print("NOTE: Reject current target. Choosing another target.")
+      }
+
+      # Increment the loop by 1.
+      next_step_loop <- next_step_loop + 1
+    }
+
+    # Check next step conditions.
+
     if (biomass == 0)
     {
       print("NOTE: Detected a creature with Biomass of '0'.")
+      print("NOTE: Searching for nearest alternative.")
     }
     else if (as.integer(biomass) > as.integer(next_step))
     {
@@ -91,6 +112,7 @@ RandomJourney <- function(data, walk_mode = 'out')
     }
     else if (as.integer(biomass) < as.integer(next_step))
     {
+      print("NOTE: A target of lower Biomass is not available.")
       print("NOTE: Consumed by a creature of a higher Biomass than itself.")
       print("NOTE: Terminating Random Journey.")
       stuck <- TRUE
@@ -162,7 +184,7 @@ RandomJourney <- function(data, walk_mode = 'out')
 
   # Output the path taken.
   print(paste("NOTE: Printing path taken."))
-  print(paste(path))
+  print(path)
 
   # path <- graph_from_edgelist(path)
 

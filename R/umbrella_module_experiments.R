@@ -99,8 +99,8 @@ UmbrellaExperimentRandomJourney <- function ()
   # Convert path to numerical vector for processing.
   # walk_data <- as.integer(as.vector(walk_data))
 
-  print(paste("TEST: Printing the Random Journey's path."))
-  print(walk_data)
+  # print(paste("TEST: Printing the Random Journey's path."))
+  # print(walk_data)
 
   # print(paste("TEST: Printing name list of Random Journey's path."))
   # for (i in walk_data)
