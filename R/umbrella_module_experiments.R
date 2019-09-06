@@ -52,9 +52,12 @@ UmbrellaExperimentProbeRandomData <- function()
   print("TEST: Output an adjacency edge list of the network data.")
   print(igraph::as_adj_edge_list(test_data$dataset))
 
+  test_random_walk <- igraph::graph_from_adj_list(test_random_walk)
+  test_random_walk <- simplify(test_random_walk)
+
   print("TEST: Plotting random walk on testing data.")
   igraph::plot.igraph(
-    igraph::graph_from_adj_list(test_random_walk),
+    test_random_walk,
     main = 'Random Walk Graph / UmbrellaExperimentProbeRandomData()',
     sub = paste("Umbrella", packageVersion("umbrella"))
   )
