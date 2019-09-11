@@ -54,25 +54,19 @@ RandomJourney <- function(data, walk_mode = 'out')
     # Take the values from the previous iteration and pass them to the first
     # step of this iteration of the journey.
 
-    walk1 <- random_walk(data, start = previous_state, steps = 2,
+    walk <- random_walk(data, start = previous_state, steps = 2,
                          stuck = 'return', mode = walk_mode)
 
-    next_step <- tail(as.integer(walk1), n = 1)
+    next_step <- tail(as.integer(walk), n = 1)
 
     ################################
     # Stage 2: Assess Surroundings #
     ################################
 
-    # Guide the walker between steps.
-    # TODO Write the code for this.
-
     # Check if possible to continue, break if number of nodes connected to this
     # iteration is equal to, or less than 1.
 
     # Detect neigbouring nodes for the journey.
-
-    # nodes_available <- betweenness(data, loop_iteration) # By betweenness
-    # nodes_available <- length(adjacent_vertices(data, next_step)) # Adjacent vertices
     nodes_available <- igraph::neighbors(data, next_step, mode = walk_mode)
 
     number_of_nodes <- length(igraph::neighbors(data, next_step, mode = 'out'))
@@ -100,7 +94,6 @@ RandomJourney <- function(data, walk_mode = 'out')
     }
 
     # Check next step conditions.
-
     if (biomass == 0)
     {
       print("NOTE: Detected a creature with Biomass of '0'.")
@@ -140,22 +133,11 @@ RandomJourney <- function(data, walk_mode = 'out')
       invisible(path)
     }
 
-    # if (nodes_available <= 1 || loop_iteration >= igraph::vcount(data))
-    # if (number_of_nodes <= 1 || loop_iteration >= igraph::vcount(data))
-    # if (biomass == 0 || number_of_nodes <= 1 || loop_iteration >= igraph::vcount(data))
-    # {
-    #   # Walk complete or stuck, silently return 'path'.
-    #   print(paste("NOTE: No change in direction available. Terminating Random",
-    #               "Journey."))
-    #   stuck <- TRUE
-    #   invisible(path)
-    # }
-
     ######################################
     # Stage 3: Compile current walk path #
     ######################################
 
-    path <- union(path, walk1)
+    path <- union(path, walk)
   }
 
   # Convert the path to an integer vector list for processing.
@@ -167,17 +149,8 @@ RandomJourney <- function(data, walk_mode = 'out')
   # Convert 'walk_data' to a graph object.
   path <- graph_from_adj_list(path)
 
-  # path <- V(path)
-
   # Remove reciprocal relationships from 'walk_data'.
   path <- simplify(path)
-
-  # Convert to data frame list.
-  # path1 <- path[-1]
-  # path1 <- as.integer(as.vector(path))
-  # path2 <- c(path1[-1], tail(path1, n = 1))
-  # path <- data.frame(path1, path2)
-  # path <- graph_from_data_frame(path)
 
   # Output the number of loop iterations.
   print(paste("NOTE: Performed", loop_iteration, "loop(s)."))
@@ -185,8 +158,6 @@ RandomJourney <- function(data, walk_mode = 'out')
   # Output the path taken.
   print(paste("NOTE: Printing path taken."))
   print(path)
-
-  # path <- graph_from_edgelist(path)
 
   # Silently return the completed random journey path.
   invisible(path)
