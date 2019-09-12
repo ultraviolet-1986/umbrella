@@ -75,11 +75,11 @@ UmbrellaExperimentProbeRandomData <- function()
   invisible(test_data)
 }
 
-########################################
-# Experiment 2: Random Journey Example #
-########################################
+####################################################
+# Experiment 2: Random Journey Example (Food Webs) #
+####################################################
 
-UmbrellaExperimentRandomJourney <- function ()
+UmbrellaExperimentRandomJourneyFoodWeb <- function ()
 {
   print("########## EXPERIMEMT ##########")
 
@@ -94,20 +94,9 @@ UmbrellaExperimentRandomJourney <- function ()
   gramwet <- simplify(gramwet)
 
   print(paste("TEST: Perform the Random Journey on the 'foodweb' data."))
-  walk_data <- umbrella::RandomJourney(gramwet)
-
-  # Convert path to numerical vector for processing.
-  # walk_data <- as.integer(as.vector(walk_data))
-
-  # print(paste("TEST: Printing the Random Journey's path."))
-  # print(walk_data)
-
-  # print(paste("TEST: Printing name list of Random Journey's path."))
-  # for (i in walk_data)
-  # {
-  #   # print(names(gramwet[[i]]))
-  #   print(vertex_attr(foodwebs$gramwet, 'name', index = V(foodwebs$gramwet))[[i]])
-  # }
+  walk_data <- umbrella::RandomJourney(
+    data = gramwet,
+    attribute = 'Biomass')
 
   print("TEST: Plotting random walk on 'foodwebs' data.")
   igraph::plot.igraph(
@@ -117,10 +106,65 @@ UmbrellaExperimentRandomJourney <- function ()
   )
 
   # Requires package 'GGally' for the 'ggnet2' function.
-  walk_plot <- GGally::ggnet2(walk_data, label = TRUE, node.size = 9,
-                              node.color = "pink", edge.size = 1,
-                              edge.color = "grey", arrow.size = 8,
-                              arrow.gap = 0.022, mode = 'kamadakawai')
+  walk_plot <- GGally::ggnet2(walk_data,
+                              label = TRUE,
+                              node.size = 9,
+                              node.color = "pink",
+                              edge.size = 1,
+                              edge.color = "grey",
+                              arrow.size = 8,
+                              arrow.gap = 0.022,
+                              mode = 'kamadakawai')
+  print(walk_plot)
+
+  ###############
+  # Return Data #
+  ###############
+
+  # NOTES:
+  # - Return data quietly.
+  # - This allows assignment to variable.
+
+  invisible(walk_data)
+}
+
+######################################################
+# Experiment 3: Random Journey Example (Karate Club) #
+######################################################
+
+UmbrellaExperimentRandomJourneyKarate <- function ()
+{
+  print("########## EXPERIMEMT ##########")
+
+  print(paste("TEST: Loading the 'karate' dataset from package ",
+              "'igraphdata'."))
+  data("karate")
+
+  # Purge self-loops.
+  # karate <- simplify(karate)
+
+  print(paste("TEST: Perform the Random Journey on the 'karate' data."))
+  walk_data <- umbrella::RandomJourney(
+    data = karate,
+    attribute = 'Faction')
+
+  print("TEST: Plotting random walk on 'karate' data.")
+  igraph::plot.igraph(
+    walk_data,
+    main = 'Random Walk Graph / UmbrellaExperimentRandomJourney()',
+    sub = paste("Umbrella", packageVersion("umbrella"))
+  )
+
+  # Requires package 'GGally' for the 'ggnet2' function.
+  walk_plot <- GGally::ggnet2(walk_data,
+                              label = TRUE,
+                              node.size = 9,
+                              node.color = "pink",
+                              edge.size = 1,
+                              edge.color = "grey",
+                              arrow.size = 8,
+                              arrow.gap = 0.022,
+                              mode = 'kamadakawai')
   print(walk_plot)
 
   ###############

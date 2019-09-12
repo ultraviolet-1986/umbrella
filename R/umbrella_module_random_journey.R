@@ -6,7 +6,11 @@
 # File Name: umbrella_module_random_journey.R
 # File Author: William Whinn
 
-RandomJourney <- function(data, walk_mode = 'out')
+RandomJourney <- function(
+  data,
+  attribute,
+  walk_mode = 'out'
+  )
 {
   # Create empty objects within function scope.
   path <- ''
@@ -33,11 +37,20 @@ RandomJourney <- function(data, walk_mode = 'out')
   {
     root_nodes <- sample(root_nodes, 1, replace = FALSE)
   }
+  else if (length(root_nodes) == 1)
+  {
+    root_nodes <- as.integer(root_nodes)
+  }
+  else
+  {
+    print("NOTE: No 'root node' has been detected. Selecting at random.")
+    root_nodes <- sample(length(data), 1, replace = FALSE)
+  }
 
   # Assign the chosen root node as the starting position for the random journey.
   previous_state <- as.vector(as.integer(root_nodes))
 
-  print(paste("NOTE: Beginning Random Journey from the selected root node: ",
+  print(paste("NOTE: Beginning Random Journey from the selected node: ",
               root_nodes, ".", sep = ''))
 
   print(root_nodes)
@@ -71,16 +84,20 @@ RandomJourney <- function(data, walk_mode = 'out')
 
     number_of_nodes <- length(igraph::neighbors(data, next_step, mode = 'out'))
 
-    biomass <- vertex_attr(foodwebs$gramwet, 'Biomass',
-                           index = V(foodwebs$gramwet))[[next_step]]
+    attribute_mod <- vertex_attr(data, attribute,
+                           index = V(data))[[next_step]]
+    attribute_mod_next <-vertex_attr(data, attribute,
+                                     index = V(data))[[(as.integer(next_step) + 1)]]
 
     # Decide next step based on prefering to eat a smaller creature.
     next_step_loop <- 0
     while (number_of_nodes >= next_step_loop)
     {
-      if (as.integer(biomass) > as.integer(next_step))
+      #if (as.integer(attribute_mod) >= as.integer(next_step))
+      if (as.integer(attribute_mod) > as.integer(attribute_mod_next))
       {
-        print("NOTE: Targeting a creature of lower Biomass than itself.")
+        print(paste("NOTE: Targeting a node containing a lower value of ",
+                    "attribute '", attribute, "',", sep = ""))
         next_step <- sample(number_of_nodes, size = 1)
         break
       }
@@ -94,26 +111,34 @@ RandomJourney <- function(data, walk_mode = 'out')
     }
 
     # Check next step conditions.
-    if (biomass == 0)
+    if (attribute_mod == 0)
     {
-      print("NOTE: Detected a creature with Biomass of '0'.")
+      print(paste("NOTE: Detected a target with attribute '", attribute,
+                  "' value of '0'.", sep = ""))
       print("NOTE: Searching for nearest alternative.")
     }
-    else if (as.integer(biomass) > as.integer(next_step))
+    else if (as.integer(attribute_mod) > as.integer(next_step))
     {
-      print("NOTE: Consumed a creature of a lower Biomass than itself.")
+      print(paste("NOTE: Selected a target of a lower value of attribute '",
+                  attribute, "' than itself.", sep = ""))
+      # - Uncomment to move forward after interacting with single vertex.
+      # - If left commented, walker will interact with every vertex available
+      #   until resources are exhausted.
+      # break
     }
-    else if (as.integer(biomass) < as.integer(next_step))
+    else if (as.integer(attribute_mod) < as.integer(next_step))
     {
-      print("NOTE: A target of lower Biomass is not available.")
-      print("NOTE: Consumed by a creature of a higher Biomass than itself.")
+      print(paste("NOTE: A target of a lower value of attribute '",
+                  attribute, "' is not available.", sep = ""))
+      print("NOTE: No logical path forward available.")
       print("NOTE: Terminating Random Journey.")
       stuck <- TRUE
       invisible(path)
     }
     else if (loop_iteration >= igraph::vcount(data))
     {
-      print("NOTE: Number of loops has reached the length of the network.")
+      print(paste("NOTE: Number of loops performed has reached the length of",
+                  "the network."))
       print("NOTE: Terminating Random Journey.")
       stuck <- TRUE
       invisible(path)
