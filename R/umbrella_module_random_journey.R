@@ -10,7 +10,7 @@ RandomJourney <- function(
   data,
   attribute,
   walk_mode = 'out'
-  )
+)
 {
   # Create empty objects within function scope.
   path <- ''
@@ -68,7 +68,7 @@ RandomJourney <- function(
     # step of this iteration of the journey.
 
     walk <- random_walk(data, start = previous_state, steps = 2,
-                         stuck = 'return', mode = walk_mode)
+                        stuck = 'return', mode = walk_mode)
 
     next_step <- tail(as.integer(walk), n = 1)
 
@@ -85,7 +85,7 @@ RandomJourney <- function(
     number_of_nodes <- length(igraph::neighbors(data, next_step, mode = 'out'))
 
     attribute_mod <- vertex_attr(data, attribute,
-                           index = V(data))[[next_step]]
+                                 index = V(data))[[next_step]]
     attribute_mod_next <-vertex_attr(data, attribute,
                                      index = V(data))[[(as.integer(next_step) + 1)]]
 
