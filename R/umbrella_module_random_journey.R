@@ -121,10 +121,6 @@ RandomJourney <- function(
     {
       print(paste("NOTE: Selected a target of a lower value of attribute '",
                   attribute, "' than itself.", sep = ""))
-      # - Uncomment to move forward after interacting with single vertex.
-      # - If left commented, walker will interact with every vertex available
-      #   until resources are exhausted.
-      # break
     }
     else if (as.integer(attribute_mod) < as.integer(next_step))
     {
