@@ -97,6 +97,9 @@ RandomJourneyFoodweb <- function()
     root_nodes <- sample(length(gramwet), 1, replace = FALSE)
   }
 
+  # Uncomment to override starting position.
+  # root_nodes <- 66
+
   # Assign the chosen root node as the starting position for the random journey.
   previous_state <- as.vector(as.integer(root_nodes))
 
@@ -129,12 +132,15 @@ RandomJourneyFoodweb <- function()
     # Check if possible to continue, break if number of nodes connected to this
     # iteration is equal to, or less than 1.
 
+    # Select walk mode: 'in', 'out', or 'all'. Default: 'all'.
+    walk_mode <- 'all'
+
     # Detect neigbouring nodes for the journey.
-    nodes_available <- igraph::neighbors(gramwet, next_step, mode = 'out')
+    nodes_available <- igraph::neighbors(gramwet, next_step, mode = walk_mode)
 
     number_of_nodes <- length(igraph::neighbors(gramwet,
                                                 next_step,
-                                                mode = 'out'))
+                                                mode = walk_mode))
 
     # Get attribute value for current position.
     attribute_value <- vertex_attr(gramwet, attribute,
@@ -150,7 +156,7 @@ RandomJourneyFoodweb <- function()
     next_step_loop <- 0
     while (number_of_nodes >= next_step_loop)
     {
-      #if (as.integer(attribute_value) >= as.integer(next_step))
+      # if (as.integer(attribute_value) >= as.integer(next_step))
       if (as.integer(attribute_value) > as.integer(attribute_value_next))
       {
         print("NOTE: Targeting a creature of lower biomass.")
@@ -183,13 +189,13 @@ RandomJourneyFoodweb <- function()
       print("NOTE: Terminating Random Journey.")
       stuck <- TRUE
     }
-    # else if (loop_iteration >= igraph::vcount(gramwet))
-    # {
-    #   print(paste("NOTE: Number of loops performed has reached the maximum",
-    #               "length of the network."))
-    #   print("NOTE: Terminating Random Journey.")
-    #   stuck <- TRUE
-    # }
+    else if (loop_iteration >= igraph::vcount(gramwet))
+    {
+      print(paste("NOTE: Number of loops performed has reached the maximum",
+                  "length of the network."))
+      print("NOTE: Terminating Random Journey.")
+      stuck <- TRUE
+    }
     else if (number_of_nodes <= 1)
     {
       print("NOTE: There are no creatures available for consumption.")
