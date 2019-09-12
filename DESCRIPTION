@@ -11,6 +11,8 @@ Description: Umbrella is a generic biased random walk algorithm, which aims to
 Collate:
   umbrella_module_analyse_data.R
   umbrella_module_apply_random_seed.R
+  umbrella_module_random_journey_foodweb.R
+  umbrella_module_random_journey_karate.R
   umbrella_module_experiments.R
   umbrella_module_generate_random_network_file.R
   umbrella_module_random_journey.R
