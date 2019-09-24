@@ -176,14 +176,18 @@ RandomJourneyFoodweb <- function()
     node_name_list_current <- union(node_name_current, node_name_next)
     node_name_list <- union(node_name_list, node_name_list_current)
 
+    ############################################################################
+    # DECISION-MAKING LOGIC TREE ###############################################
+    ############################################################################
+
     # Decide next step based on prefering to eat a smaller creature.
     next_step_loop <- 0
     while (number_of_nodes >= next_step_loop)
     {
-      # if (as.integer(attribute_value) >= as.integer(next_step))
       if (as.integer(attribute_value) > as.integer(attribute_value_next))
       {
-        print("NOTE: Targeting a creature of lower biomass.")
+        # print("NOTE: Targeting a creature of lower biomass.")
+        print(paste(node_name_current, "is being targeted by", node_name_next))
         next_step <- sample(number_of_nodes, size = 1)
         break
       }
@@ -204,7 +208,8 @@ RandomJourneyFoodweb <- function()
     }
     else if (as.integer(attribute_value) > as.integer(next_step))
     {
-      print("NOTE: Consumed a creature of lower biomass.")
+      # print("NOTE: Consumed a creature of lower biomass.")
+      print(paste(node_name_current, "has been consumed by", node_name_next))
     }
     else if (as.integer(attribute_value) < as.integer(next_step))
     {
