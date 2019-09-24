@@ -269,7 +269,7 @@ RandomJourneyFoodweb <- function()
   print(paste("NOTE: Printing path taken."))
   print(path)
 
-  # Adjust node name list for presentation.
+  # Trim the initial (empty) step.
   node_name_list <- node_name_list[-1]
 
   # Print names of nodes visited.
