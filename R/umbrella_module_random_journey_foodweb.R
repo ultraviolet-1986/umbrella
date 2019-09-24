@@ -58,6 +58,9 @@ RandomJourneyFoodweb <- function()
   # Purge self-loops.
   gramwet <- simplify(gramwet)
 
+  # Create an empty list to hold list of nodes visited during RandomJourney().
+  node_name_list <- ''
+
   ##############################################################################
   # RANDOM JOURNEY SECTION #####################################################
   ##############################################################################
@@ -142,6 +145,10 @@ RandomJourneyFoodweb <- function()
                                                 next_step,
                                                 mode = walk_mode))
 
+    ####################################
+    # ACCESS ATTRIBUTES FOR COMPARISON #
+    ####################################
+
     # Get attribute value for current position.
     attribute_value <- vertex_attr(gramwet, attribute,
                                    index = V(gramwet))[[next_step]]
@@ -151,6 +158,23 @@ RandomJourneyFoodweb <- function()
                                        attribute,
                                        index = V(gramwet))[[(as.integer(
                                          next_step) + 1)]]
+
+    ##############################
+    # ACCESS NODE NAMES FOR LIST #
+    ##############################
+
+    # Get the node name for the current vertex.
+    node_name_current <- vertex_attr(gramwet, 'name',
+                                     index = V(gramwet))[[next_step]]
+
+    # Get the node name for the next vertex.
+    node_name_next <- vertex_attr(gramwet, 'name',
+                                  index = V(gramwet))[[(
+                                    as.integer(next_step) + 1)]]
+
+    # Compile list of node names.
+    node_name_list_current <- union(node_name_current, node_name_next)
+    node_name_list <- union(node_name_list, node_name_list_current)
 
     # Decide next step based on prefering to eat a smaller creature.
     next_step_loop <- 0
@@ -245,19 +269,20 @@ RandomJourneyFoodweb <- function()
   print(paste("NOTE: Printing path taken."))
   print(path)
 
+  # Adjust node name list for presentation.
+  node_name_list <- node_name_list[-1]
+
+  # Print names of nodes visited.
+  print(paste("NOTE: Printing list of nodes visited during RandomJourney()."))
+  print(cat(node_name_list, sep = '\n'))
+
   ##############################################################################
   # PLOT RESULTS SECTION #######################################################
   ##############################################################################
 
-  # Create graphical plot (old)
-  print("TEST: Plotting random walk on 'foodwebs' data.")
-  igraph::plot.igraph(
-    path,
-    main = 'Random Walk Graph / UmbrellaExperimentRandomJourney()',
-    sub = paste("Umbrella", packageVersion("umbrella"))
-  )
+  print("TEST: Plotting random walk on 'foodwebs' data. Please Wait.")
 
-  # Create graphical plot (new)
+  # Create graphical plot using 'ggnet2'.
   walk_plot <- GGally::ggnet2(path,
                               label = TRUE,
                               node.size = 9,
@@ -267,6 +292,8 @@ RandomJourneyFoodweb <- function()
                               arrow.size = 8,
                               arrow.gap = 0.022,
                               mode = 'kamadakawai')
+
+  # Output the new plot graphically ('ggnet2' will not do this automatically).
   print(walk_plot)
 
   ##############################################################################
