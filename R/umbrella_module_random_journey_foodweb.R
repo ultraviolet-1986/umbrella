@@ -111,6 +111,9 @@ RandomJourneyFoodweb <- function()
 
   print(root_nodes)
 
+  # Select walk mode: 'in', 'out', or 'all'. Default: 'all'.
+  walk_mode <- 'all'
+
   while (isFALSE(stuck))
   {
     # Increment the number of loops performed.
@@ -123,7 +126,7 @@ RandomJourneyFoodweb <- function()
     # Take the values from the previous iteration and pass them to the first
     # step of this iteration of the journey.
     walk <- random_walk(gramwet, start = previous_state, steps = 2,
-                        stuck = 'return', mode = 'out')
+                        stuck = 'return', mode = walk_mode)
 
     # Choose the previously-visited node as the starting position for next step.
     next_step <- tail(as.integer(walk), n = 1)
@@ -134,9 +137,6 @@ RandomJourneyFoodweb <- function()
 
     # Check if possible to continue, break if number of nodes connected to this
     # iteration is equal to, or less than 1.
-
-    # Select walk mode: 'in', 'out', or 'all'. Default: 'all'.
-    walk_mode <- 'all'
 
     # Detect neigbouring nodes for the journey.
     nodes_available <- igraph::neighbors(gramwet, next_step, mode = walk_mode)
