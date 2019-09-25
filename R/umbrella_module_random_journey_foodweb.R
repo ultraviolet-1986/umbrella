@@ -243,14 +243,14 @@ RandomJourneyFoodweb <- function()
       stuck <- TRUE
     }
 
-    else if (diff_current > diff_next)
-    {
-      print("NOTE: Current node greater than next.")
-    }
-    else if (diff_current < diff_next)
-    {
-      print("NOTE: Current node smaller than next.")
-    }
+    # else if (diff_current > diff_next)
+    # {
+    #   print("NOTE: Current node greater than next.")
+    # }
+    # else if (diff_current < diff_next)
+    # {
+    #   print("NOTE: Current node smaller than next.")
+    # }
 
     #####################
     # Loop-ending logic #
