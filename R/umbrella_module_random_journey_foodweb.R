@@ -217,18 +217,22 @@ RandomJourneyFoodweb <- function()
       print("NOTE: Detected a creature with biomass of 0.")
       print("NOTE: Searching for nearest alternative.")
     }
-    else if (as.integer(vertex_attribute_value) > as.integer(next_step))
+
+
+    else if (as.integer(vertex_attribute_value) >
+             as.integer(vertex_attribute_value_next))
     {
-      # print("NOTE: Consumed a creature of lower biomass.")
       print(paste(node_name_current, "has been consumed by", node_name_next))
     }
-    else if (as.integer(vertex_attribute_value) < as.integer(next_step))
+    else if (as.integer(vertex_attribute_value) <
+             as.integer(vertex_attribute_value_next))
     {
       print("NOTE: A creature of a lower biomass is not available.")
       print("NOTE: No logical path forward available.")
       print("NOTE: Terminating Random Journey.")
       stuck <- TRUE
     }
+
     else if (loop_iteration >= igraph::vcount(gramwet))
     {
       print(paste("NOTE: Number of loops performed has reached the maximum",
