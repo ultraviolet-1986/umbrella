@@ -149,15 +149,25 @@ RandomJourneyFoodweb <- function()
     # ACCESS ATTRIBUTES FOR COMPARISON #
     ####################################
 
+    # VERTEX ATTRIBUTES
+
     # Get attribute value for current position.
-    attribute_value <- vertex_attr(gramwet, attribute,
-                                   index = V(gramwet))[[next_step]]
+    vertex_attribute_value <- vertex_attr(gramwet, attribute, index = V(
+      gramwet))[[next_step]]
 
     # Get attribute value for next position.
-    attribute_value_next <-vertex_attr(gramwet,
-                                       attribute,
-                                       index = V(gramwet))[[(as.integer(
-                                         next_step) + 1)]]
+    vertex_attribute_value_next <-vertex_attr(gramwet, attribute, index = V(
+      gramwet))[[(as.integer(next_step) + 1)]]
+
+    # EDGE ATTRIBUTES
+
+    # Get attribute value for current position.
+    edge_attribute_value <- edge_attr(gramwet, attribute, index = V(
+      gramwet))[[next_step]]
+
+    # Get attribute value for next position.
+    edge_attribute_value_next <-edge_attr(gramwet, attribute, index = V(
+      gramwet))[[(as.integer(next_step) + 1)]]
 
     ##############################
     # ACCESS NODE NAMES FOR LIST #
@@ -184,7 +194,8 @@ RandomJourneyFoodweb <- function()
     next_step_loop <- 0
     while (number_of_nodes >= next_step_loop)
     {
-      if (as.integer(attribute_value) > as.integer(attribute_value_next))
+      if (as.integer(vertex_attribute_value) >
+          as.integer(vertex_attribute_value_next))
       {
         # print("NOTE: Targeting a creature of lower biomass.")
         print(paste(node_name_current, "is being targeted by", node_name_next))
@@ -201,17 +212,17 @@ RandomJourneyFoodweb <- function()
     }
 
     # Check next step conditions.
-    if (attribute_value == 0)
+    if (vertex_attribute_value == 0)
     {
       print("NOTE: Detected a creature with biomass of 0.")
       print("NOTE: Searching for nearest alternative.")
     }
-    else if (as.integer(attribute_value) > as.integer(next_step))
+    else if (as.integer(vertex_attribute_value) > as.integer(next_step))
     {
       # print("NOTE: Consumed a creature of lower biomass.")
       print(paste(node_name_current, "has been consumed by", node_name_next))
     }
-    else if (as.integer(attribute_value) < as.integer(next_step))
+    else if (as.integer(vertex_attribute_value) < as.integer(next_step))
     {
       print("NOTE: A creature of a lower biomass is not available.")
       print("NOTE: No logical path forward available.")
