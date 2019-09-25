@@ -165,6 +165,14 @@ RandomJourneyFoodweb <- function()
     edge_attribute_value_next <-edge_attr(gramwet, attribute, index = V(
       gramwet))[[(as.integer(next_step) + 1)]]
 
+    # Differences between edge/vertex.
+
+    diff_current <- c(vertex_attribute_value, edge_attribute_value)
+    diff_current <- diff(diff_current)
+
+    diff_next <- c(vertex_attribute_value_next, edge_attribute_value_next)
+    diff_next <- diff(diff_next)
+
     ##############################
     # Access node names for list #
     ##############################
@@ -218,11 +226,14 @@ RandomJourneyFoodweb <- function()
     # Target selection logic #
     ##########################
 
+    # Current node's Biomass is greater than the next.
     else if (as.integer(vertex_attribute_value) >
              as.integer(vertex_attribute_value_next))
     {
       print(paste(node_name_current, "has been consumed by", node_name_next))
     }
+
+    # Current node's Biomass is smaller than the next.
     else if (as.integer(vertex_attribute_value) <
              as.integer(vertex_attribute_value_next))
     {
@@ -230,6 +241,15 @@ RandomJourneyFoodweb <- function()
       print("NOTE: No logical path forward available.")
       print("NOTE: Terminating Random Journey.")
       stuck <- TRUE
+    }
+
+    else if (diff_current > diff_next)
+    {
+      print("NOTE: Current node greater than next.")
+    }
+    else if (diff_current < diff_next)
+    {
+      print("NOTE: Current node smaller than next.")
     }
 
     #####################
