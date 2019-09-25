@@ -158,20 +158,19 @@ RandomJourneyFoodweb <- function()
       gramwet))[[(as.integer(next_step) + 1)]]
 
     # Get attribute value for current position.
-    edge_attribute_value <- edge_attr(gramwet, attribute, index = V(
+    edge_attribute_value <- edge_attr(gramwet, 'weight', index = V(
       gramwet))[[next_step]]
 
+    # edge_attribute_value <- as.integer(edge_attribute_value)
+
     # Get attribute value for next position.
-    edge_attribute_value_next <-edge_attr(gramwet, attribute, index = V(
+    edge_attribute_value_next <-edge_attr(gramwet, 'weight', index = V(
       gramwet))[[(as.integer(next_step) + 1)]]
 
-    # Differences between edge/vertex.
+    # edge_attribute_value_next <- as.integer(edge_attribute_value_next)
 
-    diff_current <- c(vertex_attribute_value, edge_attribute_value)
-    diff_current <- diff(diff_current)
-
-    diff_next <- c(vertex_attribute_value_next, edge_attribute_value_next)
-    diff_next <- diff(diff_next)
+    print(edge_attribute_value)
+    print(edge_attribute_value_next)
 
     ##############################
     # Access node names for list #
@@ -179,12 +178,13 @@ RandomJourneyFoodweb <- function()
 
     # Get the node name for the current vertex.
     node_name_current <- vertex_attr(gramwet, 'name',
-                                     index = V(gramwet))[[next_step]]
+                                     index = V(gramwet))[[
+                                       as.double(next_step)]]
 
     # Get the node name for the next vertex.
     node_name_next <- vertex_attr(gramwet, 'name',
                                   index = V(gramwet))[[(
-                                    as.integer(next_step) + 1)]]
+                                    as.double(next_step) + 1)]]
 
     # Compile list of node names.
     node_name_list_current <- union(node_name_current, node_name_next)
@@ -198,8 +198,8 @@ RandomJourneyFoodweb <- function()
     next_step_loop <- 0
     while (number_of_nodes >= next_step_loop)
     {
-      if (as.integer(vertex_attribute_value) >
-          as.integer(vertex_attribute_value_next))
+      if (as.double(vertex_attribute_value) >
+          as.double(vertex_attribute_value_next))
       {
         # print("NOTE: Targeting a creature of lower biomass.")
         print(paste(node_name_current, "is being targeted by", node_name_next))
@@ -227,15 +227,15 @@ RandomJourneyFoodweb <- function()
     ##########################
 
     # Current node's Biomass is greater than the next.
-    else if (as.integer(vertex_attribute_value) >
-             as.integer(vertex_attribute_value_next))
+    else if (as.double(vertex_attribute_value) >
+             as.double(vertex_attribute_value_next))
     {
       print(paste(node_name_current, "has been consumed by", node_name_next))
     }
 
     # Current node's Biomass is smaller than the next.
-    else if (as.integer(vertex_attribute_value) <
-             as.integer(vertex_attribute_value_next))
+    else if (as.double(vertex_attribute_value) <
+             as.double(vertex_attribute_value_next))
     {
       print("NOTE: A creature of a lower biomass is not available.")
       print("NOTE: No logical path forward available.")
