@@ -32,9 +32,9 @@
 
 RandomJourneyFoodweb <- function()
 {
-  ##############################################################################
-  # PREREQUISITES ##############################################################
-  ##############################################################################
+  #################
+  # Prerequisites #
+  #################
 
   library(GGally)
 
@@ -61,9 +61,9 @@ RandomJourneyFoodweb <- function()
   # Create an empty list to hold list of nodes visited during RandomJourney().
   node_name_list <- ''
 
-  ##############################################################################
-  # RANDOM JOURNEY SECTION #####################################################
-  ##############################################################################
+  ##########################
+  # Random Journey Section #
+  ##########################
 
   # Create empty objects within function scope.
   path <- ''
@@ -119,9 +119,9 @@ RandomJourneyFoodweb <- function()
     # Increment the number of loops performed.
     loop_iteration <- loop_iteration + 1
 
-    ##########################################
-    # STAGE 1: WALK FROM ONE NODE TO ANOTHER #
-    ##########################################
+    ############################################################################
+    # Stage 1: Walk from one node to another ###################################
+    ############################################################################
 
     # Take the values from the previous iteration and pass them to the first
     # step of this iteration of the journey.
@@ -131,9 +131,9 @@ RandomJourneyFoodweb <- function()
     # Choose the previously-visited node as the starting position for next step.
     next_step <- tail(as.integer(walk), n = 1)
 
-    ##################################################
-    # STAGE 2: ASSESS SURROUNDINGS / DECISION-MAKING #
-    ##################################################
+    ############################################################################
+    # Stage 2: Assess surroundings / Decision-making ###########################
+    ############################################################################
 
     # Check if possible to continue, break if number of nodes connected to this
     # iteration is equal to, or less than 1.
@@ -145,11 +145,9 @@ RandomJourneyFoodweb <- function()
                                                 next_step,
                                                 mode = walk_mode))
 
-    ####################################
-    # ACCESS ATTRIBUTES FOR COMPARISON #
-    ####################################
-
-    # VERTEX ATTRIBUTES
+    ################################################
+    # Access vertex/edge attributes for comparison #
+    ################################################
 
     # Get attribute value for current position.
     vertex_attribute_value <- vertex_attr(gramwet, attribute, index = V(
@@ -158,8 +156,6 @@ RandomJourneyFoodweb <- function()
     # Get attribute value for next position.
     vertex_attribute_value_next <-vertex_attr(gramwet, attribute, index = V(
       gramwet))[[(as.integer(next_step) + 1)]]
-
-    # EDGE ATTRIBUTES
 
     # Get attribute value for current position.
     edge_attribute_value <- edge_attr(gramwet, attribute, index = V(
@@ -170,7 +166,7 @@ RandomJourneyFoodweb <- function()
       gramwet))[[(as.integer(next_step) + 1)]]
 
     ##############################
-    # ACCESS NODE NAMES FOR LIST #
+    # Access node names for list #
     ##############################
 
     # Get the node name for the current vertex.
@@ -186,9 +182,9 @@ RandomJourneyFoodweb <- function()
     node_name_list_current <- union(node_name_current, node_name_next)
     node_name_list <- union(node_name_list, node_name_list_current)
 
-    ############################################################################
-    # DECISION-MAKING LOGIC TREE ###############################################
-    ############################################################################
+    ##############################
+    # Decision-making logic tree #
+    ##############################
 
     # Decide next step based on prefering to eat a smaller creature.
     next_step_loop <- 0
@@ -218,6 +214,9 @@ RandomJourneyFoodweb <- function()
       print("NOTE: Searching for nearest alternative.")
     }
 
+    ##########################
+    # Target selection logic #
+    ##########################
 
     else if (as.integer(vertex_attribute_value) >
              as.integer(vertex_attribute_value_next))
@@ -232,6 +231,10 @@ RandomJourneyFoodweb <- function()
       print("NOTE: Terminating Random Journey.")
       stuck <- TRUE
     }
+
+    #####################
+    # Loop-ending logic #
+    #####################
 
     else if (loop_iteration >= igraph::vcount(gramwet))
     {
@@ -259,16 +262,16 @@ RandomJourneyFoodweb <- function()
       print("NOTE: Taking another step through foodweb network.")
     }
 
-    #########################################################
-    # STAGE 3: APPEND CURRENT JOURNEY PATH TO PREVIOUS PATH #
-    #########################################################
+    ############################################################################
+    # Stage 3: Append current Journey path to previous path ####################
+    ############################################################################
 
     path <- union(path, walk)
   }
 
-  ##########################################
-  # STAGE 4: COMPILE COMPLETE JOURNEY PATH #
-  ##########################################
+  ##############################################################################
+  # Stage 4: Compile complete Journey path #####################################
+  ##############################################################################
 
   # Convert the path to an integer vector list for processing.
   path <- as.vector(as.integer(path))
@@ -296,9 +299,9 @@ RandomJourneyFoodweb <- function()
   print(paste("NOTE: Printing list of nodes visited during RandomJourney()."))
   print(cat(node_name_list, sep = '\n'))
 
-  ##############################################################################
-  # PLOT RESULTS SECTION #######################################################
-  ##############################################################################
+  ################
+  # Plot results #
+  ################
 
   print("TEST: Plotting random walk on 'foodwebs' data. Please Wait.")
 
@@ -316,9 +319,9 @@ RandomJourneyFoodweb <- function()
   # Output the new plot graphically ('ggnet2' will not do this automatically).
   print(walk_plot)
 
-  ##############################################################################
-  # RETURN DATA SECTION ########################################################
-  ##############################################################################
+  ###############
+  # Return Data #
+  ###############
 
   # Silently return the completed random journey path.
   invisible(path)
