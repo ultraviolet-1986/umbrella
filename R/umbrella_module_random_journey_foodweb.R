@@ -226,6 +226,15 @@ RandomJourneyFoodweb <- function()
     # Target selection logic #
     ##########################
 
+    else if (weight_current > weight_next)
+    {
+      print("NOTE: Current weight greater than next.")
+    }
+    else if(weight_current < weight_next)
+    {
+      print("NOTE: Current weight less than next.")
+    }
+
     # Current node's Biomass is greater than the next.
     else if (as.double(vertex_attribute_value) >
              as.double(vertex_attribute_value_next))
