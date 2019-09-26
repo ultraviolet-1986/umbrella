@@ -145,9 +145,9 @@ RandomJourneyFoodweb <- function()
                                                 next_step,
                                                 mode = walk_mode))
 
-    ################################################
-    # Access vertex/edge attributes for comparison #
-    ################################################
+    #############################################
+    # Access 'Biomass' attribute for comparison #
+    #############################################
 
     # Get attribute value for current position.
     vertex_attribute_value <- vertex_attr(gramwet, attribute, index = V(
@@ -157,20 +157,19 @@ RandomJourneyFoodweb <- function()
     vertex_attribute_value_next <-vertex_attr(gramwet, attribute, index = V(
       gramwet))[[(as.integer(next_step) + 1)]]
 
-    # Get attribute value for current position.
+    ############################################
+    # Access 'weight' attribute for comparison #
+    ############################################
+
+    # Get 'weight' value for current position and cast as double.
     weight_current <- edge_attr(gramwet, 'weight', index = V(
       gramwet))[[next_step]]
-
     weight_current <- as.double(weight_current)
 
-    # Get attribute value for next position.
+    # Get 'weight' value for next position and cast as double.
     weight_next <- edge_attr(gramwet, 'weight', index = V(
       gramwet))[[(as.integer(next_step) + 1)]]
-
     weight_next <- as.double(weight_next)
-
-    print(weight_current)
-    print(weight_next)
 
     ##############################
     # Access node names for list #
@@ -189,6 +188,15 @@ RandomJourneyFoodweb <- function()
     # Compile list of node names.
     node_name_list_current <- union(node_name_current, node_name_next)
     node_name_list <- union(node_name_list, node_name_list_current)
+
+    #############################
+    # Print current information #
+    #############################
+
+    print(paste(vertex_attribute_value))
+    print(paste(vertex_attribute_value_next))
+    print(paste(weight_current))
+    print(paste(weight_next))
 
     ##############################
     # Decision-making logic tree #
