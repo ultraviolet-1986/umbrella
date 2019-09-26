@@ -158,19 +158,19 @@ RandomJourneyFoodweb <- function()
       gramwet))[[(as.integer(next_step) + 1)]]
 
     # Get attribute value for current position.
-    edge_attribute_value <- edge_attr(gramwet, 'weight', index = V(
+    weight_current <- edge_attr(gramwet, 'weight', index = V(
       gramwet))[[next_step]]
 
-    # edge_attribute_value <- as.integer(edge_attribute_value)
+    weight_current <- as.double(weight_current)
 
     # Get attribute value for next position.
-    edge_attribute_value_next <-edge_attr(gramwet, 'weight', index = V(
+    weight_next <- edge_attr(gramwet, 'weight', index = V(
       gramwet))[[(as.integer(next_step) + 1)]]
 
-    # edge_attribute_value_next <- as.integer(edge_attribute_value_next)
+    weight_next <- as.double(weight_next)
 
-    print(edge_attribute_value)
-    print(edge_attribute_value_next)
+    print(weight_current)
+    print(weight_next)
 
     ##############################
     # Access node names for list #
@@ -242,15 +242,6 @@ RandomJourneyFoodweb <- function()
       print("NOTE: Terminating Random Journey.")
       stuck <- TRUE
     }
-
-    # else if (diff_current > diff_next)
-    # {
-    #   print("NOTE: Current node greater than next.")
-    # }
-    # else if (diff_current < diff_next)
-    # {
-    #   print("NOTE: Current node smaller than next.")
-    # }
 
     #####################
     # Loop-ending logic #
