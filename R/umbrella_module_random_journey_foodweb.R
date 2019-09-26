@@ -150,11 +150,11 @@ RandomJourneyFoodweb <- function()
     #############################################
 
     # Get attribute value for current position.
-    vertex_attribute_value <- vertex_attr(gramwet, attribute, index = V(
+    biomass_current <- vertex_attr(gramwet, attribute, index = V(
       gramwet))[[next_step]]
 
     # Get attribute value for next position.
-    vertex_attribute_value_next <-vertex_attr(gramwet, attribute, index = V(
+    biomass_next <-vertex_attr(gramwet, attribute, index = V(
       gramwet))[[(as.integer(next_step) + 1)]]
 
     ############################################
@@ -175,10 +175,10 @@ RandomJourneyFoodweb <- function()
     # Create difference value for comparison #
     ##########################################
 
-    difference_current <- as.double(vertex_attribute_value) -
+    difference_current <- as.double(biomass_current) -
       as.double(weight_current)
 
-    difference_next <- as.double(vertex_attribute_value_next) -
+    difference_next <- as.double(biomass_next) -
       as.double(weight_next)
 
     ##############################
@@ -205,13 +205,13 @@ RandomJourneyFoodweb <- function()
 
     # Current node data.
     print(paste(node_name_current))
-    print(paste("Biomass", vertex_attribute_value))
+    print(paste("Biomass:", biomass_current))
     print(paste("Weight:", weight_current))
     print(paste("Difference:", difference_current))
 
     # Next node data.
     print(paste(node_name_next))
-    print(paste("Biomass:", vertex_attribute_value_next))
+    print(paste("Biomass:", biomass_next))
     print(paste("Weight:", weight_next))
     print(paste("Difference:", difference_next))
 
@@ -223,8 +223,7 @@ RandomJourneyFoodweb <- function()
     next_step_loop <- 0
     while (number_of_nodes >= next_step_loop)
     {
-      if (as.double(vertex_attribute_value) >
-          as.double(vertex_attribute_value_next))
+      if (as.double(biomass_current) > as.double(biomass_next))
       {
         # print("NOTE: Targeting a creature of lower biomass.")
         print(paste(node_name_current, "is being targeted by", node_name_next))
@@ -241,7 +240,7 @@ RandomJourneyFoodweb <- function()
     }
 
     # Check next step conditions.
-    if (vertex_attribute_value == 0)
+    if (biomass_current == 0)
     {
       print("NOTE: Detected a creature with biomass of 0.")
       print("NOTE: Searching for nearest alternative.")
@@ -261,15 +260,15 @@ RandomJourneyFoodweb <- function()
     }
 
     # Current node's Biomass is greater than the next.
-    else if (as.double(vertex_attribute_value) >
-             as.double(vertex_attribute_value_next))
+    else if (as.double(biomass_current) >
+             as.double(biomass_next))
     {
       print(paste(node_name_current, "has been consumed by", node_name_next))
     }
 
     # Current node's Biomass is smaller than the next.
-    else if (as.double(vertex_attribute_value) <
-             as.double(vertex_attribute_value_next))
+    else if (as.double(biomass_current) <
+             as.double(biomass_next))
     {
       print("NOTE: A creature of a lower biomass is not available.")
       print("NOTE: No logical path forward available.")
