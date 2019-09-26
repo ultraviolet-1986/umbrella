@@ -223,7 +223,7 @@ RandomJourneyFoodweb <- function()
     next_step_loop <- 0
     while (number_of_nodes >= next_step_loop)
     {
-      if (as.double(biomass_current) > as.double(biomass_next))
+      if (difference_current <= difference_next)
       {
         # print("NOTE: Targeting a creature of lower biomass.")
         print(paste(node_name_current, "is being targeted by", node_name_next))
@@ -250,27 +250,14 @@ RandomJourneyFoodweb <- function()
     # Target selection logic #
     ##########################
 
-    else if (weight_current > weight_next)
+    else if (difference_current < difference_next)
     {
-      print("NOTE: Current weight greater than next.")
+      print(paste("NOTE:", node_name_current, "has been consumed by",
+                  node_name_next))
     }
-    else if(weight_current < weight_next)
+    else if (difference_current > difference_next)
     {
-      print("NOTE: Current weight less than next.")
-    }
-
-    # Current node's Biomass is greater than the next.
-    else if (as.double(biomass_current) >
-             as.double(biomass_next))
-    {
-      print(paste(node_name_current, "has been consumed by", node_name_next))
-    }
-
-    # Current node's Biomass is smaller than the next.
-    else if (as.double(biomass_current) <
-             as.double(biomass_next))
-    {
-      print("NOTE: A creature of a lower biomass is not available.")
+      print("NOTE: A creature of a lower energy transfer is not available.")
       print("NOTE: No logical path forward available.")
       print("NOTE: Terminating Random Journey.")
       stuck <- TRUE
@@ -287,7 +274,7 @@ RandomJourneyFoodweb <- function()
       print("NOTE: Terminating Random Journey.")
       stuck <- TRUE
     }
-    else if (number_of_nodes <= 1)
+    else if (number_of_nodes == 0)
     {
       print("NOTE: There are no creatures available for consumption.")
       print("NOTE: Terminating Random Journey.")
