@@ -171,6 +171,16 @@ RandomJourneyFoodweb <- function()
       gramwet))[[(as.integer(next_step) + 1)]]
     weight_next <- as.double(weight_next)
 
+    ##########################################
+    # Create difference value for comparison #
+    ##########################################
+
+    difference_current <- as.double(vertex_attribute_value) -
+      as.double(weight_current)
+
+    difference_next <- as.double(vertex_attribute_value_next) -
+      as.double(weight_next)
+
     ##############################
     # Access node names for list #
     ##############################
@@ -193,10 +203,17 @@ RandomJourneyFoodweb <- function()
     # Print current information #
     #############################
 
-    print(paste(vertex_attribute_value))
-    print(paste(vertex_attribute_value_next))
-    print(paste(weight_current))
-    print(paste(weight_next))
+    # Current node data.
+    print(paste(node_name_current))
+    print(paste("Biomass", vertex_attribute_value))
+    print(paste("Weight:", weight_current))
+    print(paste("Difference:", difference_current))
+
+    # Next node data.
+    print(paste(node_name_next))
+    print(paste("Biomass:", vertex_attribute_value_next))
+    print(paste("Weight:", weight_next))
+    print(paste("Difference:", difference_next))
 
     ##############################
     # Decision-making logic tree #
