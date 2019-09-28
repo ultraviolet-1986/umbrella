@@ -171,16 +171,6 @@ RandomJourneyFoodweb <- function()
       gramwet))[[(as.integer(next_step) + 1)]]
     weight_next <- as.double(weight_next)
 
-    ##########################################
-    # Create difference value for comparison #
-    ##########################################
-
-    difference_current <- as.double(biomass_current) -
-      as.double(weight_current)
-
-    difference_next <- as.double(biomass_next) -
-      as.double(weight_next)
-
     ##############################
     # Access node names for list #
     ##############################
@@ -207,13 +197,11 @@ RandomJourneyFoodweb <- function()
     print(paste(node_name_current))
     print(paste("Biomass:", biomass_current))
     print(paste("Weight:", weight_current))
-    print(paste("Difference:", difference_current))
 
     # Next node data.
     print(paste(node_name_next))
     print(paste("Biomass:", biomass_next))
     print(paste("Weight:", weight_next))
-    print(paste("Difference:", difference_next))
 
     ##############################
     # Decision-making logic tree #
@@ -223,7 +211,7 @@ RandomJourneyFoodweb <- function()
     next_step_loop <- 0
     while (number_of_nodes >= next_step_loop)
     {
-      if (difference_current <= difference_next)
+      if (biomass_current < biomass_next)
       {
         # print("NOTE: Targeting a creature of lower biomass.")
         print(paste(node_name_current, "is being targeted by", node_name_next))
@@ -250,12 +238,12 @@ RandomJourneyFoodweb <- function()
     # Target selection logic #
     ##########################
 
-    else if (difference_current < difference_next)
+    else if (biomass_current < biomass_next)
     {
       print(paste("NOTE:", node_name_current, "has been consumed by",
                   node_name_next))
     }
-    else if (difference_current > difference_next)
+    else if (biomass_current > biomass_next)
     {
       print("NOTE: A creature of a lower energy transfer is not available.")
       print("NOTE: No logical path forward available.")
