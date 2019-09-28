@@ -73,7 +73,7 @@ RandomJourneyFoodweb <- function()
 
   # Get list of Root Nodes.
   root_nodes <- which(sapply(sapply(V(gramwet), function(x) neighbors(
-    gramwet, x, mode = "in")), length) == 0)
+    gramwet, x, mode = 'out')), length) == 0)
 
   # Create numerical list of detected root node(s).
   root_nodes <- as.vector(as.integer(root_nodes))
@@ -217,7 +217,7 @@ RandomJourneyFoodweb <- function()
 
       if (biomass_current > biomass_next)
       {
-        print(paste("NOTE: ", node_name_current, " is/are being targeted by ",
+        print(paste("NOTE: ", node_name_current, " has/have been consumed by ",
                     node_name_next, ".", sep = ''))
         next_step <- sample(number_of_nodes, size = 1)
 
@@ -225,8 +225,8 @@ RandomJourneyFoodweb <- function()
       }
       else if (biomass_current < biomass_next)
       {
-        print("NOTE: A creature of a lower energy transfer is not available.")
-        print("NOTE: Continuing Random Journey().")
+        print(paste("NOTE: A smaller creature is not available in the current",
+                    "location."))
 
         break
       }
@@ -239,8 +239,8 @@ RandomJourneyFoodweb <- function()
       }
       else if (biomass_current == 0)
       {
-        print("NOTE: Detected a creature with biomass of 0.")
-        print("NOTE: Searching for nearest alternative.")
+        print(paste("NOTE: Detected a creature with biomass of 0 at the",
+                    "current location."))
 
         break
       }
