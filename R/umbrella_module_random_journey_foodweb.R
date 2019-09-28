@@ -195,13 +195,13 @@ RandomJourneyFoodweb <- function()
 
     # Current node data.
     # print(paste(node_name_current))
-    # print(paste("Biomass:", biomass_current))
-    print(paste("Name", node_name_current, "Weight:", weight_current))
+    # print(paste("Name", node_name_current, "Biomass:", biomass_current))
+    # print(paste("Name", node_name_current, "Weight:", weight_current))
 
     # Next node data.
     # print(paste(node_name_next))
-    # print(paste("Biomass:", biomass_next))
-    print(paste("Name", node_name_next, "Weight:", weight_next))
+    # print(paste("Name", node_name_next, "Biomass:", biomass_next))
+    # print(paste("Name", node_name_next, "Weight:", weight_next))
 
     ##############################
     # Decision-making logic tree #
@@ -209,50 +209,46 @@ RandomJourneyFoodweb <- function()
 
     # Decide next step based on prefering to eat a smaller creature.
     next_step_loop <- 0
-    while (number_of_nodes >= next_step_loop)
+
+    ##########################
+    # Target selection logic #
+    ##########################
+
+    # Lower energy transfer AND greater weight.
+    if ((biomass_current < biomass_next) && (weight_current > weight_next))
     {
-      ##########################
-      # Target selection logic #
-      ##########################
+      print(paste("NOTE: ", node_name_current, " has/have been consumed by ",
+                  node_name_next, ".", sep = ''))
+      next_step <- sample(number_of_nodes, size = 1)
+    }
 
-      # Lower energy transfer AND greater weight.
-      if ((biomass_current < biomass_next) && (weight_current > weight_next))
-      {
-        print(paste("NOTE: ", node_name_current, " has/have been consumed by ",
-                    node_name_next, ".", sep = ''))
-        next_step <- sample(number_of_nodes, size = 1)
-      }
+    # Higher energy transfer AND greater weight.
+    else if ((biomass_current > biomass_next) && (weight_current > weight_next))
+    {
+      print(paste("NOTE: A smaller creature is not available in the current",
+                  "location."))
+    }
 
-      # Higher energy transfer AND greater weight.
-      else if ((biomass_current > biomass_next) && (weight_current > weight_next))
-      {
-        print(paste("NOTE: A smaller creature is not available in the current",
-                    "location."))
-      }
+    # Next node is the same as the current (prevent reciprocal steps).
+    else if (node_name_next == node_name_current)
+    {
+      print(paste("NOTE: '", node_name_current, "' rejects current target ",
+                  " of '", node_name_next, "'. Selecting another target.",
+                  sep = ''))
+    }
 
-      # Next node is the same as the current (prevent reciprocal steps).
-      else if (node_name_current == node_name_next)
-      {
-        print(paste("NOTE: Reject current target of ", node_name_next,
-                    ". Selecting another target.", sep = ''))
-      }
-      else if (biomass_current == 0)
-      {
-        print(paste("NOTE: Detected a creature with biomass of 0 at the",
-                    "current location."))
-
-        stuck <- TRUE
-      }
-      else
-      {
-        print(paste("NOTE: Reject current target of ", node_name_next,
-                    ". Selecting another target.", sep = ''))
-
-        # break
-      }
-
-      # Increment the loop by 1.
-      next_step_loop <- next_step_loop + 1
+    # Encountered largest creature possible (very unlikely).
+    else if (biomass_current == 0)
+    {
+      print(paste("NOTE: Detected a creature with biomass of 0 at the",
+                  "current location."))
+      stuck <- TRUE
+    }
+    else
+    {
+      print(paste("NOTE: '", node_name_current, "' rejects current target ",
+                  " of '", node_name_next, "'. Selecting another target.",
+                  sep = ''))
     }
 
     #####################
