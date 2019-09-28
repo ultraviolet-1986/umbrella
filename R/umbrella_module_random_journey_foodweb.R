@@ -220,7 +220,8 @@ RandomJourneyFoodweb <- function()
       }
       else
       {
-        print("NOTE: Reject current target. Choosing another target.")
+        print(paste("NOTE: Reject current target of ", node_name_next,
+                    ". Selecting another target.", sep = ''))
       }
 
       # Increment the loop by 1.
@@ -238,7 +239,7 @@ RandomJourneyFoodweb <- function()
     # Target selection logic #
     ##########################
 
-    else if (biomass_current < biomass_next)
+    else if (biomass_current <= biomass_next)
     {
       print(paste("NOTE:", node_name_current, "has been consumed by",
                   node_name_next))
