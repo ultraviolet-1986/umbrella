@@ -215,29 +215,26 @@ RandomJourneyFoodweb <- function()
       # Target selection logic #
       ##########################
 
-      # Lower energy transfer AND greater weight
+      # Lower energy transfer AND greater weight.
       if ((biomass_current < biomass_next) && (weight_current > weight_next))
       {
         print(paste("NOTE: ", node_name_current, " has/have been consumed by ",
                     node_name_next, ".", sep = ''))
         next_step <- sample(number_of_nodes, size = 1)
-
-        break
       }
-      # Higher energy transfer AND greater weight
+
+      # Higher energy transfer AND greater weight.
       else if ((biomass_current > biomass_next) && (weight_current > weight_next))
       {
         print(paste("NOTE: A smaller creature is not available in the current",
                     "location."))
-
-        break
       }
+
+      # Next node is the same as the current (prevent reciprocal steps).
       else if (node_name_current == node_name_next)
       {
         print(paste("NOTE: Reject current target of ", node_name_next,
                     ". Selecting another target.", sep = ''))
-
-        break
       }
       else if (biomass_current == 0)
       {
@@ -251,7 +248,7 @@ RandomJourneyFoodweb <- function()
         print(paste("NOTE: Reject current target of ", node_name_next,
                     ". Selecting another target.", sep = ''))
 
-        break
+        # break
       }
 
       # Increment the loop by 1.
