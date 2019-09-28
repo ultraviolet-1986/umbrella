@@ -186,6 +186,14 @@ RandomJourneyFoodweb <- function()
     node_name_list_current <- union(node_name_current, node_name_next)
     node_name_list <- union(node_name_list, node_name_list_current)
 
+    ######################################
+    # Access 'distance' between vertices #
+    ######################################
+
+    distance <- igraph::distances(gramwet, v = node_name_current,
+                                  to = node_name_next)
+    distance <- as.double(distance)
+
     #############################
     # Print current information #
     #############################
@@ -199,6 +207,9 @@ RandomJourneyFoodweb <- function()
     # print(paste(node_name_next))
     # print(paste("Name", node_name_next, "Biomass:", biomass_next))
     # print(paste("Name", node_name_next, "Weight:", weight_next))
+
+    # print(paste("NOTE: Distance between '", node_name_current, "' and '",
+    #             node_name_next, "': ", distance, sep = ''))
 
     ##############################
     # Decision-making logic tree #
@@ -214,41 +225,16 @@ RandomJourneyFoodweb <- function()
     # Lower energy transfer AND greater weight.
     if ((biomass_current < biomass_next) && (weight_current > weight_next))
     {
-      print(paste("NOTE: ", node_name_current, " has/have been consumed by ",
-                  node_name_next, ".", sep = ''))
+      print(paste("NOTE: '", node_name_current, "' has/have been consumed by '",
+                  node_name_next, "'.", sep = ''))
       next_step <- sample(number_of_nodes, size = 1)
     }
 
     # Higher energy transfer AND greater weight.
     else if ((biomass_current > biomass_next) && (weight_current < weight_next))
     {
-      print(paste("NOTE: A smaller creature is not available in the current",
-                  "location."))
-      next_step <- sample(number_of_nodes, size = 1)
-    }
-
-
-    else if ((biomass_current < biomass_next) && (weight_current < weight_next))
-    {
-      print(paste("NOTE: ", node_name_next, " has/have been consumed by ",
-                  node_name_current, ".", sep = ''))
-      next_step <- sample(number_of_nodes, size = 1)
-    }
-
-    # Higher energy transfer AND greater weight.
-    else if ((biomass_current > biomass_next) && (weight_current > weight_next))
-    {
-      print(paste("NOTE: A smaller creature is not available in the current",
-                  "location."))
-      next_step <- sample(number_of_nodes, size = 1)
-    }
-
-    # Next node is the same as the current (prevent reciprocal steps).
-    else if (node_name_next == node_name_current)
-    {
-      print(paste("NOTE: '", node_name_current, "' rejects current target ",
-                  " of '", node_name_next, "'. Selecting another target.",
-                  sep = ''))
+      print(paste("NOTE: '", node_name_current, "' has/have been consumed by '",
+                  node_name_next, "'.", sep = ''))
       next_step <- sample(number_of_nodes, size = 1)
     }
 
@@ -261,9 +247,8 @@ RandomJourneyFoodweb <- function()
     }
     else
     {
-      print(paste("NOTE: '", node_name_current, "' rejects current target ",
-                  " of '", node_name_next, "'. Selecting another target.",
-                  sep = ''))
+      print(paste("NOTE: '", node_name_current, "' can/will not consume '",
+                  node_name_next, "'. Selecting another target.", sep = ''))
       next_step <- sample(number_of_nodes, size = 1)
     }
 
