@@ -194,14 +194,14 @@ RandomJourneyFoodweb <- function()
     #############################
 
     # Current node data.
-    print(paste(node_name_current))
-    print(paste("Biomass:", biomass_current))
-    print(paste("Weight:", weight_current))
+    # print(paste(node_name_current))
+    # print(paste("Biomass:", biomass_current))
+    # print(paste("Weight:", weight_current))
 
     # Next node data.
-    print(paste(node_name_next))
-    print(paste("Biomass:", biomass_next))
-    print(paste("Weight:", weight_next))
+    # print(paste(node_name_next))
+    # print(paste("Biomass:", biomass_next))
+    # print(paste("Weight:", weight_next))
 
     ##############################
     # Decision-making logic tree #
@@ -217,30 +217,38 @@ RandomJourneyFoodweb <- function()
 
       if (biomass_current > biomass_next)
       {
-        # print("NOTE: Targeting a creature of lower biomass.")
-        print(paste(node_name_current, "is being targeted by", node_name_next))
+        print(paste("NOTE: ", node_name_current, " is/are being targeted by ",
+                    node_name_next, ".", sep = ''))
         next_step <- sample(number_of_nodes, size = 1)
+
         break
       }
       else if (biomass_current < biomass_next)
       {
         print("NOTE: A creature of a lower energy transfer is not available.")
         print("NOTE: Continuing Random Journey().")
-        # print("NOTE: No logical path forward available.")
-        # print("NOTE: Terminating Random Journey.")
-        # stuck <- TRUE
+
         break
       }
       else if (node_name_current == node_name_next)
       {
         print(paste("NOTE: Reject current target of ", node_name_next,
                     ". Selecting another target.", sep = ''))
+
+        break
+      }
+      else if (biomass_current == 0)
+      {
+        print("NOTE: Detected a creature with biomass of 0.")
+        print("NOTE: Searching for nearest alternative.")
+
         break
       }
       else
       {
         print(paste("NOTE: Reject current target of ", node_name_next,
                     ". Selecting another target.", sep = ''))
+
         break
       }
 
@@ -252,12 +260,7 @@ RandomJourneyFoodweb <- function()
     # Loop-ending logic #
     #####################
 
-    if (biomass_current == 0)
-    {
-      print("NOTE: Detected a creature with biomass of 0.")
-      print("NOTE: Searching for nearest alternative.")
-    }
-    else if (loop_iteration >= igraph::vcount(gramwet))
+    if (loop_iteration >= igraph::vcount(gramwet))
     {
       print(paste("NOTE: Number of loops performed has reached the maximum",
                   "length of the network."))
