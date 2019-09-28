@@ -100,9 +100,6 @@ RandomJourneyFoodweb <- function()
     root_nodes <- sample(length(gramwet), 1, replace = FALSE)
   }
 
-  # Uncomment to override starting position.
-  # root_nodes <- 66
-
   # Assign the chosen root node as the starting position for the random journey.
   previous_state <- as.vector(as.integer(root_nodes))
 
@@ -112,7 +109,7 @@ RandomJourneyFoodweb <- function()
   print(root_nodes)
 
   # Select walk mode: 'in', 'out', or 'all'. Default: 'all'.
-  walk_mode <- 'all'
+  walk_mode <- 'in'
 
   while (isFALSE(stuck))
   {
@@ -223,10 +220,27 @@ RandomJourneyFoodweb <- function()
     }
 
     # Higher energy transfer AND greater weight.
+    else if ((biomass_current > biomass_next) && (weight_current < weight_next))
+    {
+      print(paste("NOTE: A smaller creature is not available in the current",
+                  "location."))
+      next_step <- sample(number_of_nodes, size = 1)
+    }
+
+
+    else if ((biomass_current < biomass_next) && (weight_current < weight_next))
+    {
+      print(paste("NOTE: ", node_name_next, " has/have been consumed by ",
+                  node_name_current, ".", sep = ''))
+      next_step <- sample(number_of_nodes, size = 1)
+    }
+
+    # Higher energy transfer AND greater weight.
     else if ((biomass_current > biomass_next) && (weight_current > weight_next))
     {
       print(paste("NOTE: A smaller creature is not available in the current",
                   "location."))
+      next_step <- sample(number_of_nodes, size = 1)
     }
 
     # Next node is the same as the current (prevent reciprocal steps).
@@ -235,6 +249,7 @@ RandomJourneyFoodweb <- function()
       print(paste("NOTE: '", node_name_current, "' rejects current target ",
                   " of '", node_name_next, "'. Selecting another target.",
                   sep = ''))
+      next_step <- sample(number_of_nodes, size = 1)
     }
 
     # Encountered largest creature possible (very unlikely).
@@ -249,6 +264,7 @@ RandomJourneyFoodweb <- function()
       print(paste("NOTE: '", node_name_current, "' rejects current target ",
                   " of '", node_name_next, "'. Selecting another target.",
                   sep = ''))
+      next_step <- sample(number_of_nodes, size = 1)
     }
 
     #####################
