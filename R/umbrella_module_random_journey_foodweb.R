@@ -211,51 +211,52 @@ RandomJourneyFoodweb <- function()
     next_step_loop <- 0
     while (number_of_nodes >= next_step_loop)
     {
-      if (biomass_current < biomass_next)
+      ##########################
+      # Target selection logic #
+      ##########################
+
+      if (biomass_current > biomass_next)
       {
         # print("NOTE: Targeting a creature of lower biomass.")
         print(paste(node_name_current, "is being targeted by", node_name_next))
         next_step <- sample(number_of_nodes, size = 1)
         break
       }
+      else if (biomass_current < biomass_next)
+      {
+        print("NOTE: A creature of a lower energy transfer is not available.")
+        print("NOTE: Continuing Random Journey().")
+        # print("NOTE: No logical path forward available.")
+        # print("NOTE: Terminating Random Journey.")
+        # stuck <- TRUE
+        break
+      }
+      else if (node_name_current == node_name_next)
+      {
+        print(paste("NOTE: Reject current target of ", node_name_next,
+                    ". Selecting another target.", sep = ''))
+        break
+      }
       else
       {
         print(paste("NOTE: Reject current target of ", node_name_next,
                     ". Selecting another target.", sep = ''))
+        break
       }
 
       # Increment the loop by 1.
       next_step_loop <- next_step_loop + 1
     }
 
-    # Check next step conditions.
+    #####################
+    # Loop-ending logic #
+    #####################
+
     if (biomass_current == 0)
     {
       print("NOTE: Detected a creature with biomass of 0.")
       print("NOTE: Searching for nearest alternative.")
     }
-
-    ##########################
-    # Target selection logic #
-    ##########################
-
-    else if (biomass_current <= biomass_next)
-    {
-      print(paste("NOTE:", node_name_current, "has been consumed by",
-                  node_name_next))
-    }
-    else if (biomass_current > biomass_next)
-    {
-      print("NOTE: A creature of a lower energy transfer is not available.")
-      print("NOTE: No logical path forward available.")
-      print("NOTE: Terminating Random Journey.")
-      stuck <- TRUE
-    }
-
-    #####################
-    # Loop-ending logic #
-    #####################
-
     else if (loop_iteration >= igraph::vcount(gramwet))
     {
       print(paste("NOTE: Number of loops performed has reached the maximum",
@@ -269,17 +270,16 @@ RandomJourneyFoodweb <- function()
       print("NOTE: Terminating Random Journey.")
       stuck <- TRUE
     }
+    else if (isFALSE(stuck))
+    {
+      print("NOTE: Taking another step through foodweb network.")
+    }
     else
     {
       print(paste("NOTE: 'Umbrella::RandomJourneyFoodWeb()' has encountered",
                   "an unknown error."))
       print("NOTE: Terminating Random Journey.")
       stuck <- TRUE
-    }
-
-    if (isFALSE(stuck))
-    {
-      print("NOTE: Taking another step through foodweb network.")
     }
 
     ############################################################################
