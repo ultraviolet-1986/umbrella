@@ -19,7 +19,7 @@
 #   provided by the 'igraphdata/foodweb' dataset.
 # - The domain knowledge utilised to 'guide' the Random Journey (dynamic random
 #   walk) in this case is the fact that a larger creature will typically
-#   consume another.
+#   consume a smaller creature (or vice versa in case of large-creature death).
 # - The walker as part of this Random Journey will typically consume creatures
 #   of a lower biomass than itself before taking another step, meaning that a
 #   walker can consume multiple creatures per step. In this sense, the walker
@@ -190,20 +190,25 @@ RandomJourneyFoodweb <- function()
     # Access 'distance' between vertices #
     ######################################
 
-    distance <- igraph::distances(gramwet, v = node_name_current,
-                                  to = node_name_next)
-    distance <- as.double(distance)
+    # NOTES:
+    # - At present, this value may be extracted but not compared to other values
+    #   due to the variable not casting to a double number correctly.
+    # - This will always return FALSE for comparative operations.
 
-    #############################
-    # Print current information #
-    #############################
+    # distance <- igraph::distances(gramwet, v = node_name_current,
+    #                               to = node_name_next)
+    # distance <- as.double(distance)
 
-    # Current node data.
+    ############################################
+    # Print current information (More Verbose) #
+    ############################################
+
+    # # Current node data.
     # print(paste(node_name_current))
     # print(paste("Name", node_name_current, "Biomass:", biomass_current))
     # print(paste("Name", node_name_current, "Weight:", weight_current))
 
-    # Next node data.
+    # # Next node data.
     # print(paste(node_name_next))
     # print(paste("Name", node_name_next, "Biomass:", biomass_next))
     # print(paste("Name", node_name_next, "Weight:", weight_next))
@@ -229,7 +234,6 @@ RandomJourneyFoodweb <- function()
                   node_name_next, "'.", sep = ''))
       next_step <- sample(number_of_nodes, size = 1)
     }
-
     # Higher energy transfer AND greater weight.
     else if ((biomass_current > biomass_next) && (weight_current < weight_next))
     {
@@ -237,7 +241,6 @@ RandomJourneyFoodweb <- function()
                   node_name_next, "'.", sep = ''))
       next_step <- sample(number_of_nodes, size = 1)
     }
-
     # Encountered largest creature possible (very unlikely).
     else if (biomass_current == 0)
     {
@@ -245,6 +248,7 @@ RandomJourneyFoodweb <- function()
                   "current location."))
       stuck <- TRUE
     }
+    # Catch all.
     else
     {
       print(paste("NOTE: '", node_name_current, "' can/will not consume '",
@@ -258,26 +262,28 @@ RandomJourneyFoodweb <- function()
 
     if (loop_iteration >= igraph::vcount(gramwet))
     {
-      print(paste("NOTE: Number of loops performed has reached the maximum",
-                  "length of the network."))
+      print(paste("NOTE: This foodweb has been fully explored."))
       print("NOTE: Terminating Random Journey.")
+
       stuck <- TRUE
     }
     else if (number_of_nodes == 0)
     {
       print("NOTE: There are no creatures available for consumption.")
-      print("NOTE: Terminating Random Journey.")
+      print("NOTE: Terminating RandomJourneyFoodWeb().")
+
       stuck <- TRUE
     }
     else if (isFALSE(stuck))
     {
-      print("NOTE: Taking another step through foodweb network.")
+      print("NOTE: Taking another step through Food Web network.")
     }
     else
     {
       print(paste("NOTE: 'Umbrella::RandomJourneyFoodWeb()' has encountered",
                   "an unknown error."))
       print("NOTE: Terminating Random Journey.")
+
       stuck <- TRUE
     }
 
@@ -322,7 +328,7 @@ RandomJourneyFoodweb <- function()
   # Plot results #
   ################
 
-  print("TEST: Plotting random walk on 'foodwebs' data. Please Wait.")
+  print("NOTE: Plotting random walk on 'foodwebs' data. Please Wait.")
 
   # Create graphical plot using 'ggnet2'.
   walk_plot <- GGally::ggnet2(path,
