@@ -270,7 +270,7 @@ RandomJourneyFoodweb <- function()
     else if (number_of_nodes == 0)
     {
       print("NOTE: There are no creatures available for consumption.")
-      print("NOTE: Terminating RandomJourneyFoodWeb().")
+      print("NOTE: Terminating Random Journey.")
 
       stuck <- TRUE
     }
@@ -280,7 +280,7 @@ RandomJourneyFoodweb <- function()
     }
     else
     {
-      print(paste("NOTE: 'Umbrella::RandomJourneyFoodWeb()' has encountered",
+      print(paste("NOTE: 'Random Journey' has encountered",
                   "an unknown error."))
       print("NOTE: Terminating Random Journey.")
 
