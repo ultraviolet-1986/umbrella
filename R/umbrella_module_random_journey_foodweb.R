@@ -122,8 +122,11 @@ RandomJourneyFoodweb <- function()
 
     # Take the values from the previous iteration and pass them to the first
     # step of this iteration of the journey.
-    walk <- random_walk(gramwet, start = previous_state, steps = 2,
-                        stuck = 'return', mode = walk_mode)
+    walk <- random_walk(gramwet,
+                        start = previous_state,
+                        steps = 2,
+                        stuck = 'return',
+                        mode = walk_mode)
 
     # Choose the previously-visited node as the starting position for next step.
     next_step <- tail(as.integer(walk), n = 1)
@@ -136,7 +139,9 @@ RandomJourneyFoodweb <- function()
     # iteration is equal to, or less than 1.
 
     # Detect neigbouring nodes for the journey.
-    nodes_available <- igraph::neighbors(gramwet, next_step, mode = walk_mode)
+    nodes_available <- igraph::neighbors(gramwet,
+                                         next_step,
+                                         mode = walk_mode)
 
     number_of_nodes <- length(igraph::neighbors(gramwet,
                                                 next_step,
@@ -195,9 +200,10 @@ RandomJourneyFoodweb <- function()
     #   due to the variable not casting to a double number correctly.
     # - This will always return FALSE for comparative operations.
 
-    # distance <- igraph::distances(gramwet, v = node_name_current,
-    #                               to = node_name_next)
-    # distance <- as.double(distance)
+    distance <- igraph::distances(gramwet, v = node_name_current,
+                                  to = node_name_next)
+
+    distance <- toString(distance)
 
     ############################################
     # Print current information (More Verbose) #
@@ -228,14 +234,14 @@ RandomJourneyFoodweb <- function()
     ##########################
 
     # Lower energy transfer AND greater weight.
-    if ((biomass_current < biomass_next) && (weight_current > weight_next))
+    if ((biomass_current < biomass_next) && (weight_current > weight_next) && (isTRUE(distance <= 5)))
     {
       print(paste("NOTE: '", node_name_current, "' has/have been consumed by '",
                   node_name_next, "'.", sep = ''))
       next_step <- sample(number_of_nodes, size = 1)
     }
-    # Higher energy transfer AND greater weight.
-    else if ((biomass_current > biomass_next) && (weight_current < weight_next))
+    # Higher energy transfer AND lower weight.
+    else if ((biomass_current > biomass_next) && (weight_current < weight_next) && (isTRUE(distance > 5)))
     {
       print(paste("NOTE: '", node_name_current, "' has/have been consumed by '",
                   node_name_next, "'.", sep = ''))
