@@ -1,9 +1,7 @@
 \name{AnalyseData}
 \alias{AnalyseData}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-%%  ~~function to do ... ~~
-}
+\title{umbrella::AnalyseData()}
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
@@ -53,18 +51,18 @@ AnalyseData(dataset, draw_graph = c(TRUE, FALSE), random_seed = c(TRUE, FALSE))
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function (dataset, draw_graph = c(TRUE, FALSE), random_seed = c(TRUE, 
-    FALSE)) 
+function (dataset, draw_graph = c(TRUE, FALSE), random_seed = c(TRUE,
+    FALSE))
 {
     if (isTRUE(random_seed)) {
         umbrella::ApplyRandomSeed()
     }
     else if (isFALSE(random_seed)) {
-        print(paste("NOTE: Argument 'random_seed' is set to 'FALSE'. Proceeding ", 
+        print(paste("NOTE: Argument 'random_seed' is set to 'FALSE'. Proceeding ",
             "with machine default."))
     }
     else if (missing(random_seed)) {
-        print(paste("NOTE: Argument 'random_seed' is missing. Proceeding with ", 
+        print(paste("NOTE: Argument 'random_seed' is missing. Proceeding with ",
             "machine default."))
     }
     else {
@@ -72,7 +70,7 @@ function (dataset, draw_graph = c(TRUE, FALSE), random_seed = c(TRUE,
         return()
     }
     if (missing(dataset)) {
-        print(paste("ERROR: Argument 'dataset' has not been defined. Terminating", 
+        print(paste("ERROR: Argument 'dataset' has not been defined. Terminating",
             "Data Analysis."))
         return()
     }
@@ -88,7 +86,7 @@ function (dataset, draw_graph = c(TRUE, FALSE), random_seed = c(TRUE,
     print("NOTE: Validation Complete. No errors encountered.")
     if (class(dataset) == "data.frame") {
         print(paste("NOTE: Data are 'data.frame' format. Converting to 'igraph'."))
-        dataset <- igraph::graph_from_adj_list(dataset, mode = "all", 
+        dataset <- igraph::graph_from_adj_list(dataset, mode = "all",
             duplicate = FALSE)
         print(paste("NOTE: Data have been converted to 'igraph'."))
     }
@@ -100,20 +98,20 @@ function (dataset, draw_graph = c(TRUE, FALSE), random_seed = c(TRUE,
         return()
     }
     dataset_edge_count <- igraph::ecount(dataset)
-    print(paste("NOTE: Data contains a total of", igraph::ecount(dataset), 
+    print(paste("NOTE: Data contains a total of", igraph::ecount(dataset),
         "connections (edges)."))
     dataset_vertex_count = igraph::vcount(dataset)
-    print(paste("NOTE: Data contains a total of", igraph::vcount(dataset), 
+    print(paste("NOTE: Data contains a total of", igraph::vcount(dataset),
         "nodes (vertices)."))
     if (isTRUE(draw_graph)) {
-        igraph::plot.igraph(dataset, main = "Network Data Graph", 
+        igraph::plot.igraph(dataset, main = "Network Data Graph",
             sub = paste("Umbrella", packageVersion("umbrella")))
     }
-    dataset_transition_matrix <- igraph::stochastic_matrix(dataset, 
+    dataset_transition_matrix <- igraph::stochastic_matrix(dataset,
         sparse = TRUE)
-    analysis_payload <- list(dataset = dataset, dataset_type = dataset_type, 
-        dataset_class = dataset_class, dataset_edge_count = dataset_edge_count, 
-        dataset_vertex_count = dataset_vertex_count, dataset_adjacency_matrix = as_adjacency_matrix(dataset), 
+    analysis_payload <- list(dataset = dataset, dataset_type = dataset_type,
+        dataset_class = dataset_class, dataset_edge_count = dataset_edge_count,
+        dataset_vertex_count = dataset_vertex_count, dataset_adjacency_matrix = as_adjacency_matrix(dataset),
         dataset_transition_matrix = dataset_transition_matrix)
     return(analysis_payload)
   }

@@ -1,9 +1,7 @@
 \name{RandomJourney}
 \alias{RandomJourney}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-%%  ~~function to do ... ~~
-}
+\title{umbrella::RandomJourney()}
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
@@ -53,17 +51,17 @@ RandomJourney(data, attribute, walk_mode = "out")
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function (data, attribute, walk_mode = "out") 
+function (data, attribute, walk_mode = "out")
 {
     path <- ""
     stuck <- FALSE
     loop_iteration <- 0
-    root_nodes <- which(sapply(sapply(V(data), function(x) neighbors(data, 
+    root_nodes <- which(sapply(sapply(V(data), function(x) neighbors(data,
         x, mode = "in")), length) == 0)
     root_nodes <- as.vector(as.integer(root_nodes))
     print(paste("NOTE: Detected root nodes:"))
     print(root_nodes)
-    print(paste("Number of Root Nodes: ", length(root_nodes), 
+    print(paste("Number of Root Nodes: ", length(root_nodes),
         ".", sep = ""))
     if (length(root_nodes) > 1) {
         root_nodes <- sample(root_nodes, 1, replace = FALSE)
@@ -76,25 +74,25 @@ function (data, attribute, walk_mode = "out")
         root_nodes <- sample(length(data), 1, replace = FALSE)
     }
     previous_state <- as.vector(as.integer(root_nodes))
-    print(paste("NOTE: Beginning Random Journey from the selected node: ", 
+    print(paste("NOTE: Beginning Random Journey from the selected node: ",
         root_nodes, ".", sep = ""))
     print(root_nodes)
     while (isFALSE(stuck)) {
         loop_iteration <- loop_iteration + 1
-        walk <- random_walk(data, start = previous_state, steps = 2, 
+        walk <- random_walk(data, start = previous_state, steps = 2,
             stuck = "return", mode = walk_mode)
         next_step <- tail(as.integer(walk), n = 1)
-        nodes_available <- igraph::neighbors(data, next_step, 
+        nodes_available <- igraph::neighbors(data, next_step,
             mode = walk_mode)
-        number_of_nodes <- length(igraph::neighbors(data, next_step, 
+        number_of_nodes <- length(igraph::neighbors(data, next_step,
             mode = "out"))
         attribute_mod <- vertex_attr(data, attribute, index = V(data))[[next_step]]
-        attribute_mod_next <- vertex_attr(data, attribute, index = V(data))[[(as.integer(next_step) + 
+        attribute_mod_next <- vertex_attr(data, attribute, index = V(data))[[(as.integer(next_step) +
             1)]]
         next_step_loop <- 0
         while (number_of_nodes >= next_step_loop) {
             if (as.integer(attribute_mod) > as.integer(attribute_mod_next)) {
-                print(paste("NOTE: Targeting a node containing a lower value of ", 
+                print(paste("NOTE: Targeting a node containing a lower value of ",
                   "attribute '", attribute, "',", sep = ""))
                 next_step <- sample(number_of_nodes, size = 1)
                 break
@@ -105,16 +103,16 @@ function (data, attribute, walk_mode = "out")
             next_step_loop <- next_step_loop + 1
         }
         if (attribute_mod == 0) {
-            print(paste("NOTE: Detected a target with attribute '", 
+            print(paste("NOTE: Detected a target with attribute '",
                 attribute, "' value of '0'.", sep = ""))
             print("NOTE: Searching for nearest alternative.")
         }
         else if (as.integer(attribute_mod) > as.integer(next_step)) {
-            print(paste("NOTE: Selected a target of a lower value of attribute '", 
+            print(paste("NOTE: Selected a target of a lower value of attribute '",
                 attribute, "' than itself.", sep = ""))
         }
         else if (as.integer(attribute_mod) < as.integer(next_step)) {
-            print(paste("NOTE: A target of a lower value of attribute '", 
+            print(paste("NOTE: A target of a lower value of attribute '",
                 attribute, "' is not available.", sep = ""))
             print("NOTE: No logical path forward available.")
             print("NOTE: Terminating Random Journey.")
@@ -122,7 +120,7 @@ function (data, attribute, walk_mode = "out")
             invisible(path)
         }
         else if (loop_iteration >= igraph::vcount(data)) {
-            print(paste("NOTE: Number of loops performed has reached the length of", 
+            print(paste("NOTE: Number of loops performed has reached the length of",
                 "the network."))
             print("NOTE: Terminating Random Journey.")
             stuck <- TRUE

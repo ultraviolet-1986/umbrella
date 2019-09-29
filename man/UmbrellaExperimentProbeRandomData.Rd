@@ -1,9 +1,7 @@
 \name{UmbrellaExperimentProbeRandomData}
 \alias{UmbrellaExperimentProbeRandomData}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-%%  ~~function to do ... ~~
-}
+\title{umbrella::UmbrellaExperimentProbeRandomData()}
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
@@ -42,14 +40,14 @@ UmbrellaExperimentProbeRandomData()
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function () 
+function ()
 {
     print("########## EXPERIMEMT ##########")
     setwd("~/")
     test_data <- umbrella::GenerateRandomNetwork(to_file = TRUE)
     test_data <- umbrella::AnalyseData(test_data, draw_graph = TRUE)
     print("TEST: Performing random walk on testing data.")
-    test_random_walk <- igraph::random_walk(test_data$dataset, 
+    test_random_walk <- igraph::random_walk(test_data$dataset,
         start = 1, steps = 10, mode = "all")
     print(test_random_walk)
     print("TEST: Output an adjacency edge list of the network data.")
@@ -57,7 +55,7 @@ function ()
     test_random_walk <- igraph::graph_from_adj_list(test_random_walk)
     test_random_walk <- simplify(test_random_walk)
     print("TEST: Plotting random walk on testing data.")
-    igraph::plot.igraph(test_random_walk, main = "Random Walk Graph / UmbrellaExperimentProbeRandomData()", 
+    igraph::plot.igraph(test_random_walk, main = "Random Walk Graph / UmbrellaExperimentProbeRandomData()",
         sub = paste("Umbrella", packageVersion("umbrella")))
     print("TEST: Return data as graph object.")
     print(test_data)

@@ -1,9 +1,7 @@
 \name{RandomWalk}
 \alias{RandomWalk}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-%%  ~~function to do ... ~~
-}
+\title{umbrella::RandomWalk()}
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
@@ -65,44 +63,44 @@ RandomWalk(dataset, ontology, start_node, walk_length, random_seed = c(TRUE, FAL
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function (dataset, ontology, start_node, walk_length, random_seed = c(TRUE, 
-    FALSE), walk_mode = c("in", "out", "all"), stuck_response = c("return", 
-    "error")) 
+function (dataset, ontology, start_node, walk_length, random_seed = c(TRUE,
+    FALSE), walk_mode = c("in", "out", "all"), stuck_response = c("return",
+    "error"))
 {
     if (missing(dataset)) {
-        print(paste("ERROR: Argument 'dataset' has not been defined. Terminating", 
+        print(paste("ERROR: Argument 'dataset' has not been defined. Terminating",
             "Random Walk."))
         return()
     }
     if (missing(start_node)) {
-        print(paste("ERROR: Argument 'start_node' has not been defined.", 
+        print(paste("ERROR: Argument 'start_node' has not been defined.",
             "Terminating Random Walk."))
         return()
     }
     if (missing(walk_length)) {
         walk_length <- round(vcount(dataset)/2)
         print("NOTE: Argument 'walk_length' has not been defined.")
-        print(paste("NOTE: Automatically setting number of steps to ", 
+        print(paste("NOTE: Automatically setting number of steps to ",
             walk_length, ".", sep = ""))
     }
     if (isTRUE(random_seed)) {
         umbrella::ApplyRandomSeed()
     }
     else if (isFALSE(random_seed)) {
-        print(paste("NOTE: Argument 'random_seed' set to 'FALSE'. Proceeding with", 
+        print(paste("NOTE: Argument 'random_seed' set to 'FALSE'. Proceeding with",
             "current pseudo-random seed."))
     }
     else if (missing(random_seed)) {
-        print(paste("NOTE: Argument 'random_seed' not specified. Proceeding with", 
+        print(paste("NOTE: Argument 'random_seed' not specified. Proceeding with",
             "current pseudo-random seed."))
     }
     else {
-        print(paste("ERROR: Argument 'random_seed' has not been defined.", 
+        print(paste("ERROR: Argument 'random_seed' has not been defined.",
             "Terminating Random Walk."))
         return()
     }
     if (missing(walk_mode)) {
-        print(paste("NOTE: Argument 'walk_mode' not specified. Proceeding under ", 
+        print(paste("NOTE: Argument 'walk_mode' not specified. Proceeding under ",
             "'all' mode."))
         walk_mode <- "all"
     }
@@ -116,17 +114,17 @@ function (dataset, ontology, start_node, walk_length, random_seed = c(TRUE,
         print("NOTE: Random Walk will be executed under 'all' mode.")
     }
     else {
-        print(paste("ERROR: Argument 'walk_mode' has not been defined. Terminating", 
+        print(paste("ERROR: Argument 'walk_mode' has not been defined. Terminating",
             "Random Walk."))
         return()
     }
     if (missing(stuck_response)) {
-        print(paste("ERROR: Argument 'stuck' has not been defined. Terminating", 
+        print(paste("ERROR: Argument 'stuck' has not been defined. Terminating",
             "Random Walk."))
         return()
     }
     n <- vcount(dataset)
-    tm <- matrix(sample(0:1, n^2, prob = c(0.95, 0.05), replace = TRUE), 
+    tm <- matrix(sample(0:1, n^2, prob = c(0.95, 0.05), replace = TRUE),
         n, n)
     tm <- (tm == 1 | t(tm) == 1) * 1
     diag(tm) <- 0
@@ -136,7 +134,7 @@ function (dataset, ontology, start_node, walk_length, random_seed = c(TRUE,
     for (i in 2:(len + 1)) {
         idx <- tm[path[i - 1], ] != 0
         if (any(idx)) {
-            path[i] <- resample(which(idx), 1, prob = tm[path[i - 
+            path[i] <- resample(which(idx), 1, prob = tm[path[i -
                 1], idx])
         }
         else {
@@ -147,7 +145,7 @@ function (dataset, ontology, start_node, walk_length, random_seed = c(TRUE,
     path <- igraph::graph_from_adj_list(path, mode = "all", duplicate = FALSE)
     print(path)
     print("NOTE: Plotting random walk on data set.")
-    plot(path, main = "Random Walk Graph / RandomWalk()", sub = paste("Umbrella", 
+    plot(path, main = "Random Walk Graph / RandomWalk()", sub = paste("Umbrella",
         packageVersion("umbrella")))
     invisible(path)
   }

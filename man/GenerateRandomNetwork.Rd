@@ -1,9 +1,7 @@
 \name{GenerateRandomNetwork}
 \alias{GenerateRandomNetwork}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-%%  ~~function to do ... ~~
-}
+\title{umbrella::GenerateRandomNetwork()}
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
@@ -50,19 +48,19 @@ GenerateRandomNetwork(nodes = 25, to_file = c(TRUE, FALSE))
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function (nodes = 25, to_file = c(TRUE, FALSE)) 
+function (nodes = 25, to_file = c(TRUE, FALSE))
 {
     umbrella_random_network_file <- "umbrella_random_network.txt"
-    umbrella_random_network <- igraph::erdos.renyi.game(nodes, 
+    umbrella_random_network <- igraph::erdos.renyi.game(nodes,
         0.33)
     if (isTRUE(to_file)) {
         if (file.exists(umbrella_random_network_file)) {
-            print(paste("NOTE: Existing network file detected and will be", 
+            print(paste("NOTE: Existing network file detected and will be",
                 "overwritten."))
         }
-        igraph::write_graph(umbrella_random_network, file = umbrella_random_network_file, 
+        igraph::write_graph(umbrella_random_network, file = umbrella_random_network_file,
             format = "edgelist")
-        print(paste("NOTE: Random network file '", umbrella_random_network_file, 
+        print(paste("NOTE: Random network file '", umbrella_random_network_file,
             "' has been written", sep = ""))
     }
     invisible(umbrella_random_network)
