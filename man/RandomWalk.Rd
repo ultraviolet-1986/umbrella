@@ -2,33 +2,36 @@
 \alias{RandomWalk}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-  Umbrella: RandomWalk()
+%%  ~~function to do ... ~~
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-RandomWalk(dataset = "placeholder", start_node, steps, random_seed = c(TRUE, FALSE), mode = c("in", "out", "all"), stuck = c("stop_walk", "raise_error"))
+RandomWalk(dataset, ontology, start_node, walk_length, random_seed = c(TRUE, FALSE), walk_mode = c("in", "out", "all"), stuck_response = c("return", "error"))
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{dataset}{
 %%     ~~Describe \code{dataset} here~~
 }
+  \item{ontology}{
+%%     ~~Describe \code{ontology} here~~
+}
   \item{start_node}{
 %%     ~~Describe \code{start_node} here~~
 }
-  \item{steps}{
-%%     ~~Describe \code{steps} here~~
+  \item{walk_length}{
+%%     ~~Describe \code{walk_length} here~~
 }
   \item{random_seed}{
 %%     ~~Describe \code{random_seed} here~~
 }
-  \item{mode}{
-%%     ~~Describe \code{mode} here~~
+  \item{walk_mode}{
+%%     ~~Describe \code{walk_mode} here~~
 }
-  \item{stuck}{
-%%     ~~Describe \code{stuck} here~~
+  \item{stuck_response}{
+%%     ~~Describe \code{stuck_response} here~~
 }
 }
 \details{
@@ -62,59 +65,91 @@ RandomWalk(dataset = "placeholder", start_node, steps, random_seed = c(TRUE, FAL
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function (dataset = "placeholder", start_node, steps, random_seed = c(TRUE,
-    FALSE), mode = c("in", "out", "all"), stuck = c("stop_walk",
-    "raise_error"))
+function (dataset, ontology, start_node, walk_length, random_seed = c(TRUE, 
+    FALSE), walk_mode = c("in", "out", "all"), stuck_response = c("return", 
+    "error")) 
 {
-    if (missing(start_node)) {
-        print(paste("ERROR: Argument 'start_node' has not been defined.",
-            "Terminating Random Walk."))
-        return()
-    }
-    if (missing(steps)) {
-        print(paste("ERROR: Argument 'steps' has not been defined. Terminating",
+    if (missing(dataset)) {
+        print(paste("ERROR: Argument 'dataset' has not been defined. Terminating", 
             "Random Walk."))
         return()
     }
+    if (missing(start_node)) {
+        print(paste("ERROR: Argument 'start_node' has not been defined.", 
+            "Terminating Random Walk."))
+        return()
+    }
+    if (missing(walk_length)) {
+        walk_length <- round(vcount(dataset)/2)
+        print("NOTE: Argument 'walk_length' has not been defined.")
+        print(paste("NOTE: Automatically setting number of steps to ", 
+            walk_length, ".", sep = ""))
+    }
     if (isTRUE(random_seed)) {
-        print("NOTE: Applying a unique psuedo-random seed.")
-        ApplyRandomSeed()
+        umbrella::ApplyRandomSeed()
     }
     else if (isFALSE(random_seed)) {
-        print("NOTE: Proceeding with current pseudo-random seed.")
+        print(paste("NOTE: Argument 'random_seed' set to 'FALSE'. Proceeding with", 
+            "current pseudo-random seed."))
     }
     else if (missing(random_seed)) {
-        print(paste("NOTE: Argument 'random_seed' not specified. Proceeding with",
+        print(paste("NOTE: Argument 'random_seed' not specified. Proceeding with", 
             "current pseudo-random seed."))
     }
     else {
-        print(paste("ERROR: Argument 'random_seed' has not been defined.",
+        print(paste("ERROR: Argument 'random_seed' has not been defined.", 
             "Terminating Random Walk."))
         return()
     }
-    if (missing(mode)) {
-        print("NOTE: Argument 'mode' not specified. Proceeding under 'all' mode.")
-        mode <- "all"
+    if (missing(walk_mode)) {
+        print(paste("NOTE: Argument 'walk_mode' not specified. Proceeding under ", 
+            "'all' mode."))
+        walk_mode <- "all"
     }
-    else if (mode == "in") {
+    else if (walk_mode == "in") {
         print("NOTE: Random Walk will be executed under 'in' mode.")
     }
-    else if (mode == "out") {
+    else if (walk_mode == "out") {
         print("NOTE: Random Walk will be executed under 'out' mode.")
     }
-    else if (mode == "all") {
+    else if (walk_mode == "all") {
         print("NOTE: Random Walk will be executed under 'all' mode.")
     }
     else {
-        print(paste("ERROR: Argument 'mode' has not been defined. Terminating",
+        print(paste("ERROR: Argument 'walk_mode' has not been defined. Terminating", 
             "Random Walk."))
         return()
     }
-    if (missing(stuck)) {
-        print(paste("ERROR: Argument 'stuck' has not been defined. Terminating",
+    if (missing(stuck_response)) {
+        print(paste("ERROR: Argument 'stuck' has not been defined. Terminating", 
             "Random Walk."))
         return()
     }
+    n <- vcount(dataset)
+    tm <- matrix(sample(0:1, n^2, prob = c(0.95, 0.05), replace = TRUE), 
+        n, n)
+    tm <- (tm == 1 | t(tm) == 1) * 1
+    diag(tm) <- 0
+    start <- start_node
+    len <- walk_length
+    path <- c(start, rep(NA, len))
+    for (i in 2:(len + 1)) {
+        idx <- tm[path[i - 1], ] != 0
+        if (any(idx)) {
+            path[i] <- resample(which(idx), 1, prob = tm[path[i - 
+                1], idx])
+        }
+        else {
+            break
+        }
+    }
+    path
+    path <- igraph::graph_from_adj_list(path, mode = "all", duplicate = FALSE)
+    print(path)
+    print("NOTE: Plotting random walk on data set.")
+    plot(path, main = "Random Walk Graph / RandomWalk()", sub = paste("Umbrella", 
+        packageVersion("umbrella")))
+    invisible(path)
   }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

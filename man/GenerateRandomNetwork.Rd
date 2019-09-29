@@ -1,22 +1,22 @@
-\name{GenerateRandomNetworkFile}
-\alias{GenerateRandomNetworkFile}
+\name{GenerateRandomNetwork}
+\alias{GenerateRandomNetwork}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-  Umbrella: GenerateRandomNetworkFile()
+%%  ~~function to do ... ~~
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-GenerateRandomNetworkFile(nodes = 20, rows = 20)
+GenerateRandomNetwork(nodes = 25, to_file = c(TRUE, FALSE))
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{nodes}{
 %%     ~~Describe \code{nodes} here~~
 }
-  \item{rows}{
-%%     ~~Describe \code{rows} here~~
+  \item{to_file}{
+%%     ~~Describe \code{to_file} here~~
 }
 }
 \details{
@@ -50,27 +50,22 @@ GenerateRandomNetworkFile(nodes = 20, rows = 20)
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function (nodes = 20, rows = 20)
+function (nodes = 25, to_file = c(TRUE, FALSE)) 
 {
-    umbrella_random_network_file <- "umbrella_random_network.csv"
-    if (file.exists(umbrella_random_network_file)) {
-        file.remove(umbrella_random_network_file)
-        print(paste("NOTE: '", umbrella_random_network_file,
-            "' has been deleted ", "from the current working directory.",
-            sep = ""))
-    }
-    for (i in 1:rows) {
-        numbers <- c(sample(1:nodes, 1), sample(1:nodes, 1))
-        while (numbers[1] == numbers[2]) {
-            numbers <- c(sample(1:nodes, 1), sample(1:nodes,
-                1))
+    umbrella_random_network_file <- "umbrella_random_network.txt"
+    umbrella_random_network <- igraph::erdos.renyi.game(nodes, 
+        0.33)
+    if (isTRUE(to_file)) {
+        if (file.exists(umbrella_random_network_file)) {
+            print(paste("NOTE: Existing network file detected and will be", 
+                "overwritten."))
         }
-        write(paste(numbers[1], numbers[2], sep = ", "), file = umbrella_random_network_file,
-            append = TRUE, sep = "\n")
-        i <- i + 1
+        igraph::write_graph(umbrella_random_network, file = umbrella_random_network_file, 
+            format = "edgelist")
+        print(paste("NOTE: Random network file '", umbrella_random_network_file, 
+            "' has been written", sep = ""))
     }
-    print(paste("NOTE: '", umbrella_random_network_file, "' has been written to ",
-        "current working directory.", sep = ""))
+    invisible(umbrella_random_network)
   }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

@@ -1,14 +1,14 @@
-\name{UmbrellaExperimentConversion}
-\alias{UmbrellaExperimentConversion}
+\name{UmbrellaExperimentProbeRandomData}
+\alias{UmbrellaExperimentProbeRandomData}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-  Umbrella: UmbrellaExperimentConversion
+%%  ~~function to do ... ~~
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-UmbrellaExperimentConversion()
+UmbrellaExperimentProbeRandomData()
 }
 %- maybe also 'usage' for other objects documented here.
 \details{
@@ -42,31 +42,22 @@ UmbrellaExperimentConversion()
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function ()
+function () 
 {
     print("########## EXPERIMEMT ##########")
     setwd("~/")
-    umbrella::GenerateRandomNetworkFile(nodes = 10, rows = 10)
-    test_data <- read.csv("umbrella_random_network.csv")
-    umbrella::AnalyseData(test_data, draw_graph = TRUE)
-    print("TEST: Convert comma-separated data into graph object.")
-    test_data <- igraph::graph_from_adj_list(test_data, mode = "all",
-        duplicate = FALSE)
-    print("TEST: Convert data into adjacency matrix.")
-    test_data <- igraph::as_adjacency_matrix(test_data, type = "both")
-    print("TEST: Outputting data as adjacency matrix.")
-    print(test_data)
-    print("TEST: Convert data back into graph object.")
-    test_data <- igraph::graph_from_adjacency_matrix(test_data)
+    test_data <- umbrella::GenerateRandomNetwork(to_file = TRUE)
+    test_data <- umbrella::AnalyseData(test_data, draw_graph = TRUE)
     print("TEST: Performing random walk on testing data.")
-    test_random_walk <- igraph::random_walk(test_data, start = 1,
-        steps = 10, mode = "all")
+    test_random_walk <- igraph::random_walk(test_data$dataset, 
+        start = 1, steps = 10, mode = "all")
     print(test_random_walk)
     print("TEST: Output an adjacency edge list of the network data.")
-    print(as_adj_edge_list(test_data))
+    print(igraph::as_adj_edge_list(test_data$dataset))
+    test_random_walk <- igraph::graph_from_adj_list(test_random_walk)
+    test_random_walk <- simplify(test_random_walk)
     print("TEST: Plotting random walk on testing data.")
-    igraph::plot.igraph(igraph::graph_from_adj_list(test_random_walk),
-        main = "Random Walk Graph / umbrella_test_function()",
+    igraph::plot.igraph(test_random_walk, main = "Random Walk Graph / UmbrellaExperimentProbeRandomData()", 
         sub = paste("Umbrella", packageVersion("umbrella")))
     print("TEST: Return data as graph object.")
     print(test_data)

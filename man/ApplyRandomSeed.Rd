@@ -2,7 +2,7 @@
 \alias{ApplyRandomSeed}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-  Umbrella: ApplyRandomSeed
+%%  ~~function to do ... ~~
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
@@ -42,7 +42,7 @@ ApplyRandomSeed()
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function ()
+function () 
 {
     if (exists(".Random.seed")) {
         rm(.Random.seed, envir = globalenv())
