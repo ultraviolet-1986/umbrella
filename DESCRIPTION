@@ -17,6 +17,7 @@ Collate:
   umbrella_module_generate_random_network_file.R
   umbrella_module_random_journey.R
   umbrella_module_random_walk.R
+  umbrella_module_random_walk_foodweb.R
 License: GPL (>= 3)
 URL: https://github.com/ultraviolet-1986/umbrella
 BugReports: https://github.com/ultraviolet-1986/umbrella

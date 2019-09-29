@@ -36,8 +36,6 @@ RandomJourneyFoodweb <- function()
   # Prerequisites #
   #################
 
-  library(GGally)
-
   # Set random seed for experiment.
   umbrella::ApplyRandomSeed()
 
@@ -339,7 +337,9 @@ RandomJourneyFoodweb <- function()
   ###############################
 
   clusters <- cluster_walktrap(path)
-  plot(clusters, path)
+  plot(clusters, path,
+       main = 'Random Journey / foodwebs$gramwet',
+       sub = paste("Umbrella", packageVersion("umbrella")))
 
   ################
   # Plot results #
@@ -367,7 +367,6 @@ RandomJourneyFoodweb <- function()
 
   # Silently return the completed random journey path.
   invisible(path)
-
 }
 
 # End of File.
