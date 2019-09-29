@@ -58,7 +58,7 @@ RandomJourneyFoodweb <- function()
   # Purge self-loops.
   gramwet <- simplify(gramwet)
 
-  # Create an empty list to hold list of nodes visited during RandomJourney().
+  # Create an empty list to hold list of nodes visited during Random Journey.
   node_name_list <- ''
 
   ##########################
@@ -109,7 +109,7 @@ RandomJourneyFoodweb <- function()
   print(root_nodes)
 
   # Select walk mode: 'in', 'out', or 'all'. Default: 'all'.
-  walk_mode <- 'in'
+  walk_mode <- 'all'
 
   while (isFALSE(stuck))
   {
@@ -236,8 +236,9 @@ RandomJourneyFoodweb <- function()
     # Lower energy transfer AND greater weight.
     if ((biomass_current < biomass_next) && (weight_current > weight_next) && (isTRUE(distance <= 5)))
     {
-      print(paste("NOTE: '", node_name_current, "' has/have been consumed by '",
-                  node_name_next, "'.", sep = ''))
+      print(paste("NOTE: '", node_name_next, "' has/have been consumed by '",
+                  node_name_current, "'.", sep = ''))
+
       next_step <- sample(number_of_nodes, size = 1)
     }
     # Higher energy transfer AND lower weight.
@@ -245,6 +246,7 @@ RandomJourneyFoodweb <- function()
     {
       print(paste("NOTE: '", node_name_current, "' has/have been consumed by '",
                   node_name_next, "'.", sep = ''))
+
       next_step <- sample(number_of_nodes, size = 1)
     }
     # Encountered largest creature possible (very unlikely).
@@ -252,13 +254,16 @@ RandomJourneyFoodweb <- function()
     {
       print(paste("NOTE: Detected a creature with biomass of 0 at the",
                   "current location."))
+
       stuck <- TRUE
     }
     # Catch all.
     else
     {
-      print(paste("NOTE: '", node_name_current, "' can/will not consume '",
-                  node_name_next, "'. Selecting another target.", sep = ''))
+      print(paste("NOTE: '", node_name_current, "' can/will not likely ",
+                  "consume '", node_name_next, "'. Selecting another target.",
+                  sep = ''))
+
       next_step <- sample(number_of_nodes, size = 1)
     }
 
@@ -268,7 +273,7 @@ RandomJourneyFoodweb <- function()
 
     if (loop_iteration >= igraph::vcount(gramwet))
     {
-      print(paste("NOTE: This foodweb has been fully explored."))
+      print("NOTE: This foodweb has been fully explored.")
       print("NOTE: Terminating Random Journey.")
 
       stuck <- TRUE
@@ -282,12 +287,11 @@ RandomJourneyFoodweb <- function()
     }
     else if (isFALSE(stuck))
     {
-      print("NOTE: Taking another step through Food Web network.")
+      # print("NOTE: Taking another step through Food Web network.")
     }
     else
     {
-      print(paste("NOTE: 'Random Journey' has encountered",
-                  "an unknown error."))
+      print("NOTE: Random Journey has encountered an unknown error.")
       print("NOTE: Terminating Random Journey.")
 
       stuck <- TRUE
@@ -327,8 +331,15 @@ RandomJourneyFoodweb <- function()
   node_name_list <- node_name_list[-1]
 
   # Print names of nodes visited.
-  print(paste("NOTE: Printing list of nodes visited during RandomJourney()."))
+  print(paste("NOTE: Printing list of nodes visited during Random Journey."))
   print(cat(node_name_list, sep = '\n'))
+
+  ###############################
+  # Plot results (Compartments) #
+  ###############################
+
+  clusters <- cluster_walktrap(path)
+  plot(clusters, path)
 
   ################
   # Plot results #
