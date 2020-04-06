@@ -361,7 +361,7 @@ RandomJourneyFoodweb <- function()
 
   # print("NOTE: Plotting random walk on 'foodwebs' data. Please Wait.")
 
-  # Create graphical plot using 'ggnet2'.
+  # # Create graphical plot using 'ggnet2'.
   # walk_plot <- GGally::ggnet2(path,
   #                             label = TRUE,
   #                             node.size = 9,
@@ -372,7 +372,7 @@ RandomJourneyFoodweb <- function()
   #                             arrow.gap = 0.022,
   #                             mode = 'kamadakawai')
 
-  # Output the new plot graphically ('ggnet2' will not do this automatically).
+  # # Output the new plot graphically ('ggnet2' will not do this automatically).
   # print(walk_plot)
 
   ###############
