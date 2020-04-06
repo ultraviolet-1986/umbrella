@@ -13,7 +13,10 @@ random walk algorithm onto a multitude of fields, regardless of subject.
 It is possible to install this package using the following commands in R or
 RStudio:
 
-### GitHub Method (Not yet tested)
+### GitHub Method
+
+Tested and verified under **Fedora Workstation 31 (x86_64)** /
+**RStudio v1.2.5033**.
 
 ```R
   install.packages('devtools', dependencies = TRUE)
