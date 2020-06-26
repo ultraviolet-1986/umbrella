@@ -359,21 +359,21 @@ RandomJourneyFoodweb <- function()
   # Plot results (GGally) #
   #########################
 
-  # print("NOTE: Plotting random walk on 'foodwebs' data. Please Wait.")
+  print("NOTE: Plotting random walk on 'foodwebs' data. Please Wait.")
 
-  # # Create graphical plot using 'ggnet2'.
-  # walk_plot <- GGally::ggnet2(path,
-  #                             label = TRUE,
-  #                             node.size = 9,
-  #                             node.color = "pink",
-  #                             edge.size = 1,
-  #                             edge.color = "grey",
-  #                             arrow.size = 8,
-  #                             arrow.gap = 0.022,
-  #                             mode = 'kamadakawai')
+  # Create graphical plot using 'ggnet2'.
+  walk_plot <- GGally::ggnet2(path,
+                              label = TRUE,
+                              node.size = 9,
+                              node.color = "pink",
+                              edge.size = 1,
+                              edge.color = "grey",
+                              arrow.size = 8,
+                              arrow.gap = 0.022,
+                              mode = 'kamadakawai')
 
-  # # Output the new plot graphically ('ggnet2' will not do this automatically).
-  # print(walk_plot)
+  # Output the new plot graphically ('ggnet2' will not do this automatically).
+  print(walk_plot)
 
   ###############
   # Return Data #
