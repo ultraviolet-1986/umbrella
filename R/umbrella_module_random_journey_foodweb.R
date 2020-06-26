@@ -44,14 +44,18 @@
 # Functions #
 #############
 
-RandomJourneyFoodweb <- function()
+RandomJourneyFoodweb <- function(random_seed = FALSE)
 {
   #################
   # Prerequisites #
   #################
 
   # Set random seed for experiment.
-  umbrella::ApplyRandomSeed()
+  if (random_seed == TRUE)
+  {
+    print("########## APPLY RANDOM SEED ##########")
+    umbrella::ApplyRandomSeed()
+  }
 
   print("########## BEGIN EXPERIMEMT ##########")
 
