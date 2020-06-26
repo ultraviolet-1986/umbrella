@@ -1,14 +1,21 @@
 \name{RandomJourneyFoodweb}
 \alias{RandomJourneyFoodweb}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{umbrella::RandomJourneyFoodweb()}
+\title{
+%%  ~~function to do ... ~~
+}
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-RandomJourneyFoodweb()
+RandomJourneyFoodweb(random_seed = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
+\arguments{
+  \item{random_seed}{
+%%     ~~Describe \code{random_seed} here~~
+}
+}
 \details{
 %%  ~~ If necessary, more details than the description above ~~
 }
@@ -40,9 +47,12 @@ RandomJourneyFoodweb()
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function ()
+function (random_seed = FALSE)
 {
-    umbrella::ApplyRandomSeed()
+    if (random_seed == TRUE) {
+        print("########## APPLY RANDOM SEED ##########")
+        umbrella::ApplyRandomSeed()
+    }
     print("########## BEGIN EXPERIMEMT ##########")
     print(paste("TEST: Loading the 'foodwebs' dataset from package",
         "'igraphdata'."))
