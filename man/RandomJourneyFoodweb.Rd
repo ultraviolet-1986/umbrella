@@ -1,9 +1,7 @@
 \name{RandomJourneyFoodweb}
 \alias{RandomJourneyFoodweb}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-%%  ~~function to do ... ~~
-}
+\title{umbrella::RandomJourneyFoodweb())}
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }

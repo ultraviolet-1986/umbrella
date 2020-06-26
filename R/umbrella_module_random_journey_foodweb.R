@@ -250,7 +250,8 @@ RandomJourneyFoodweb <- function(random_seed = FALSE)
     ##########################
 
     # Lower energy transfer AND greater weight.
-    if ((biomass_current < biomass_next) && (weight_current > weight_next) && (isTRUE(distance <= 5)))
+    if ((biomass_current < biomass_next) && (weight_current > weight_next)
+        && (isTRUE(distance <= 5)))
     {
       print(paste("NOTE: '", node_name_next, "' has/have been consumed by '",
                   node_name_current, "'.", sep = ''))
@@ -258,7 +259,8 @@ RandomJourneyFoodweb <- function(random_seed = FALSE)
       next_step <- sample(number_of_nodes, size = 1)
     }
     # Higher energy transfer AND lower weight.
-    else if ((biomass_current > biomass_next) && (weight_current < weight_next) && (isTRUE(distance > 5)))
+    else if ((biomass_current > biomass_next) && (weight_current < weight_next)
+             && (isTRUE(distance > 5)))
     {
       print(paste("NOTE: '", node_name_current, "' has/have been consumed by '",
                   node_name_next, "'.", sep = ''))
