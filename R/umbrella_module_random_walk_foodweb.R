@@ -26,7 +26,7 @@
 
 RandomWalkFoodweb <- function()
 {
-  data(foodwebs)
+  data("foodwebs")
 
   # Create network object.
   gramwet <- foodwebs$gramwet
