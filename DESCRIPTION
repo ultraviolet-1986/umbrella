@@ -1,11 +1,11 @@
 Package: umbrella
-Version: 0.2.2
+Version: 0.2.3
 Date: 2019-07-15
 Title: Umbrella: A Biased Generic Random Walk Algorithm for Community Detection
 Author: William Whinn <bh39sb@student.sunderland.ac.uk>
 Maintainer: William Whinn <bh39sb@student.sunderland.ac.uk>
-Depends: R (>= 3.6.0), rstudioapi, igraph (>= 1.2.4.1), igraphdata (>= 1.0.1)
-Suggests: igraphdata (>= 1.0.1)
+Depends: R (>= 3.6.0), rstudioapi, GGally (>= 2.0.0), igraph (>= 1.2.4.1),
+  igraphdata (>= 1.0.1)
 Description: Umbrella is a generic biased random walk algorithm, which aims to
   perform accurate community detection for virtually any data set.
 Collate:
